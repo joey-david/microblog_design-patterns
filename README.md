@@ -129,8 +129,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Métaprogrammation" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc5hrmy3g1/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e59e89b1kkvlmtrymwi6ngkv/thumb_link.png" alt="Métaprogrammation"/></a>
 
-* Transparents [07-metaprogramming-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-metaprogramming-slides.pdf)
-  (version imprimable : [07-metaprogramming-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-metaprogramming-handout.pdf))
+* Transparents [04-metaprogramming-slides.pdf](http://matthieu-moy.fr/cours/mif01/04-metaprogramming-slides.pdf)
+  (version imprimable : [04-metaprogramming-handout.pdf](http://matthieu-moy.fr/cours/mif01/04-metaprogramming-handout.pdf))
 
 ### Spécifications
 
