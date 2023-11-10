@@ -150,7 +150,7 @@ email, ce fichier en contient une copie.
 
 ## CM 6 (18/10/2023, 8h) : Test
 
-* [Transparents de Sandrine Gouraud](http://matthieu-moy.fr/cours/mif01/gouraud_20221005.pdf)
+* Transparents de Sandrine Gouraud, lien disponible sur TOMUSS.
 
 * [Software Fail Watch, 5th
   edition](https://www.tricentis.com/wp-content/uploads/2019/01/Software-Fails-Watch-5th-edition.pdf)
