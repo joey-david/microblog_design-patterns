@@ -360,6 +360,8 @@ L'intérêt est plus évident quand on teste des propriétés plus complexes, co
     }
 ```
 
+(Attention, `contains` est trompeur, l'assertion ne passe que si le conteneur contient *exactement* ce contenu, et pas d'autres éléments contrairement à `hasEntry`)
+
 ### Test-Driven Development (TDD)
 
 C'est en général une bonne idée d'écrire les tests avant d'écrire le
