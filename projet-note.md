@@ -173,7 +173,7 @@ Vous pouvez laisser les autres fichiers et répertoires.
 | 3 | Autres extensions |
 | 3 | Tests automatiques |
 | 1 | Principes GRASP bien appliqués |
-| 1 | Design pattern MVC : la deuxième vue fonctionne, les listes se mettent à jour automatiquement (plus de bouton « refresh ») |
+| 1 | Design pattern MVC : la deuxième vue fonctionne, les listes se mettent à jour automatiquement |
 | 3 | Design pattern MVC : qualité et organisation du code |
 | 5 | Design-patterns (création, structure, SOLID, ...) : au moins 3 autres patterns que MVC ou GRASP |
 | 6 | Rapport : partie « design patterns » |
