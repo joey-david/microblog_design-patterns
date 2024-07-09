@@ -1,4 +1,7 @@
 <!-- LTeX: language=fr -->
+<!-- dates :
+grep '^## .. ' README.md | sed 's/[^(]*(//; s/,.*//' | sed 's@\(.*\)/\(.*\)/\(.*\)@\2/\1/\3@' | date -f -
+-->
 # Gestion de Projet et Génie Logiciel, M1, département informatique, Lyon 1, 2023-2024
 
 ## Dates importantes
@@ -8,10 +11,10 @@
 * Emploi du temps : Cf. ADE.
   Utilisez la ressource "M1 informatique" **plus les groupes de TD** pour voir l'emploi du temps. Contrairement à la licence vous n'avez pas d'emploi du temps personnalisé il faut regarder celui de votre groupe.
 
-* Rendu du TP noté : vous devez avoir rempli le champ URL de TOMUSS avant le 20 septembre 2023 (malus sur la note si ce n'est pas fait sans une raison valable). Le rendu final est le 17/12/2023 à 23h59. Voir
+* Rendu du TP noté : vous devez avoir rempli le champ URL de TOMUSS avant le 13 septembre 2023 (malus sur la note si ce n'est pas fait sans une raison valable). Le rendu final est le 8/12/2024 à 23h59. Voir
   [projet-note.md](projet-note.md) pour un récapitulatif des consignes.
 
-* Examen : 10 janvier 2024, 8h30, voir amphi sur TOMUSS. 1h30 (sauf tiers-temps) Consignes : Seules 5
+* Examen : TODO: date à décider, voir amphi sur TOMUSS. 1h30 (sauf tiers-temps) Consignes : Seules 5
   feuilles A4 recto verso (donc 10 pages au total) sont autorisées à
   l’examen. Leur contenu est libre. Elles peuvent être une sélection de
   transparents ou manuscrites, avec une taille de caractère de votre
@@ -45,7 +48,7 @@ Les informations de dernière minute sont disponibles ici :
 [NEWS.md](NEWS.md). Les informations importantes seront envoyées par
 email, ce fichier en contient une copie.
 
-## CM 1 (13/9/2023, 8h) : Introduction
+## CM 1 (3/9/2024, 14h) : Introduction
 
 ### Intro du cours
 
@@ -59,17 +62,18 @@ email, ce fichier en contient une copie.
 
 * Transparents : [01-introduction-slides.pdf](http://matthieu-moy.fr/cours/mif01/01-introduction-slides.pdf) (version imprimable : [01-introduction-handout.pdf](http://matthieu-moy.fr/cours/mif01/01-introduction-handout.pdf))
   
-## TP 1 (13/9/2023, 9h45) : Mise en route Java
+## TP 1 (3/9/2024, 15h45) : Mise en route Java
 
 * Énoncé : [TP1-java/README.md](TP1-java/README.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 2: Matthieu Moy
   - Nautibus TP 3, Nautibus TP 4: Joel Felderhoff
   - Nautibus TP 5, Nautibus TP 6: Lionel Medini
   - Nautibus TP 9, Nautibus TP10: Mathieu Hilaire
+  -->
 
-## CM 2 (13/9/2023, 14h) : Outillage : Maven, la forge Gitlab, intégration continue, coding style ... 
+## CM 2 (Vendredi 6/9/2024, 9h45) : Outillage : Maven, la forge Gitlab, intégration continue, coding style ... 
 
 ### Maven, Forge, Intégration Continue
 
@@ -78,23 +82,24 @@ email, ce fichier en contient une copie.
 * Transparents : [02-cm-maven-forge-ic-slides.pdf](http://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-slides.pdf)
   (Version imprimable : [02-cm-maven-forge-ic-handout.pdf](http://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-handout.pdf))
 
-## TP 2 (13/9/2023, 15h45) : Outillage
+## TP 2 (Vendredi 6/9/2024, 11h30) : Outillage
 
 * Énoncé : [TP2-outils/README.md](TP2-outils/README.md)
 
 * Salles : comme le matin.
 
-## TP 3 (20/9/2023, 9h45) : Outillage (suite)
+## TP 3 (10/9/2024, 14h00) : Outillage (suite)
 
 * Énoncé : continuer [TP2-outils/README.md](TP2-outils/README.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 2 : Matthieu Moy
   - Nautibus TP 3, Nautibus TP 4 : Joel Felderhoff
   - Nautibus TP 5, Nautibus TP 6 : Lionel Medini
   - Nautibus TP 9, Nautibus TP10 : Mathieu Hilaire
+  -->
 
-## CM 3 (20/9/2023, 11h30, par Lionel Medini) : Coding style, Design patterns (début)
+## CM 3 (10/9/2024, 15h45, par Lionel Medini) : Coding style, Design patterns (début)
 
 ### Coding style
 
@@ -111,19 +116,20 @@ email, ce fichier en contient une copie.
 
 * Vidéo du mercredi 9/9/2020 sur Youtube : [https://youtu.be/9oV0xDSrXes](https://youtu.be/9oV0xDSrXes)
 
-## CM 4 (20/9/2023, 14h, par Lionel Medini) : Design patterns (suite)
+## CM 4 (Mercredi 11/9/2024, 11h30, par Lionel Medini) : Design patterns (suite)
 
-## TD 1 (20/9/2023, 15h45) : Design patterns
+## TD 1 (Vendredi 13/9/2024, 11h30) : Design patterns
 
 * [TD1-design-patterns](http://matthieu-moy.fr/cours/mif01/TD1-patterns/TD-design-patterns.html)
 
-* Salles : cf. TOMUSS et mail envoyé pour les étudiants.
+<!-- * Salles : cf. TOMUSS et mail envoyé pour les étudiants.
   - Nautibus TD 2 : Matthieu Moy
   - Nautibus TD 3 : Joel Felderhoff
   - Nautibus TD12 : Lionel Medini
   - Nautibus TD13 : Mathieu Hilaire
+  -->
 
-## CM 5 (11/10/2023, 8h) : Métaprogrammation, spécifications et cas d'utilisation
+## CM 5 (1/10/2024, 14h) : Métaprogrammation, spécifications et cas d'utilisation
 
 ### Métaprogrammation
 
@@ -138,17 +144,18 @@ email, ce fichier en contient une copie.
 
 * [05-UML-CU.pdf](http://matthieu-moy.fr/cours/mif01/05-UML-CU.pdf)
 
-## TP 4 (11/10/2023, 9h45) : Design patterns & refactoring
+## TP 4 (Vendredi 4/10/2024, 11h30) : Design patterns & refactoring
 
 * [TP3-patterns/README.md](TP3-patterns/README.md) et de l'aide avec [MVC](TP3-patterns/mvc.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 4, Nautibus TP 5 : Matthieu Moy
   - Nautibus TP 6, Nautibus TP10 : Joel Felderhoff
   - Nautibus TP11, Nautibus TP12 : Lionel Medini
   - Nautibus TP13, Nautibus TP14 : Mathieu Hilaire
+  -->
 
-## CM 6 (18/10/2023, 8h) : Test
+## CM 6 (8/10/2024, 14h) : Test
 
 * Transparents de Sandrine Gouraud, lien disponible sur TOMUSS.
 
@@ -156,18 +163,19 @@ email, ce fichier en contient une copie.
   edition](https://www.tricentis.com/wp-content/uploads/2019/01/Software-Fails-Watch-5th-edition.pdf)
   présenté pendant le cours.
 
-## TD 2 (18/10/2023, 9h45) : Coding styles, spécifications et agilité
+## TD 2 (8/10/2024, 15h45) : Coding styles, spécifications et agilité
 
 * [TD2-uc-style/TD-usecase-et-style.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style.pdf)
   (corrigé : [TD2-uc-style/TD-usecase-et-style-corrige.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style-corrige.pdf))
 
-* Salles :
-  - Groupe A : Nautibus TD 1, 9h45 : Matthieu Moy
-  - Groupe B : Nautibus TD 2, 9h45 : Mathieu Hilaire
-  - Groupe C : Nautibus TD 3, 9h45 : Lionel Medini
+<!-- * Salles :
+  - Groupe A : Nautibus TD 1, 15h45 : Matthieu Moy
+  - Groupe B : Nautibus TD 2, 15h45 : Mathieu Hilaire
+  - Groupe C : Nautibus TD 3, 15h45 : Lionel Medini
   - Groupe D : Nautibus TD 1, 11h30 : Matthieu Moy
+  -->
 
-## CM 7 (8/11/2023, 8h) : introduction à l'agilité
+## CM 7 (29/10/2024, 14h) : introduction à l'agilité
 
 ### Introduction à l'Agilité
 
@@ -176,17 +184,18 @@ email, ce fichier en contient une copie.
 * Transparents : [08-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-slides.pdf)
   (version imprimable : [08-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-handout.pdf))
 
-## TP 5 (8/11/2023, 9h45): Design patterns & refactoring, suite
+## TP 5 (29/10/2024, 15h45): Design patterns & refactoring, suite
 
 * Continuer avec : [TP3-patterns/README.md](TP3-patterns/README.md) et de l'aide avec [MVC](TP3-patterns/mvc.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 2 : Matthieu Moy
   - Nautibus TP 3, Nautibus TP 4 : Joel Felderhoff
   - Nautibus TP 5, Nautibus TP 9 : Lionel Medini
   - Nautibus TP10, Nautibus TP11 : Mathieu Hilaire
+  -->
 
-## CM 8 (15/11/2023, 8h) : Agilité (suite)
+## CM 8 (5/11/2024, 14h) : Agilité (suite)
 
 ### Fin du cours sur l'agilité
 
@@ -201,17 +210,18 @@ email, ce fichier en contient une copie.
 
 * Transparents : [Présentation_spotify_v2.pdf](http://matthieu-moy.fr/cours/mif01/Présentation_spotify_v2.pdf)
 
-## TP 6 (15/11/2023, 9h45) : Tests
+## TP 6 (5/11/2024, 15h45) : Tests
 
 * Énoncé : [TP4-tests/README.md](TP4-tests/README.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 2 : Matthieu Moy
   - Nautibus TP 3, Nautibus TP 4 : Joel Felderhoff
   - Nautibus TP 5, Nautibus TP 6 : Lionel Medini
   - Nautibus TP 9, Nautibus TP11 : Mathieu Hilaire
+  -->
 
-## CM 9 (6/12/2023, 8h) : Éthique
+## CM 9 (26/11/2024, 14h) : Éthique
 
 ### Éthique
 
@@ -220,28 +230,28 @@ email, ce fichier en contient une copie.
 * Transparents : [10-ethics-slides.pdf](http://matthieu-moy.fr/cours/mif01/10-ethics-slides.pdf)
   (version imprimable : [10-ethics-handout.pdf](http://matthieu-moy.fr/cours/mif01/10-ethics-handout.pdf))
 
-## TP 7 (6/12/2023, 9h45) : Tests (suite)
+## TP 7 (Vendredi 29/11/2024, 15h45) : Tests (suite)
 
 * Sujet : continuer avec [TP4-tests/README.md](TP4-tests/README.md)
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 3 : Matthieu Moy
   - Nautibus TP 4, Nautibus TP 5 : Joel Felderhoff
   - Nautibus TP 6, Nautibus TP 9 : Lionel Medini
   - Nautibus TP10, Nautibus TP11 : Mathieu Hilaire
+  -->
 
-## CM 10 (13/12/2023, 8h) : Gestion de projet en entreprise
+## CM 10 (3/12/2024, 14h) : Ethique, suite.
 
-Intervention de Jonathan BENZAQUEN.
-
-## TP 8 (13/12/2023, 9h45) : fin du projet
+## TP 8 (Vendredi 6/12/2024, 15h45) : fin du projet
 
 Cette dernière séance devrait vous permettre de boucler votre projet, qui est à rendre quelques jours plus tard.
 
-* Salles :
+<!-- * Salles :
   - Nautibus TP 1, Nautibus TP 2 : Matthieu Moy
   - Nautibus TP 3, Nautibus TP 4 : Joel Felderhoff
   - Nautibus TP 5, Nautibus TP 6 : Lionel Medini
   - Nautibus TP 9, Nautibus TP10 : Mathieu Hilaire
+  -->
 
 ## 17/12/2023, 23h59 : date limite pour le rendu de projet.
