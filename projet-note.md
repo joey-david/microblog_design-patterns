@@ -1,5 +1,5 @@
 <!-- LTeX: language=fr -->
-# Rendu du Mini Projet "ELIZA GPT"
+# Rendu du Mini Projet "Y Microblogging"
 
 **Votre travail devra être rendu sous forme d’un projet déposé sur la Forge Lyon 1, les dates limites sont dans le fichier README.md de ce projet.**
 
@@ -15,74 +15,87 @@ Les consignes ci-dessous sont à respecter **impérativement** pour le rendu.
 On vous demande un travail original et non une copie. Vous n'êtes pas autorisés
 à fournir votre code à d'autres équipes ni à utiliser le code d'autres équipes
 (y compris le code écrit les années passées, y compris par vous-même si vous
-êtes redoublant). Si vous êtes en difficulté, demandez de l'aide à vos
-enseignants, mais n'utilisez pas vos difficultés comme excuse pour frauder.
+êtes redoublant). Vous n'êtes pas non plus autorisés à utiliser le code généré
+par des IA génératives (ChatGPT, Copilot, etc.). Si vous êtes en difficulté,
+demandez de l'aide à vos enseignants, mais n'utilisez pas vos difficultés comme
+excuse pour frauder.
 
 ## Rapport
 
 Votre rendu inclura un rapport, au format PDF (consignes pour le rendu
-ci-dessous), qui doit comprendre obligatoirement :
+ci-dessous), en français, qui doit comprendre obligatoirement, en plus d'une
+présentation globale du projet (rapide : ne répétez pas l'énoncé) :
 
-- une présentation globale du projet (rapide : ne répétez pas
-  l'énoncé),
+### Une section « design patterns » [BAREME: 6]
 
-- Une section « design patterns », donnant une motivation des choix
+  Cette section donne une motivation des choix
   d’architecture (et des patterns choisis), et leur explication en s’aidant de
   diagrammes appropriés et adaptés au degré de précision et au type
   d’explication. Donc des diagrammes de classe, mais pas que cela, et pas de
   plats de spaghettis générés automatiquement représentant tout le code.
   
-* Une section « éthique ». Cette section devra discuter de la problématique des
-  IA conversationnelles comme ChatGPT, Bard, etc. Quels sont les
-  enjeux ? Quels sont les risques et les bénéfices, pour la société qui édite un
-  tel programme, et pour ses utilisateurs ? Quelles sont les mesures, légales et
-  techniques, pour limiter ou éliminer les risques ? Lesquels sont mis en œuvre
-  dans la réalité ? En avez-vous mis en place dans votre TP, si oui, lesquelles
-  (il s'agit d'un petit projet scolaire, on ne vous demande pas une application
-  vraiment sécurisée, mais vous devriez être capable de discuter des limites de
-  votre implémentation. Vous pouvez aussi mettre en place des mesures simplistes
-  et discuter de ce qu'il faudrait faire dans une vraie application) ?
+### Une section « éthique » [BAREME: 4]
 
-  L'objectif n'est pas de donner un avis subjectif (la question «
-  ChatGPT/Bard/... est-il bien ? » est hors sujet ici), mais de présenter les
-  questions importantes et les éléments objectifs de réponse autour de la
-  question des IA conversationnelles. Appuyez-vous autant que possible sur des
-  articles existants, en citant vos sources. Il s'agit donc avant tout d'un
-  travail de bibliographie de votre part.
+  Cette section devra discuter de la problématique des
+  plateformes de microblogging et plus généralement des réseaux sociaux. Quelles
+  sont les parties prenantes ? Quels sont les enjeux ? Quel impact ce genre
+  d'outils a sur la société ?
+
+  Nous avons implémenté un système de scoring, analogue aux systèmes de
+  recommandations qui sont implémentés dans la plupart des réseaux sociaux pour
+  proposer du contenu « pertinent » à l'utilisateur. Quels sont les avantages,
+  et quels sont les risques de ces systèmes de recommandation ?
+
+  Quelles sont les mesures, légales et techniques, pour limiter
+  ou éliminer les risques ? Lesquels sont mis en œuvre dans la réalité ? En
+  avez-vous mis en place dans votre TP, si oui, lesquelles (il s'agit d'un petit
+  projet scolaire, on ne vous demande pas une application vraiment sécurisée,
+  mais vous devriez être capable de discuter des limites de votre
+  implémentation. Vous pouvez aussi mettre en place des mesures simplistes et
+  discuter de ce qu'il faudrait faire dans une vraie application) ?
+
+  L'objectif n'est pas de donner un avis subjectif (la question « les réseaux
+  sociaux sont ils une bonne chose ? » est hors sujet ici), mais de présenter
+  les questions importantes et les éléments objectifs de réponse autour de la
+  question des réseaux sociaux et des systèmes de recommandation de contenu.
+  Appuyez-vous autant que possible sur des articles existants, en citant vos
+  sources. Il s'agit donc avant tout d'un travail de bibliographie de votre
+  part. Attention, un travail de bibliographie n'est pas un exercice de
+  copier-coller : on attend de vous un travail de synthèse. Vous pouvez
+  copier-coller des sources externes uniquement dans le cadre du [droit de
+  courte citation](https://fr.wikipedia.org/wiki/Droit_de_courte_citation)
+  (portions de textes courtes, bien délimitées par exemple par des guillemets,
+  mention de la source, ...). Il est interdit, pas seulement dans le cadre d'un
+  travail scolaire, de laisser entendre que vous êtes l'auteur d'un texte que
+  vous n'avez pas écrit vous-même. On rappelle que l'utilisation d'IA générative
+  est interdite sur ce TP.
 
   Pour vous aider, voici quelques références intéressantes sur le sujet :
 
-  * [ChatGPT](https://fr.wikipedia.org/wiki/ChatGPT) et [Bard](https://fr.wikipedia.org/wiki/Bard_(chatbot)) sur Wikipedia
+__* [https://fr.wikipedia.org/wiki/Bulle_de_filtres](Bulle de filtres), concept développé par Eli Parisier.
 
-  * [Sept choses à savoir sur la suspension de ChatGPT en Italie](https://www.liberation.fr/economie/economie-numerique/sept-choses-a-savoir-sur-la-suspension-de-chatgpt-en-italie-20230331_L6YEOWWJU5HWDL3GF5P7QM5LFE/)
+  * [https://fr.wikipedia.org/wiki/%C3%89conomie_de_l%27attention](Économie de l'attention) sur Wikipedia.
 
-  * [Un ingénieur de Google mis à pied après avoir affirmé que l’intelligence artificielle était "sensible"](https://www.radiofrance.fr/franceinter/un-ingenieur-de-google-mis-a-pied-apres-avoir-affirme-que-l-intelligence-artificielle-etait-sensible-5250635)
+  * [https://www.lemonde.fr/pixels/article/2022/11/14/twitter-supprime-une-grande-partie-de-ses-capacites-de-moderation_6149773_4408996.html](Twitter supprime une grande partie de ses capacités de modération) dans la rubrique « Pixels » du journal « Le Monde ».
 
-  * [Un Belge se suicide après avoir trouvé refuge auprès d'un robot conversationnel](https://www.lefigaro.fr/actualite-france/chatgpt-un-belge-se-suicide-apres-avoir-trouve-refuge-aupres-d-un-robot-conversationnel-20230329)
+  * [https://www.youtube.com/watch?v=fHsa9DqmId8](My Video Went Viral. Here's Why) sur la chaîne Youtube Veritasium, qui analyse l'effet de l'algorithme de recommandation de Youtube sur le succès d'une vidéo.
 
-  * [Prompt engineer : quel est ce nouveau métier qui rapporte jusqu’à 300 000 € ?](https://www.presse-citron.net/prompt-engineer-quel-est-ce-nouveau-metier-qui-rapporte-jusqua-300-000-e/)
+  * [https://www.lemonde.fr/pixels/article/2024/07/29/naztok-un-rapport-revele-comment-des-groupes-neonazis-utilisent-l-algorithme-de-tiktok-a-son-avantage_6261156_4408996.html?lmd_medium=al&lmd_campaign=envoye-par-appli&lmd_creation=android&lmd_source=default](« NazTok » : un rapport révèle comment des groupes néonazis utilisent l’algorithme de TikTok à leur avantage) dans la rubrique « Pixels » du journal « Le Monde ».
 
-  * [Elon Musk et des centaines d’experts réclament une « pause » dans le développement de l’intelligence artificielle](https://www.lemonde.fr/economie/article/2023/03/29/elon-musk-et-des-centaines-d-experts-reclament-une-pause-dans-le-developpement-de-l-ia_6167461_3234.html)
-
-  * [ChatGPT est-il devenu plus “éthique” grâce à l’exploitation de travailleurs kényans ?](https://www.journaldugeek.com/2023/01/19/chatgpt-est-il-devenu-plus-ethique-grace-a-lexploitation-de-travailleurs-kenyans/)
+  * En amont des systèmes de recommandation, la création de continu calculée pour répondre aux demandes : [https://medium.com/@danial.a/how-netflix-used-data-to-create-house-of-cards-a-revolutionary-approach-to-content-creation-b9a114630ddc](How Netflix Used Data to Create House of Cards: A Revolutionary Approach to Content Creation)
 
   La liste n'est bien entendu pas exhaustive. Pensez à vos enseignants qui
   liront des dizaines de rapports, surprenez-nous, apprenez-nous des choses ! Si
   votre relecteur se dit « Ah tiens, je ne savais pas » ou « Ah tiens, je n'y
   avais pas pensé » en lisant votre rapport, vous avez atteint l'objectif !
-
-  Vous pouvez utiliser une IA conversationnelle pour écrire cette section, mais
-  si vous le faites vous devez le dire explicitement dans votre rapport et
-  donner les requêtes (prompt) que vous avez utilisé pour arriver au texte
-  final.
   
-* Une section « tests » où vous décrirez les tests manuels que vous avez
+### Une section « tests » [BAREME: 1]
+
+  Vous décrirez les tests manuels que vous avez
   réalisés. Vos tests automatiques (le code Java des tests et les commentaires
   associés) devraient se suffire à eux-mêmes, il n'est pas nécessaire de les
   re-documenter dans le rapport (sauf si vous avez fait des choses
   extraordinaires qui méritent une documentation externe).
-
-On vous demande d'appuyer votre rapport sur des références bibliographiques existantes, mais il ne s'agit en aucun cas de vous contenter de copier-coller. Il est rappelé ici que le [droit de courte citation](https://fr.wikipedia.org/wiki/Droit_de_courte_citation) impose entre autres de citer vos sources quand vous utilisez un extrait d'un texte existant (il est interdit, pas seulement dans le cadre d'un travail scolaire, de laisser entendre que vous êtes l'auteur d'un texte que vous n'avez pas écrit vous-même).
 
 ## Qualité du code
 
@@ -138,8 +151,8 @@ Le dépôt ne sera relevé qu’après la date de rendu.
 
 Votre dépôt sur la Forge devra contenir :
 
-- un répertoire `eliza-gpt/` (le répertoire doit impérativement avoir exactement ce nom)
-- un fichier maven (`eliza-gpt/pom.xml`) pour le build du projet
+- un répertoire `microblog/` (le répertoire doit impérativement avoir exactement ce nom)
+- un fichier maven (`microblog/pom.xml`) pour le build du projet
 - les sources (fichiers Java)
 - le rapport en PDF (6 pages maximum, format libre. La limitation de pages est indicative, si vous avez vraiment besoin de plus vous pouvez dépasser un peu, mais restez raisonnables et concis), dans un fichier qui doit impérativement s'appeler `rapport.pdf` à la racine du dépôt Git.
 
@@ -147,38 +160,40 @@ Vous pouvez laisser les autres fichiers et répertoires.
 
 ## Barème indicatif (le barème sera ramené à 20), à utiliser comme checklist pour vérifier que vous avez tout fait
 
+<!--
+git grep -h '\[BAREME: [^]]\]' | sed 's/^#*\s*//' | sed 's/^\(.*\)\[BAREME: \([^]]*\)\]\(.*\)$/| \2 | \1\3 |/'
+-->
+
 | Points | Critère |
 |--------|---------|
-| malus -3 si absent | Présence des bons fichiers (rapport.pdf, eliza-gpt/pom.xml, .gitlab-ci.yml) |
-| 1 | Le projet est compilable (mvn compile) |
-| 1 | Au moins une issue dans GitLab |
-| 1 | Au moins une merge-request fermée |
-| 1 | L'intégration continue est OK sur Gitlab |
-| 1 | Les tests passent (mvn test -Dcheckstyle.skip) |
-| 2 | Aucun warning checkstyle |
-| 1 | Fichier .gitignore (pas de "untracked files" après "mvn test") |
 | Malus si retard | Rendu avant la deadline |
 | Malus jusqu'à -5 | Malus éventuel pour non-respect des consignes (en plus de la note automatique) |
+| malus -3 si absent | Présence des bons fichiers (rapport.pdf, microblog/pom.xml, .gitlab-ci.yml) |
+| 1 | Le projet est compilable (mvn compile) |
 | 1 | Le programme se lance correctement (mvn exec:java) |
-| 1 | Qualité et structure globale du code, utilisation de Packages |
-| 2 | Interface (UI) propre y compris pour les extensions (pas de point si l'UI du squelette est rendue, note max si l'interface est belle et ergonomique) |
-| 1 | Extension : Un autre type de réponse prédéfinie (Ici, c'est moi qui pose les questions) |
-| 1 | Extension : Ajout de règles de conjugaisons de verbes du 3ième groupe (vouloir, pouvoir) |
-| 1 | Extension : Suppression d'un message d'ELIZA |
-| 2 | Extension : Ajout de deux autres réponses pré-définie (Au revoir + au choix) |
-| 1 | Extension : Stratégies de recherche (sous-chaîne, expression régulière) |
-| 1 | Extension : Une troisième stratégie de recherche (mot complet) |
-| 1 | Extension : Règles de conjugaison |
-| 1 | Extension : Modification de l'interface pour les messages (bouton pour supprimer) |
-| 3 | Autres extensions |
+| 1 | Fonctionnalité : Affichage des messages en bookmark en premier  |
+| 1 | Fonctionnalité : Stockage de la date de publication  |
+| 1 | Fichiers ignorés avec .gitignore  |
+| 1 | Au moins une issue fermée dans GitLab  |
+| 1 | Les tests passent (mvn test -Dcheckstyle.skip)  |
+| 2 | Absence d'erreur avec checkstyle  |
+| 1 | Au moins une merge-request fermée sur GitLab  |
+| 3 | Pattern Modèle-Vue-Contrôleur  |
+| 1 | Flexibilité du modèle MVC : deux vues correctement synchronisées  |
+| 1 | Principes GRASP bien respectés  |
+| 5 | Design-patterns (création, structure, SOLID, ...) : au moins 3 autres patterns que MVC ou GRASP  |
+| 1 | Fonctionnalité : bonus de score pour les messages récents  |
+| 1 | Fonctionnalité : autre règle de scoring des messages  |
+| 1 | Fonctionnalité : seuil de score pour afficher les messages  |
+| 2 | Fonctionnalité : choix de la stratégie de calcul de score et d'affichage  |
+| 1 | Fonctionnalité : une troisième stratégie de scoring et d'affichage  |
+| 2 | Fonctionnalité : configuration initiale (utilisateurs et messages prédéfinis)  |
+| 1 | Fonctionnalité : Modification de l'interface pour les messages (bouton pour supprimer)  |
+| 3 | Autres extensions  |
 | 3 | Tests automatiques |
-| 1 | Principes GRASP bien appliqués |
-| 1 | Design pattern MVC : la deuxième vue fonctionne, les listes se mettent à jour automatiquement |
-| 3 | Design pattern MVC : qualité et organisation du code |
-| 5 | Design-patterns (création, structure, SOLID, ...) : au moins 3 autres patterns que MVC ou GRASP |
-| 6 | Rapport : partie « design patterns » |
-| 4 | Rapport : partie « éthique » |
-| 1 | Rapport : partie « tests » |
+| 6 | Rapport : Une section « design patterns »  |
+| 4 | Rapport : Une section « éthique »  |
+| 1 | Rapport : Une section « tests »  |
 | 3 | Rapport : qualité globale des explications |
 | Malus jusqu'à 5 | Rapport : malus éventuel pour mauvaise forme et orthographe (0 si la forme est OK, pas de note positive) |
 | Bonus jusqu'à +3 | Bonus éventuel pour choses en plus (pas de note négative) |

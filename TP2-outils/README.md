@@ -398,13 +398,7 @@ votre installation si besoin) :
 Sous Linux avec le package `openjfx` (nom du paquet pour la distribution Ubuntu, à adapter pour les autres distributions) installé :
 
 ```sh
-java --module-path /usr/share/openjfx/lib --add-modules=javafx.controls -jar target/mes-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-```
-
-Si vous utilisez l'installation manuelle au Nautibus, alors la commande sera :
-
-```sh
-java --module-path /home/tpetu/m1if01/javafx-sdk-11.0.2/lib --add-modules=javafx.controls -jar target/mes-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+java --module-path /usr/share/openjfx/lib --add-modules=javafx.controls -jar target/y-microblogging-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 Ce fichier `.jar` est donc indépendant de Maven, en utilisation réelle on
