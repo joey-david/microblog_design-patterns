@@ -1,0 +1,12 @@
+{
+        "editor.indentSize": 4,
+        "editor.tabSize": 8,
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.configuration.runtimes": [
+    {
+        "name": "JavaSE-18",
+        "path": "/usr/lib/jvm/java-18-openjdk-amd64/",
+        "default":  true
+    }
+]
+}

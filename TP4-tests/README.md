@@ -1,4 +1,5 @@
-﻿# TP4 - tests
+﻿<!-- LTeX: language=fr -->
+# TP4 - tests
 
 ## Objectif
 
@@ -126,7 +127,7 @@ Vérifiez que les tests sont bien lancés, et regardez ce qu'il se passe quand d
 
 En pratique, lancer les tests depuis l'IDE est intéressant pour le
 confort au quotidien (bientôt, vous lancerez les tests aussi souvent
-que vous compilez), et lancer les test en ligne de commande via `mvn
+que vous compilez), et lancer les tests en ligne de commande via `mvn
 test` est indispensable pour l'intégration continue (où vos tests
 tourneront sur un serveur sans utilisateur humain ni interface
 graphique).
@@ -312,10 +313,11 @@ La bibliothèque Hamcrest permet d'écrire des assertions plus proches de la lan
 Commencez par replacer la dépendance sur `org.junit.platform` par `org.hamcrest` dans le `pom.xml` :
 
 ```xml
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
         <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
             <scope>test</scope>
         </dependency>
 ```
@@ -329,7 +331,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
         assertThat(invert, is("DCBA"));
 ```
 
-L'intérêt est plus évident quand on teste des propriétés plus complexes, comme par exemple sur des conteneurs (vous devrez probablement les utiliser dans votre projet) :
+L'intérêt est plus évident quand on teste des propriétés plus complexes, par exemple sur des conteneurs (vous devrez probablement les utiliser dans votre projet) :
 
 ```java
 
@@ -392,7 +394,7 @@ non-triviales à écrire, mais c'est en général plus facile de
 concevoir une API en écrivant des exemples d'utilisation (donc des
 tests) qu'en écrivant l'API directement.
 
-A ce stade, votre code ne compile pas car la fonction n'existe pas.
+À ce stade, votre code ne compile pas, car la fonction n'existe pas.
 Votre IDE a probablement souligné `removePattern`.
 
 #### Squelette de code
@@ -449,7 +451,7 @@ tests régulièrement pour vérifier que vous n'avez rien cassé.
 
 #### Commit :-)
 
-Voila, vous avez un code irréprochable et bien testé. Un `git commit`
+Voilà, vous avez un code irréprochable et bien testé. Un `git commit`
 et sans doute un `git push` s'imposent.
 
 #### goto "Écriture du test"
@@ -474,8 +476,10 @@ tests :
   vos tests, et donc quelles parties du programme n'ont pas été testées. Ces
   outils peuvent s'intégrer à Maven et à votre IDE. Le `pom.xml` fourni génère
   automatiquement un rapport de couverture JaCoCo dans
-  `target/site/jacoco/index.html`, vous pouvez l'utiliser pour repérer les
-  portions non-testées de votre base de tests.
+  `target/site/jacoco/index.html` lors de l'exécution de `mvn test` (mais
+  étrangement le rapport n'est pas inclu dans le site si vous n'avez pas lancé
+  explicitement `mvn test` avant `mvn site`), vous pouvez l'utiliser pour
+  repérer les portions non-testées de votre base de code.
   
 - Les outils de mock comme [Mockito](https://site.mockito.org/), qui
   vous permettent de fabriquer des « mocks », c'est à dire des faux
@@ -484,7 +488,7 @@ tests :
   programme MVC en isolation en faisant des « mocks » de la vue et du
   modèle.
   
-## Tests unitaires du projet
+## Tests unitaires (automatiques) du projet [BAREME: 3]
 
 Vous avez probablement beaucoup modifié le projet de base lors du TP
 de refactoring. Si vous aviez appris le TDD plus tôt, vous auriez
@@ -519,12 +523,11 @@ vous lancer :
 
 Que doivent faire les tests à minima :
 
-- Tester qu'ELIZA fournit des réponses pertinentes à certaines phrases.
+- Tester que les différentes stratégies de calcul de score fonctionnent.
 
-- Tester que les différentes stratégies recherche fonctionnent.
+- Tester que le tri et filtrage des messages fonctionne.
 
-- Tester que les actions du contrôleur (ajouter/supprimer une
-  compétence recherchée par exemple) ont l'effet souhaité.
+- Tester que les actions du contrôleur ont l'effet souhaité.
 
 - ...
 

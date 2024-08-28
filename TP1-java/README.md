@@ -6,17 +6,23 @@
 Il vous est demandé de mettre en place quelques classes pour vous remettre en
 tête les grands principes de la programmation orientée objet : messages et
 collaboration entre objets, attributs et méthodes, constructeurs, héritage, etc.
-Pour cela, vous manipulerez un chatbot, inspiré de ChatGPT (mais en réalité ses
-capacités sont plus proches de celle du programme
-[ELIZA](https://en.wikipedia.org/wiki/ELIZA) développé dans les années 60).
+Pour cela, vous manipulerez un système de microblogging, inspiré de l'ex-Twitter
+ou Mastodon, que nous appellerons Y.
 
 Votre travail servira de base aux TPs suivants qui feront l'objet d'une note
-globale (voir le fichier [projet-note.md](projet-note.md) pour les consignes sur
+globale (voir le fichier [projet-note.md](../projet-note.md) pour les consignes sur
 l'ensemble du projet). Le travail se fait en binômes (malus sur la note pour les
 étudiants travaillant seul). Si vous ne trouvez pas de binôme, postez un message
 sur l'issue #1 du dépôt enseignant. Pour des raisons logistiques, évitez les
 binômes entre un alternant et un étudiant. Il n'y a pas d'autre contrainte pour
 cette UE, mais d'autres UE ont des règles différentes.
+
+L'énonce du projet est réparti sur plusieurs fichiers correspondant à plusieurs
+séances. Certaines manipulations sont là pour vous guider, d'autres sont
+demandées explicitement et prises en compte dans le barème de notation. Pour
+vous aider, les tâches notées sont marquées `[BAREME: N]` où `N` est le nombre
+de points correspondant. Un récapitulatif est disponible dans
+[projet-note.md](../projet-note.md).
 
 Ce TP devrait vous prendre environ une séance.
 
@@ -33,8 +39,10 @@ général plus agréables à utiliser via l'intégration IDE.
 
 <!-- TODO: est-ce encore vrai pour Windows ? -->
 Le TP n'a été testé que sous Linux. Sur les machines de l'université le TP
-fonctionne sous Linux, mais les IDE Java n'ont pas l'air installés sous Windows.
-Sur vos machines personnelles, vous pouvez utiliser l'OS de votre choix.
+fonctionne sous Linux. L'installation des outils Java sous Windows est de
+qualité variable selon les années et non-testée par le responsable d'UE (à
+utiliser à vos risques et périls, donc). Sur vos machines personnelles, vous
+pouvez utiliser l'OS de votre choix.
 
 ### Sur les machines du Nautibus sous Linux
 
@@ -62,20 +70,12 @@ obtenez bien :
 
 ### Sur vos machines personnelles
 
-Sur vos machines personnelles, en cas de problème sous Linux, il peut
-être nécessaire d'installer JavaFX explicitement (`sudo apt install
-openjfx` sous Ubuntu, ou bien téléchargement depuis
-[openjfx.io](https://openjfx.io)). Le TP a été testé avec Java 11, il
-ne marchera probablement pas sans adaptation avec des versions plus récentes
-(il faudra peut-être version de JavaFX dans `pom.xml`).
-
-Si vous avez installé JavaFX via votre distribution et que Java ne
-trouve pas les classes JavaFX, ajoutez explicitement les fichiers JAR
-concernés à votre classpath, avec quelque chose comme :
-
-    CLASSPATH="$CLASSPATH":/usr/share/java/openjfx/jre/lib/ext/jfxrt.jar
-    CLASSPATH="$CLASSPATH":/usr/share/java/openjfx/jre/lib/jfxswt.jar
-    export CLASSPATH
+Sur vos machines personnelles, en cas de problème sous Linux, il peut être
+nécessaire d'installer JavaFX explicitement (`sudo apt install openjfx` sous
+Ubuntu, ou bien téléchargement depuis [openjfx.io](https://openjfx.io)). Le TP a
+été testé avec Java 11, il marchera probablement sans adaptation avec des
+versions plus récentes (il faudra peut-être spécifier la version de Java et
+JavaFX dans `pom.xml`).
 
 Sur machines personnelles, vérifiez que vous avez bien `git` et `mvn`
 installés :
@@ -158,7 +158,7 @@ automatiquement les mises à jour. Nous verrons au TP2 comment récupérer facil
 
 ## Premier contact avec le projet
 
-On vous fournit un squelette [eliza-gpt/](../eliza-gpt/).
+On vous fournit un squelette [microblog/](../microblog/).
 
 Le projet utilise l'outil Maven pour la compilation. Nous en parlerons
 plus en détails en CM, pour l'instant vous devez seulement savoir :
@@ -174,26 +174,12 @@ plus en détails en CM, pour l'instant vous devez seulement savoir :
 ### Premier contact avec l'application
 
 Lancez l'interface graphique (`mvn exec:java`). Vous devriez voir s'afficher une
-fenêtre dans laquelle vous pouvez dialoguer avec une IA minimaliste :
+fenêtre avec quelques messages prédéfinis :
 
-![Interface de ELIZA-GPT](img/eliza-gpt.png)
+![Interface de Y](img/microblog.png)
 
 Vous pouvez entrer du texte dans le champ en bas de la fenêtre, valider avec la
-touche <kbd>Entrée</kbd> ou le bouton « search ». Vous pouvez effacer vos
-messages en cliquant sur le message à supprimer.
-
-Un champ recherche est également disponible en haut de l'écran pour filtrer les
-messages contenant une chaîne de caractères. Dans la version actuelle, les
-messages ne contenant pas la chaîne sont non-seulement cachés, mais
-définitivement oubliés, donc on ne peut pas annuler une recherche (le bouton «
-Undo search » lance une exception). Ce sera à vous d'améliorer cela (mais
-l'implémentation est tellement affreuse qu'il faudra avant tout coder ça
-proprement et l'annulation sera triviale à coder dans une base de code propre).
-
-Les chatbots de ce genre sont apparus très tôt dans l'histoire de
-l'informatique. Le nom de notre projet est tiré du célèbre programme
-[ELIZA](https://en.wikipedia.org/wiki/ELIZA) écrit entre 1964 et 1966, et plus
-récemment de [ChatGPT](https://openai.com/blog/chatgpt).
+<kbd>Control</kbd>+<kbd>Entrée</kbd> ou le bouton « Publish ».
 
 ### Le code source du squelette fourni
 
@@ -207,7 +193,7 @@ Le squelette contient ces classes :
     rendrez.
 
 -   Un embryon de package `model.*` : pour gérer la logique de l'application,
-    ici le traitement de langue naturelle.
+    ici le classement des messages.
 
 -   `App` : le point d'entrée de l'application, qui gère la création de
     l'application.
@@ -232,7 +218,7 @@ projet automatiquement depuis le `pom.xml` :
 
 - VS Code : installer le plugin [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) qui apporte le support du langage Java, de Maven, ... Faire menu File → Open Folder (<kbd>Controle</kbd>+<kbd>k</kbd> <kbd>Controle</kbd>+<kbd>o</kbd>) puis choisir le répertoire. Une section « Maven Projects » doit s'ajouter à la barre latérale de gauche, et vous pourrez sélectionner les actions à effectuer (`exec:java` dans la section `exec` pour lancer l'application). Si vous n'avez pas la complétion intelligente et la navigation dans le code, vous devrez sans doute positionner votre variable de configuration `java.home` : faire avec <kbd>Control</kbd> + <kbd>,</kbd>, puis chercher `java.home` et « edit in settings.json ». Au Nautibus, la configuration est :
 <pre>
-"java.home" : "/home/tpetu/m1if01/jdk-11.0.4/"
+"java.home" : "/usr/lib/jvm/java-21-openjdk-21.0.4.0.7-2.fc40.x86_64"
 </pre>
 <!-- TODO ça c'est la version installé à la main -->
 
@@ -253,65 +239,47 @@ Dans un premier temps, conservez l'architecture (répartition en
 classes et packages) fournie. Nous verrons bientôt comment réorganiser
 le tout.
 
-### Un autre type de réponse prédéfinie (Ici, c'est moi qui pose les questions)
+### Fonctionnalité : Affichage des messages en bookmark en premier [BAREME: 1]
 
-Contrairement aux modèles de langages modernes, notre programme n'est pas
-entraîné sur une base de textes, mais toutes les réponses possibles sont codées
-en dur dans l'outil. Par exemple, quand vous commencez une phrase par « Je pense
-que ... » l'outil peut vous répondre « Pourquoi pensez-vous que ... ».
+Le squelette de code fourni affiche les messages triés par ordre de pertinence.
+On a considéré qu'un message était pertinent quand il contenait des mots communs
+avec les messages bookmarkés (autrement dit, le système recommande des contenus
+similaires à ceux qui ont plu a l'utilisateur). Le calcul de similitude donne un
+score qui est affiché en grisé sur chaque message.
 
-Ajoutez une règle qui détecte les questions (c'est-à-dire les phrases terminant
-par un point d'interrogation), et faites en sorte que le programme réponde
-aléatoirement « Je vous renvoie la question. » ou « Ici, c'est moi qui pose les
-questions. ».
+Les messages bookmarkés ont naturellement un bon score, mais n'apparaissent pas
+toujours en sommet de liste. Modifiez la fonction de tri pour que les messages
+bookmarkés apparaissent toujours en haut de liste. Si vous ne trouvez pas où
+modifier le code, vous pouvez utiliser `git grep`, par exemple
+`git grep -n compare` pour rechercher les occurrences du mot `compare` dans le code.
 
-Si vous ne trouvez pas les endroits où faire vos modifications dans la base de
-code, une astuce : cherchez les chaînes de caractères qui vous intéressent, par
-exemple `git grep -n "Pourquoi pensez-vous que"` vous indiquera comment est
-faite la réponse automatique aux phrases commençant par `Je`.
+### Stockage de la date de publication [BAREME: 1]
 
-Le code existant utilise les expressions régulières pour reconnaître des motifs
-dans une phrase. Si vous n'êtes pas familier avec les expressions régulières de
-Java, vous pouvez jeter un œil à [ce
-tutorial](https://www.w3schools.com/java/java_regex.asp).
+Pour l'instant, les messages sont des objets très simples qui ne stockent que
+leur contenu (une chaîne de caractères), cf. la classe `Message`. Faites en
+sorte que la date de publication des nouveaux messages enregistre la date de
+création ([new
+Date()](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html#Date--)
+permet d'obtenir la date courante), et que celle-ci soit affichée en dessous du
+message
+([SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html)
+peut vous aider). Il devrait être assez facile de l'ajouter à la classe
+`Message`, mais dans l'état actuel du code, il n'est pas évident de préserver
+cette donnée quand la liste des messages est triée (elle l'est automatiquement
+après chaque publication). Vous pouvez tester en mettant en commentaire l'appel
+à la fonction `sortMessages()` temporairement.
 
-### Ajout de règles de conjugaisons de verbes du 3ième groupe (vouloir, pouvoir)
+En effet, en l'état les données sont stockées directement dans les classes
+JavaFX de l'interface graphique. Le tri des messages récupère ces données telles
+qu'elles sont affichées (via `JfxView.getMessages()`) avant de faire le tri, et
+je ré-injecter ces données dans l'interface (`JfxView.setMessages()`).
 
-Pour transformer les phrases comme « Je pense que ... » en « Qu'est-ce qui vous
-fait dire que vous pensez ... », notre programme doit savoir conjuguer un verbe,
-pour passer de « pense » à « pensez ». Pour les verbes du 3ième groupe, il n'y a
-malheureusement pas de règle générale, donc notre programme connaît un certain
-nombre de verbes (par exemple « suis » -> « êtes », « vais » -> « allez »).
-Ajoutez les correspondances « peux » -> « pouvez » et « dois » -> « devez ».
-
-On peut remarquer au passage que :
-
-* Ajouter un verbe ne prend qu'une ligne de code, ce qui est une bonne chose.
-
-* La logique permettant de passer de la 1ère personne à la 2ème est séparée du
-  code de l'interface graphique, ce qui est également une bonne chose.
-
-* La liste des verbes est codée en dur dans le code Java. Impossible d'ajouter
-  des verbes sans modifier le code (par exemple, on aurait pu souhaiter qu'un
-  plugin puisse ajouter des verbes). On dit que ce code n'est pas extensible.
-
-### Suppression d'un message d'ELIZA
-
-Cliquer sur un de vos messages permet de le supprimer, mais l'auteur a
-« oublié » de faire la même chose pour les messages d'ELIZA. Faites en sorte
-qu'un clic sur un message d'ELIZA le supprime également. Profitez-en pour pester
-contre l'auteur de ce squelette qui n'a pas correctement factorisé le code : il
-y a des fonctions séparées très similaires pour poster les messages d'ELIZA et
-les vôtres. Ce code viole le principe simple « DRY » (Don't Repeat Yourself).
-Notez dans un coin de votre tête qu'il faudra résoudre tout cela dans la version
-finale bien sûr.
-
-### Stratégie de recherche
-
-Le champ recherche utilise pour l'instant une simple recherche de sous-chaîne.
-Proposez une autre stratégie de recherche où l'utilisateur puisse faire une
-recherche par expression régulière (par exemple entrer « Qu'est.*dire » dans le
-champ de recherche trouvera le message « Qu'est-ce qui vous fait dire cela ? »).
+On pourrait s'amuser à modifier `JfxView.getMessages()` et
+`JfxView.setMessages()` pour préserver la date, mais profitons-en plutôt pour
+remarquer à quel point le code est horrible (vous implémenterez une gestion plus
+raisonnable des dates après refactoring). Le code de `JfxView.getMessages()` en
+particulier est une abomination qui devra absolument disparaître avant votre
+rendu final.
 
 ### Problèmes avec la base de code fournie
 
@@ -321,10 +289,11 @@ questions (rhétoriques ?) suivantes :
 - Est-ce facile de modifier l'interface graphique sans changer la
   fonctionnalité ?
   
-- À l'inverse, des fonctionnalités comme les réponses pré-définies devraient
-  être indépendantes, de l'interface graphique utilisée. Quand vous avez ajouté
-  une réponse « Ici, c'est moi qui pose les questions », l'avez-vous fait sans
-  modifier la vue (le package `view`) ?
+- À l'inverse, des fonctionnalités comme le tri des messages devraient être
+  indépendantes de l'interface graphique utilisée. Un début de séparation a été
+  fait via la classe `MessageData`, mais l'appel à lo fonction `sorted` qui fait
+  le travail effectif de tri reste dans une méthode de `JfxView` qui ne devrait
+  contenir que de l'affichage.
   
 - Si vous deviez avoir plusieurs interfaces possibles (par exemple un
   mode « expert » et un mode « débutant » avec moins de boutons, ou

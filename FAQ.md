@@ -1,3 +1,4 @@
+<!-- LTeX: language=fr -->
 # Questions Fréquentes sur le cours
 
 ## Je n'arrive pas à avoir la bonne version de Java, mon .bashrc n'est pas lu
@@ -9,7 +10,7 @@ Selon comment le shell est lancé, c'est soit le `~/.bashrc` soit le `~/.bash_pr
 . ~/.bashrc
 ```
 
-Si vous voulez plus d'explications, cherchez dans vos souvenirs ou vos cours de programmation concurrente si vous étiez en L3 à Lyon 1 !
+Si vous voulez plus d'explications, cherchez dans vos souvenirs ou vos cours de programmation concurrente et administration système si vous étiez en L3 à Lyon 1 !
 
 # Maven ne marche pas avec Java 17
 
@@ -25,6 +26,17 @@ $ mvn compile
 
 La solution est d'installer la dernière version de Maven, cf. https://keepgrowing.in/java/how-to-fix-error-executing-maven-issue-after-updating-to-java-17/
 
+# JavaFX ne fonctionne pas sur ma machine personnelle
+
+
+Si vous avez installé JavaFX via votre distribution et que Java ne
+trouve pas les classes JavaFX, ajoutez explicitement les fichiers JAR
+concernés à votre classpath, avec quelque chose comme :
+
+    CLASSPATH="$CLASSPATH":/usr/share/java/openjfx/jre/lib/ext/jfxrt.jar
+    CLASSPATH="$CLASSPATH":/usr/share/java/openjfx/jre/lib/jfxswt.jar
+    export CLASSPATH
+
 # VSCode n'a pas les fonctionnalités intelligentes pour Java (complétion, navigation, ...)
 
 Il faut :
@@ -33,9 +45,9 @@ Il faut :
 
 * Positionner correctement son `JAVA_HOME`, que l'on peut faire avec <kbd>Control</kbd> + <kbd>,</kbd>, puis chercher `java.home` et « edit in settings.json ». Au Nautibus, la configuration est :
 <pre>
-"java.home" : "/home/tpetu/m1if01/jdk-11.0.4/"
+"java.home" : "/usr/lib/jvm/java-21-openjdk-21.0.4.0.7-2.fc40.x86_64"
 </pre>
-
+<!-- TODO: vérifier chaque année. java -XshowSettings:properties -version |& grep java.home -->
 
 ### Problèmes fréquents et solutions avec Eclipse
 

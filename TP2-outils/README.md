@@ -24,10 +24,8 @@ les bases de `mvn` et `git` bien maîtrisées, vous aurez peut-être envie
 d'utiliser les outils graphiques et les raccourcis clavier intégrés à votre
 éditeur de texte ou IDE.
 
-<!-- TODO: est-ce vrai ? -->
-Sur les machines de Lyon 1, Maven n'est pas installé sous Windows.
-Vous pouvez tout de même travailler sous Windows, mais vous devrez
-[installer Maven sur votre
+Si Maven n'est pas installé (c'est parfois le cas au Nautibus sous Windows),
+vous pouvez [installer Maven sur votre
 compte](https://www.mkyong.com/maven/how-to-install-maven-in-windows/).
 Vous pouvez aussi travailler sous Linux pour les manipulations avec
 `mvn`.
@@ -35,7 +33,7 @@ Vous pouvez aussi travailler sous Linux pour les manipulations avec
 Pour les TPs suivants, il sera quasi-indispensable d'utiliser un IDE (VSCode,
 IntelliJ, Eclipse, ...).
 
-## Git et la GitLab
+## Git et la forge GitLab
 
 ### Configuration de base de Git
 
@@ -103,7 +101,7 @@ machine ne sont pas pertinents sur une autre). Vous allez donc configurer ce
 projet de manière à les ignorer. Pour cela vous allez utiliser en plus l'outil
 de gestion de tickets.
 
-#### Suppression éventuelle des fichiers qui n'auraient jamais du être là
+#### Suppression éventuelle des fichiers qui n'auraient jamais dû être là
 
 Les fichiers générés par Maven se trouvent tous dans le répertoire `target/`.
 Ils ne devraient pas être trackés par Git (personne n'a envie de faire des merge
@@ -129,14 +127,15 @@ coupable. C'est embêtant, car ces fichiers prennent de l'espace disque pour rie
 dans votre historique, et les supprimer maintenant ne vous rendra pas cet espace
 disque : ce qu'il aurait fallu faire, c'est travailler proprement dès le début
 (commencez par prendre l'habitude de faire un `git status` avant chaque
-commit) ! Mais réparons ce qui est encore réparable :
+commit, et répétez 7 fois « Je ne ferais plus de `git add .` dans un dépôt
+Git ») ! Mais réparons ce qui est encore réparable :
 
 ```sh
 git rm -r target/
 git commit -m "Suppression du répertoire target/, qui n'aurait jamais du être ajouté"
 ```
 
-#### Fichiers ignorés
+#### Fichiers ignorés avec .gitignore [BAREME: 1]
 
 Depuis l'interface web de la forge, créez une nouvelle demande
 (*issue*) intitulée : “ignorer le répertoire target et les fichiers des
@@ -151,7 +150,7 @@ Accédez à la liste des demandes de votre projet puis modifiez la demande
 précédente en affectant un des membres du projet à cette tâche. Notez bien
 le numéro `#xxxx` de la demande (sans doute `#1`).
 
-Créez un fichier `.gitignore` à la base du répertoire `eliza-gpt/` et
+Créez un fichier `.gitignore` à la base du répertoire `microblog/` et
 ajoutez-y les lignes suivantes :
 
 ```gitignore
@@ -191,6 +190,9 @@ fichier `.gitignore`. Ajoutez ce fichier dans les fichiers versionnés :
 git add .gitignore
 ```
 
+Dans la version finale de votre projet, `git status` ne doit afficher aucun
+fichier `Untracked files` après un `mvn test`.
+
 puis valider en indiquant `fixes \#1` dans le message de commit (en remplaçant
 `1` par le vrai numéro de l'issue si besoin) :
 
@@ -209,9 +211,10 @@ commit. Vous pouvez vérifier que le `#1` est un lien vers votre
 demande, et que la présence de `fixes #1` dans un message de commit
 a automatiquement fermé le ticket correspondant.
 
-Votre [projet](../projet-note.md) devra impérativement ignorer tous les fichiers
-générés (qui ne doivent bien sûr pas être trackés), et avoir au moins une «
-issue » GitLab (fermée) (vous perdrez des points sur la note sinon).
+#### Au moins une issue fermée dans GitLab [BAREME: 1]
+
+Votre [projet](../projet-note.md) devra impérativement avoir au moins une «
+issue » GitLab (fermée).
 
 ### Un gitignore local par utilisateur
 
@@ -309,7 +312,7 @@ git push  # Les envoyer vers votre fork privé
 ```
 
 L'option `--no-rebase` est pertinente ici pour éviter de rebaser l'ensemble de
-votre historique par dessus l'historique du dépôt enseignant.
+votre historique par-dessus l'historique du dépôt enseignant.
 
 En résumé :
 
@@ -319,6 +322,12 @@ git pull            # récupérer les changements depuis votre fork (de votre bi
 git push            # envoyer des changements à votre fork
 git pull --no-rebase moy main # récupérer les mises à jour du dépôt enseignant
 ```
+
+Il y a aussi un bouton `Update fork` dans l'interface web de Gitlab (sur la page
+de votre fork) qui permet de récupérer les changements du dépôt enseignant vers
+votre fork, mais l'auteur de ce document préfère savoir exactement ce qu'il se
+passe (rebase ou merge, par exemple), et pouvoir corriger les éventuels conflits
+sur la machine de développement et non dans l'interface web.
 
 ## Maven
 
@@ -476,7 +485,7 @@ un peu plus que cela. Ouvrez le fichier
 
 - Configurer le proxy HTTP pour Maven (via le script setup-mvn-proxy.sh). Ce
   point est spécifique à notre installation GitLab, on n'a en général pas besoin
-  de cela mais c'est nécessaire pour nous pour que Maven marche.
+  de cela, mais c'est nécessaire pour nous pour que Maven marche.
   
 - Mettre en cache le répertoire `.m2/repository`, pour éviter de
   re-télécharger toutes les dépendances à chaque pipeline.
@@ -486,7 +495,7 @@ Ouvrez ce fichier dans votre éditeur de texte. La dernière ligne
 Remplacez-la par :
 
 ```yaml
-    - cd eliza-gpt/ && mvn test --batch-mode
+    - cd microblog/ && mvn test --batch-mode
 ```
 
 (Attention, l'indentation compte : cette ligne doit être indentée en
@@ -504,9 +513,14 @@ indicateur « commit: running » :
 Au bout d'un certain temps, l'indicateur passera en rouge : le projet
 que nous vous fournissons ne passe volontairement pas les tests !
 
-Pour avoir une notification par email à chaque échec de pipeline,
-choisissez dans la barre latérale : « Settings → Integrations », puis
-« Pipelines emails ».
+Si vous avez activé les notifications pour votre dépôt, vous devriez avoir une
+notification par email à chaque échec de pipeline que vous causez (puis une
+notification `Fixed pipeline` pour le premier succès après un échec). Voir [la
+documentation des notifications
+GitLab](https://forge.univ-lyon1.fr/help/user/profile/notifications#notification-events-on-issues-merge-requests-and-epics)
+pour les détails. On peut aussi envoyer des mails à d'autres utilisateurs que
+l'auteur du pipeline, choisissez dans la barre latérale : « Settings →
+Integrations », puis « Pipelines status emails ».
 
 Vous pouvez examiner la sortie de la commande `mvn test` lancée par
 GitLab en choisissant dans la barre latérale de l'interface web : « CI / CD → Jobs » puis
@@ -516,9 +530,10 @@ sortie de Maven.
 
 ### Correction des défauts
 
-Pour corriger les problèmes, le mieux est de travailler en local. L'échec sur la
-forge se produit à l'exécution de la commande `mvn test`, donc vous pouvez
-reproduire le problème en faisant `mvn test` de votre côté.
+Pour corriger les problèmes, le mieux est de travailler en local (c'est-à-dire
+sur votre machine, par opposition à l'interface web). L'échec sur la forge se
+produit à l'exécution de la commande `mvn test`, donc vous pouvez reproduire le
+problème en faisant `mvn test` de votre côté.
 
 Il y a deux choses à corriger :
 
@@ -537,10 +552,14 @@ Il y a deux choses à corriger :
   introduit d'autres violations de style en faisant le TP jusqu'ici, il faudra
   les corriger rapidement (mais lisez ce qui suit sur les IDE, cela peut vous
   faire gagner beaucoup de temps !)
-  
-Une fois ces deux corrections faites, vérifiez que `mvn test` ne lève
-plus d'erreur, faites un commit et un push, et vérifiez que
-l'intégration continue de la forge valide ce commit.
+
+### Les tests passent (mvn test -Dcheckstyle.skip) [BAREME: 1]
+
+Une fois ces deux corrections faites, vérifiez que `mvn test` ne lève plus
+d'erreur, faites un commit et un push, et vérifiez que l'intégration continue de
+la forge valide ce commit. Bien sûr, la version finale de votre projet ne devra
+avoir aucun échec dans la base de tests, mais maintenant que vous avez
+l'intégration continue en place cela ne posera aucun problème.
 
 ## IDE et plugins, un peu de confort ...
 
@@ -593,7 +612,7 @@ Le plugin `exec-maven-plugin` pour lancer l'application :
         </execution>
     </executions>
     <configuration>
-        <mainClass>fr.univ_lyon1.info.m1.elizagpt.App</mainClass>
+        <mainClass>fr.univ_lyon1.info.m1.microblog.App</mainClass>
     </configuration>
   </plugin>
 ```
@@ -608,7 +627,7 @@ Les tests utilisent l'API JUnit (pour le lancement des tests) et Hamcrest (pour 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0-M1</version>
+            <version>5.10.3</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
@@ -673,6 +692,8 @@ style Oracle (ex-SUN), mais avec un certain nombre de contraintes relâchées
 Autrement dit, si vous trouvez le style trop strict, dites-vous que le style par
 défaut de checkstyle l'est beaucoup plus.
 
+### Absence d'erreur avec checkstyle [BAREME: 2]
+
 Votre [projet](../projet-note.md) devra impérativement n'avoir aucun warning avec checkstyle. Prenez l'habitude d'éliminer ces warnings au fur et à mesure (via votre IDE et/ou `mvn test`, et en dernier recours l'intégration continue qui vous dira si vous avez fait des bétises) : c'est très pénible de devoir tout corriger après coup !
   
 ## Et les merge-requests (alias pull-requests sur GitHub) ?
@@ -705,6 +726,8 @@ avec les bases, nous vous demandons au moins de les
 expérimenter et pourquoi pas à lire la [documentation de GitLab sur
 les
 merge-requests](https://docs.gitlab.com/ce/user/project/merge_requests/).
+
+### Au moins une merge-request fermée sur GitLab [BAREME: 1]
 
 Votre [projet](../projet-note.md) devra impérativement avoir au moins une
 pull-request intégrée dans la branche principale (« mergée ») sur GitLab.
