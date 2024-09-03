@@ -2,7 +2,7 @@
 <!-- dates :
 grep '^## .. ' README.md | sed 's/[^(]*(//; s/,.*//' | sed 's@\(.*\)/\(.*\)/\(.*\)@\2/\1/\3@' | date -f -
 -->
-# Gestion de Projet et Génie Logiciel, M1, département informatique, Lyon 1, 2023-2024
+# Gestion de Projet et Génie Logiciel, M1, département informatique, Lyon 1, 2024-2025
 
 ## Dates importantes
 
@@ -181,8 +181,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Introduction à l'agilité" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc19hggacu/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e59e5038qrz03jom0i42z6ey/thumb_link.png" alt="Introduction à l'agilité"/></a>
 
-* Transparents : [08-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-slides.pdf)
-  (version imprimable : [08-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-handout.pdf))
+* Transparents : [07-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
+  (version imprimable : [07-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
 
 ## TP 5 (29/10/2024, 15h45): Design patterns & refactoring, suite
 
@@ -201,8 +201,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Conclusion sur l'agilité" href="https://myvideo.univ-lyon1.fr/permalink/v1266483214d42el9dn3/iframe/#start=2"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f64407b3aqquizvskjxrimpz6n/thumb_link.png" alt="Conclusion sur l'agilité"/></a>
 
-* Transparents : [08-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-slides.pdf)
-  (version imprimable : [08-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/08-agilite-handout.pdf))
+* Transparents : [07-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
+  (version imprimable : [07-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
 
 ### Agilité et passage à l'échelle : la méthode Spotify (transparents de Levent Acar)
 
@@ -227,8 +227,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Éthique et numérique" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc91hpkb0g/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e878599ekgr4ire6ac5wv8q0/thumb_link.png" alt="Éthique et numérique"/></a>
 
-* Transparents : [10-ethics-slides.pdf](http://matthieu-moy.fr/cours/mif01/10-ethics-slides.pdf)
-  (version imprimable : [10-ethics-handout.pdf](http://matthieu-moy.fr/cours/mif01/10-ethics-handout.pdf))
+* Transparents : [07-ethics-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-ethics-slides.pdf)
+  (version imprimable : [07-ethics-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-ethics-handout.pdf))
 
 ## TP 7 (Vendredi 29/11/2024, 15h45) : Tests (suite)
 
