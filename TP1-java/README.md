@@ -259,7 +259,7 @@ modifier le code, vous pouvez utiliser `git grep`, par exemple
 
 Pour l'instant, les messages sont des objets très simples qui ne stockent que
 leur contenu (une chaîne de caractères), cf. la classe `Message`. Faites en
-sorte que la date de publication des nouveaux messages enregistre la date de
+sorte que la publication des nouveaux messages enregistre la date de
 création ([new
 Date()](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html#Date--)
 permet d'obtenir la date courante), et que celle-ci soit affichée en dessous du
