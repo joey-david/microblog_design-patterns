@@ -92,7 +92,7 @@ public class JfxView {
             VBox msgBox = createMessageWidget(m, new MessageData());
             userMsg.getChildren().add(msgBox);
         }
-        sortMessages();
+        //sortMessages();
     }
 
     void bookmarkMessage(final Message m, final User user) {
@@ -115,7 +115,7 @@ public class JfxView {
                 bookBtn.setText("⭐");
             }
         }
-        sortMessages();
+        //sortMessages();
     }
     /**
      * Get a clean list of messages and the associated metadata from the GUI.
@@ -202,13 +202,17 @@ public class JfxView {
             } else {
                 bookButton.setText("Click to bookmark");
             }
-            sortMessages();
+            //sortMessages();
         });
         msgBox.getChildren().add(bookButton);
 
 
         final Label label = new Label(m.getContent());
         msgBox.getChildren().add(label);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Label dateLabel = new Label(dateFormat.format(m.getPublicationDate()));
+        msgBox.getChildren().add(dateLabel);
 
 
         final Label score = new Label("Score: " + d.getScore());

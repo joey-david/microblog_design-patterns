@@ -74,6 +74,8 @@ public class MessageData {
     public int compare(final MessageData rightData) {
         int scoreLeft = getScore();
         int scoreRight = rightData.getScore();
+        if (this.isBookmarked()) return 1;
+        if (rightData.isBookmarked()) return -1;
         if (scoreLeft < scoreRight) {
             return -1;
         } else if (scoreLeft == scoreRight) {
