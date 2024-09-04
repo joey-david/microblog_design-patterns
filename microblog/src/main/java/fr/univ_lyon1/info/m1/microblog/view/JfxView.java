@@ -1,6 +1,7 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
-
+import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Collections;
@@ -130,6 +131,7 @@ public class JfxView {
             ScrollPane scroll = (ScrollPane) u;
             VBox userBox = (VBox) scroll.getContent();
             Label userID = (Label) userBox.getChildren().get(0);
+
             if (userID.getText().equals(user.getId())) {
                 VBox userMsg = (VBox) userBox.getChildren().get(1);
 
@@ -142,9 +144,20 @@ public class JfxView {
                             Button bookBtn = (Button) n;
                             if (bookBtn.getText().equals("⭐")) {
                                 d.setBookmarked(true);
+                            }                            
+                        } else if (n instanceof Label) {
+                            Label label = (Label) n;
+                            if (m == null) {
+                                m = new Message(label.getText());
+                            } else {
+                                try {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                    Date date = dateFormat.parse(label.getText());
+                                    d.setPublicationDate(date);
+                                } catch (ParseException e) {
+                                    //this is not the date label, so it's the score
+                                }
                             }
-                        } else if (n instanceof Label && m == null) {
-                            m = new Message(((Label) n).getText());
                         }
                     }
                     assert m != null;
@@ -205,11 +218,14 @@ public class JfxView {
             sortMessages();
         });
         msgBox.getChildren().add(bookButton);
-
+        
 
         final Label label = new Label(m.getContent());
         msgBox.getChildren().add(label);
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Label dateLabel = new Label(dateFormat.format(d.getPublicationDate()));
+        msgBox.getChildren().add(dateLabel);
 
         final Label score = new Label("Score: " + d.getScore());
         score.setTextFill(Color.LIGHTGRAY);
