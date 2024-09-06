@@ -86,8 +86,12 @@ public class MessageData {
         int scoreRight = rightData.getScore();
 
         //if either of the messages is bookmarked, place it before the other.
-        if (this.isBookmarked()) return 1;
-        if (rightData.isBookmarked()) return -1;
+        if (this.isBookmarked()) {
+            return 1;
+        }
+        if (rightData.isBookmarked()) {
+            return -1;
+        }
         if (scoreLeft < scoreRight) {
             return -1;
         } else if (scoreLeft == scoreRight) {

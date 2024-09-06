@@ -13,7 +13,6 @@ import fr.univ_lyon1.info.m1.microblog.model.Message;
 import fr.univ_lyon1.info.m1.microblog.model.MessageData;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,7 +38,7 @@ public class JfxView {
      */
         // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
         public JfxView(final Y y, final Stage stage,
-                       final int width, final int height){
+                       final int width, final int height) {
         stage.setTitle("Y Microblogging");
 
         this.model = y;
@@ -151,7 +150,8 @@ public class JfxView {
                                 m = new Message(label.getText());
                             } else {
                                 try {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                    SimpleDateFormat dateFormat =
+                                        new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                                     Date date = dateFormat.parse(label.getText());
                                     d.setPublicationDate(date);
                                 } catch (ParseException e) {

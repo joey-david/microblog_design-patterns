@@ -13,7 +13,9 @@ public class Message {
         return content;
     }
 
-    public Date getPublicationDate() { return publicationDate; }
+    public Date getPublicationDate() {
+        return publicationDate;
+        }
 
     /**
      * Build a Message object from it's (String) content.
