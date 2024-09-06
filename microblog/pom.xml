@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>Y Microblogging</name>
-    <url>https://forge.univ-lyon1.fr/matthieu.moy/mif01</url>
+    <url>https://forge.univ-lyon1.fr/p2020982/mif01</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
