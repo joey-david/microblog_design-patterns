@@ -6,7 +6,7 @@
 Dans le code fourni, la logique métier et l'interface graphique sont
 beaucoup trop entremêlées :
 
-* La liste des réponses prédéfinies est codée dans la vue, on devra dupliquer
+* La fonction `sortMessages()` est codée dans la vue, on devra dupliquer
   ce code si on veut écrire une autre vue sur le même modèle.
 
 <!-- Pas pertinent cette année
@@ -31,6 +31,16 @@ beaucoup trop entremêlées :
   Maintenir à jour les vues différentes serait très difficile sans une bonne
   architecture logicielle.
 
+* Le modèle de données est : une liste de messages publics donc partagés par
+  tous les utilisateurs et des méta-données par utilisateur. Par exemple, le
+  fait qu'un message soit bookmarké est spécifique à chaque utilisateur, ce
+  n'est pas une propriété des messages. Ce modèle de données n'est pas reflété
+  par l'interface graphique, dans laquelle les messages sont dupliqués pour
+  chaque utilisateur. Cela rend très difficile de maintenir les listes de
+  messages de chaque utilisateur (par exemple, supprimer un message et appliquer
+  le changement à tous les utilisateurs serait non-trivial en l'état).
+
+<!-- Pas trop cette année.
 * Une partie de la logique métier (par exemple la recherche) est codée dans des
   « callbacks » de l'interface graphique, écrit au même endroit que la
   création des éléments de l'interface. Si on souhaite modifier
@@ -40,19 +50,26 @@ beaucoup trop entremêlées :
   à une interface web ou une interface graphique comme Swing ou AWT),
   il faudrait extraire les morceaux de code relatifs à l'interface
   graphique à la main pour les réutiliser avec la nouvelle interface. 
+  -->
 
-* À l'inverse, la logique métier fait beaucoup d'appels à l'API JavaFX
+* La logique métier fait beaucoup d'appels à l'API JavaFX
   pour aller chercher des informations directement dans l'interface
   graphique. Par exemple, la recherche parcourt les messages avec :
   ```
-        for (Node hBox : dialog.getChildren()) {
-            for (Node label : ((HBox) hBox).getChildren()) {
-                String t = ((Label) label).getText();
+        for (Node u : users.getChildren()) {
+            ScrollPane scroll = (ScrollPane) u;
+            VBox userBox = (VBox) scroll.getContent();
+            Label userID = (Label) userBox.getChildren().get(0);
+            if (userID.getText().equals(user.getId())) {
+                VBox userMsg = (VBox) userBox.getChildren().get(1);
+
+                for (Node mNode : userMsg.getChildren()) {
+
   ```
   alors que `.getChildren()` et `.getText()` sont des fonctions JavaFX. Si on
   change l'interface graphique (par exemple si on remplace les `Label`s par un
   élément d'interface graphique plus compliqué pour lequel il n'y a pas de
-  `.getText()), il faudra changer ce morceau de code qui n'a pourtant aucune
+  `.getText()`), il faudra changer ce morceau de code qui n'a pourtant aucune
   raison d'être lié à l'interface. Bref, c'est horrible. Plus jamais ça. Il faut
   absolument résoudre ce problème avant la version finale !
   
@@ -61,19 +78,19 @@ fort](https://fr.wikipedia.org/wiki/Couplage_(informatique)#Inconv%C3%A9nients_d
 entre l'interface et la logique métier, et c'est bien sûr une mauvaise
 pratique.
 
-Vous verrez pendant le CM sur les design-pattern un moyen de remédier
+Vous verrez pendant le CM sur les design pattern un moyen de remédier
 au problème : le principe MVC, pour « Modèle, Vue, Contrôleur ».
-L'interface sera uniquement contenue dans la Vue, et la logique métier
+L'interface sera uniquement contenue dans la Vue et la logique métier
 dans le Modèle.
 
 Un problème moins évident que ceux ci-dessus est la testabilité : nous écrirons
 plus tard des tests automatiques, et en l'état tester notre code automatiquement
-rendu plus difficile par le couplage entre l'interface et la logique métier (par
-exemple, tester la fonctionnalité de gestion du prénom par ELIZA est infernal).
+rendu plus difficile par le couplage entre l'interface et la logique métier.
 Avec une bonne séparation type MVC, on
 pourrait tester le modèle et le contrôleur sans être dérangés par l'interface
 graphique.
 
+<!--
 ## Factorisation du code
 
 Vous avez sans doute été tentés d'utiliser le copier-coller pour
@@ -82,4 +99,5 @@ implémenter les différentes stratégies de recherche. Céder
 long, mais surtout beaucoup plus difficile à maintenir (il faudrait
 garder les 3 versions du code cohérentes au fil des évolutions !). Là
 encore, vous verrez une solution propre et éprouvée pendant le CM sur
-les design-patterns.
+les design patterns.
+-->
