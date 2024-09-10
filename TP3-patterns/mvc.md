@@ -71,7 +71,7 @@ transparents, donc appliquer le découpage suivant :
 ## Mise en place
 
 Nous allons implémenter Modèle, Vue et Contrôleur avec 3 packages
-java (`fr.univ_lyon1.info.m1.elizagpt.model`, et idem pour `view`
+java (`fr.univ_lyon1.info.m1.microblog.model`, et idem pour `view`
 et `controller`), contenant chacun une ou plusieurs classes.
 
 On vous fournit un package `model` contenant le nécessaire pour gérer les
