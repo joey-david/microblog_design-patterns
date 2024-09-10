@@ -31,8 +31,6 @@ Barème : 40% examen / 60% TP (une note pour le rapport, une note pour le code).
 
 * [Matthieu Moy](https://matthieu-moy.fr/) (responsable du cours)
 * [Lionel Medini](https://perso.liris.cnrs.fr/lionel.medini/)
-* [Joël Felderhoff](https://perso.jfelderhoff.fr/)
-* [Mathieu Hilaire](https://liris.cnrs.fr/page-membre/mathieu-hilaire)
 
 ## Enseignement présentiel, vidéos et messagerie instantanée
 
