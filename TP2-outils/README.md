@@ -446,9 +446,10 @@ Avant tout, vérifiez que les pipelines sont activés sur votre projet :
   private », si ce n'est pas le cas relisez le début de ce document,
   c'est important).
   
-- Vérifiez que l'interrupteur « pipelines » est sur « enabled ».
+- Vérifiez que l'interrupteur « CI/CD » est sur « enabled ».
 
-- Si vous avez modifié quelque chose, cliquez sur « save changes ».
+- Si vous avez modifié quelque chose, cliquez sur « save changes » plus bas dans
+  la page.
 
 Il faut maintenant dire à GitLab quelle commande il doit lancer à
 chaque push, et dans quel environnent. Cela se fait dans le fichier
