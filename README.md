@@ -11,7 +11,7 @@ grep '^## .. ' README.md | sed 's/[^(]*(//; s/,.*//' | sed 's@\(.*\)/\(.*\)/\(.*
 * Emploi du temps : Cf. ADE.
   Utilisez la ressource "M1 informatique" **plus les groupes de TD** pour voir l'emploi du temps. Contrairement à la licence vous n'avez pas d'emploi du temps personnalisé il faut regarder celui de votre groupe.
 
-* Rendu du TP noté : vous devez avoir rempli le champ URL de TOMUSS avant le 13 septembre 2024 (malus sur la note si ce n'est pas fait sans une raison valable). Le rendu final est le 8/12/2024 à 23h59. Voir
+* Rendu du TP noté : vous devez avoir rempli correctement (URL clonable, projet non-public, binôme formé) le champ URL de TOMUSS avant le 13 septembre 2024. Il y aura un malus sur la note si ce n'est pas fait sans une raison valable. Le rendu final est le 8/12/2024 à 23h59. Voir
   [projet-note.md](projet-note.md) pour un récapitulatif des consignes.
 
 * Examen : TODO: date à décider, voir amphi sur TOMUSS. 1h30 (sauf tiers-temps) Consignes : Seules 5
@@ -161,7 +161,9 @@ email, ce fichier en contient une copie.
   edition](https://www.tricentis.com/wp-content/uploads/2019/01/Software-Fails-Watch-5th-edition.pdf)
   présenté pendant le cours.
 
-## TD 2 (8/10/2024, 15h45) : Coding styles, spécifications et agilité
+## TD 2 (8/10/2024, 15h45 ou 17h30) : Coding styles, spécifications et agilité
+
+Les groupes A, B et C ont TD à 15h45, le groupe D à 17h30. Les salles seront disponibles prochainement sur ADE.
 
 * [TD2-uc-style/TD-usecase-et-style.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style.pdf)
   (corrigé : [TD2-uc-style/TD-usecase-et-style-corrige.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style-corrige.pdf))

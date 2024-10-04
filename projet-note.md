@@ -72,17 +72,17 @@ présentation globale du projet (rapide : ne répétez pas l'énoncé) :
 
   Pour vous aider, voici quelques références intéressantes sur le sujet :
 
-__* [https://fr.wikipedia.org/wiki/Bulle_de_filtres](Bulle de filtres), concept développé par Eli Parisier.
+  * [Bulle de filtres](https://fr.wikipedia.org/wiki/Bulle_de_filtres), concept développé par Eli Parisier.
 
-  * [https://fr.wikipedia.org/wiki/%C3%89conomie_de_l%27attention](Économie de l'attention) sur Wikipedia.
+  * [Économie de l'attention](https://fr.wikipedia.org/wiki/%C3%89conomie_de_l%27attention) sur Wikipedia.
 
-  * [https://www.lemonde.fr/pixels/article/2022/11/14/twitter-supprime-une-grande-partie-de-ses-capacites-de-moderation_6149773_4408996.html](Twitter supprime une grande partie de ses capacités de modération) dans la rubrique « Pixels » du journal « Le Monde ».
+  * [Twitter supprime une grande partie de ses capacités de modération](https://www.lemonde.fr/pixels/article/2022/11/14/twitter-supprime-une-grande-partie-de-ses-capacites-de-moderation_6149773_4408996.html) dans la rubrique « Pixels » du journal « Le Monde ».
 
-  * [https://www.youtube.com/watch?v=fHsa9DqmId8](My Video Went Viral. Here's Why) sur la chaîne Youtube Veritasium, qui analyse l'effet de l'algorithme de recommandation de Youtube sur le succès d'une vidéo.
+  * [My Video Went Viral. Here's Why](https://www.youtube.com/watch?v=fHsa9DqmId8) sur la chaîne Youtube Veritasium, qui analyse l'effet de l'algorithme de recommandation de Youtube sur le succès d'une vidéo.
 
-  * [https://www.lemonde.fr/pixels/article/2024/07/29/naztok-un-rapport-revele-comment-des-groupes-neonazis-utilisent-l-algorithme-de-tiktok-a-son-avantage_6261156_4408996.html?lmd_medium=al&lmd_campaign=envoye-par-appli&lmd_creation=android&lmd_source=default](« NazTok » : un rapport révèle comment des groupes néonazis utilisent l’algorithme de TikTok à leur avantage) dans la rubrique « Pixels » du journal « Le Monde ».
+  * [« NazTok » : un rapport révèle comment des groupes néonazis utilisent l’algorithme de TikTok à leur avantage](https://www.lemonde.fr/pixels/article/2024/07/29/naztok-un-rapport-revele-comment-des-groupes-neonazis-utilisent-l-algorithme-de-tiktok-a-son-avantage_6261156_4408996.html?lmd_medium=al&lmd_campaign=envoye-par-appli&lmd_creation=android&lmd_source=default) dans la rubrique « Pixels » du journal « Le Monde ».
 
-  * En amont des systèmes de recommandation, la création de continu calculée pour répondre aux demandes : [https://medium.com/@danial.a/how-netflix-used-data-to-create-house-of-cards-a-revolutionary-approach-to-content-creation-b9a114630ddc](How Netflix Used Data to Create House of Cards: A Revolutionary Approach to Content Creation)
+  * En amont des systèmes de recommandation, la création de continu calculée pour répondre aux demandes : [How Netflix Used Data to Create House of Cards: A Revolutionary Approach to Content Creation](https://medium.com/@danial.a/how-netflix-used-data-to-create-house-of-cards-a-revolutionary-approach-to-content-creation-b9a114630ddc)
 
   La liste n'est bien entendu pas exhaustive. Pensez à vos enseignants qui
   liront des dizaines de rapports, surprenez-nous, apprenez-nous des choses ! Si
