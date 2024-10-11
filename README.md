@@ -157,10 +157,6 @@ email, ce fichier en contient une copie.
 
 * Transparents de Sandrine Gouraud, lien disponible sur TOMUSS.
 
-* [Software Fail Watch, 5th
-  edition](https://www.tricentis.com/wp-content/uploads/2019/01/Software-Fails-Watch-5th-edition.pdf)
-  présenté pendant le cours.
-
 ## TD 2 (8/10/2024, 15h45 ou 17h30) : Coding styles, spécifications et agilité
 
 Les groupes A, B et C ont TD à 15h45, le groupe D à 17h30. Les salles seront disponibles prochainement sur ADE.
