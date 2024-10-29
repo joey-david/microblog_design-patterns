@@ -18,7 +18,7 @@ grep '^## .. ' README.md | sed 's/[^(]*(//; s/,.*//' | sed 's@\(.*\)/\(.*\)/\(.*
   feuilles A4 recto verso (donc 10 pages au total) sont autorisées à
   l’examen. Leur contenu est libre. Elles peuvent être une sélection de
   transparents ou manuscrites, avec une taille de caractère de votre
-  choix. Les annales de l'examen sont dans le répertoire [exam/](http://matthieu-moy.fr/cours/mif01/exam/)
+  choix. Les annales de l'examen sont dans le répertoire [exam/](https://matthieu-moy.fr/cours/mif01/exam/)
   et [sur l'ancienne page du
   cours](http://www.tabard.fr/cours/2017/mif01/). Prévoyez un stylo
   bleu foncé ou noir et un blanc correcteur.
@@ -52,13 +52,13 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Introduction du cours" href="https://myvideo.univ-lyon1.fr/permalink/v126648321336prac6d7/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f63c7665cu1ddhhdumjvjfkrdr/thumb_link.png" alt="Introduction du cours"/></a>
 
-* Transparents : [00-intro-cours-slides.pdf](http://matthieu-moy.fr/cours/mif01/00-intro-cours-slides.pdf) (version imprimable : [00-intro-cours-handout.pdf](http://matthieu-moy.fr/cours/mif01/00-intro-cours-handout.pdf))
+* Transparents : [00-intro-cours-slides.pdf](https://matthieu-moy.fr/cours/mif01/00-intro-cours-slides.pdf) (version imprimable : [00-intro-cours-handout.pdf](https://matthieu-moy.fr/cours/mif01/00-intro-cours-handout.pdf))
 
 ### Introduction au génie logiciel
 
 * Vidéo : <a target="_blank" title="Introduction au génie logiciel" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fbadfanih3/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e3b1081xmi26ty70pk23mhvs/thumb_link.png" alt="Introduction au génie logiciel"/></a>
 
-* Transparents : [01-introduction-slides.pdf](http://matthieu-moy.fr/cours/mif01/01-introduction-slides.pdf) (version imprimable : [01-introduction-handout.pdf](http://matthieu-moy.fr/cours/mif01/01-introduction-handout.pdf))
+* Transparents : [01-introduction-slides.pdf](https://matthieu-moy.fr/cours/mif01/01-introduction-slides.pdf) (version imprimable : [01-introduction-handout.pdf](https://matthieu-moy.fr/cours/mif01/01-introduction-handout.pdf))
   
 ## TP 1 (3/9/2024, 15h45) : Mise en route Java
 
@@ -77,8 +77,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Maven, Forge, Intégration Continue" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fb8hrl6hos/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e3a7f0fkr7ooladan4vxrmp1/thumb_link.png" alt="Maven, Forge, Intégration Continue"/></a>
 
-* Transparents : [02-cm-maven-forge-ic-slides.pdf](http://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-slides.pdf)
-  (Version imprimable : [02-cm-maven-forge-ic-handout.pdf](http://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-handout.pdf))
+* Transparents : [02-cm-maven-forge-ic-slides.pdf](https://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-slides.pdf)
+  (Version imprimable : [02-cm-maven-forge-ic-handout.pdf](https://matthieu-moy.fr/cours/mif01/02-cm-maven-forge-ic-handout.pdf))
 
 ## TP 2 (Vendredi 6/9/2024, 11h30) : Outillage
 
@@ -103,8 +103,8 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Coding Style" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fbdwej3119/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e3b82e5qhb6vdjbfdziizhq7/thumb_link.png" alt="Coding Style"/></a>
 
-* Transparents : [03-coding-style-slides.pdf](http://matthieu-moy.fr/cours/mif01/03-coding-style-slides.pdf)
-  (version imprimable : [03-coding-style-handout.pdf](http://matthieu-moy.fr/cours/mif01/03-coding-style-handout.pdf))
+* Transparents : [03-coding-style-slides.pdf](https://matthieu-moy.fr/cours/mif01/03-coding-style-slides.pdf)
+  (version imprimable : [03-coding-style-handout.pdf](https://matthieu-moy.fr/cours/mif01/03-coding-style-handout.pdf))
 
 ### Design patterns
 
@@ -118,7 +118,7 @@ email, ce fichier en contient une copie.
 
 ## TD 1 (Vendredi 13/9/2024, 11h30) : Design patterns
 
-* [TD1-design-patterns](http://matthieu-moy.fr/cours/mif01/TD1-patterns/TD-design-patterns.html)
+* [TD1-design-patterns](https://matthieu-moy.fr/cours/mif01/TD1-patterns/TD-design-patterns.html)
 
 <!-- * Salles : cf. TOMUSS et mail envoyé pour les étudiants.
   - Nautibus TD 2 : Matthieu Moy
@@ -133,14 +133,14 @@ email, ce fichier en contient une copie.
 
 * Vidéo : <a target="_blank" title="Métaprogrammation" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc5hrmy3g1/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e59e89b1kkvlmtrymwi6ngkv/thumb_link.png" alt="Métaprogrammation"/></a>
 
-* Transparents [04-metaprogramming-slides.pdf](http://matthieu-moy.fr/cours/mif01/04-metaprogramming-slides.pdf)
-  (version imprimable : [04-metaprogramming-handout.pdf](http://matthieu-moy.fr/cours/mif01/04-metaprogramming-handout.pdf))
+* Transparents [04-metaprogramming-slides.pdf](https://matthieu-moy.fr/cours/mif01/04-metaprogramming-slides.pdf)
+  (version imprimable : [04-metaprogramming-handout.pdf](https://matthieu-moy.fr/cours/mif01/04-metaprogramming-handout.pdf))
 
 ### Spécifications
 
 * Vidéo : <a target="_blank" title="Spécifications et cas d'utilisations" href="https://myvideo.univ-lyon1.fr/permalink/v1266483213e2log0vyw/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f64046e89yvikpjhr6bdcklhii/thumb_link.png" alt="Spécifications et cas d'utilisations"/></a>
 
-* [05-UML-CU.pdf](http://matthieu-moy.fr/cours/mif01/05-UML-CU.pdf)
+* [05-UML-CU.pdf](https://matthieu-moy.fr/cours/mif01/05-UML-CU.pdf)
 
 ## TP 4 (Vendredi 4/10/2024, 11h30) : Design patterns & refactoring
 
@@ -157,16 +157,12 @@ email, ce fichier en contient une copie.
 
 * Transparents de Sandrine Gouraud, lien disponible sur TOMUSS.
 
-* [Software Fail Watch, 5th
-  edition](https://www.tricentis.com/wp-content/uploads/2019/01/Software-Fails-Watch-5th-edition.pdf)
-  présenté pendant le cours.
-
 ## TD 2 (8/10/2024, 15h45 ou 17h30) : Coding styles, spécifications et agilité
 
 Les groupes A, B et C ont TD à 15h45, le groupe D à 17h30. Les salles seront disponibles prochainement sur ADE.
 
-* [TD2-uc-style/TD-usecase-et-style.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style.pdf)
-  (corrigé : [TD2-uc-style/TD-usecase-et-style-corrige.pdf](http://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style-corrige.pdf))
+* [TD2-uc-style/TD-usecase-et-style.pdf](https://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style.pdf)
+  (corrigé : [TD2-uc-style/TD-usecase-et-style-corrige.pdf](https://matthieu-moy.fr/cours/mif01/TD2-uc-style/TD-usecase-et-style-corrige.pdf))
 
 <!-- * Salles :
   - Groupe A : Nautibus TD 1, 15h45 : Matthieu Moy
@@ -181,8 +177,8 @@ Les groupes A, B et C ont TD à 15h45, le groupe D à 17h30. Les salles seront d
 
 * Vidéo : <a target="_blank" title="Introduction à l'agilité" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc19hggacu/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e59e5038qrz03jom0i42z6ey/thumb_link.png" alt="Introduction à l'agilité"/></a>
 
-* Transparents : [07-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
-  (version imprimable : [07-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
+* Transparents : [07-agilite-slides.pdf](https://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
+  (version imprimable : [07-agilite-handout.pdf](https://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
 
 ## TP 5 (29/10/2024, 15h45): Design patterns & refactoring, suite
 
@@ -201,14 +197,14 @@ Les groupes A, B et C ont TD à 15h45, le groupe D à 17h30. Les salles seront d
 
 * Vidéo : <a target="_blank" title="Conclusion sur l'agilité" href="https://myvideo.univ-lyon1.fr/permalink/v1266483214d42el9dn3/iframe/#start=2"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f64407b3aqquizvskjxrimpz6n/thumb_link.png" alt="Conclusion sur l'agilité"/></a>
 
-* Transparents : [07-agilite-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
-  (version imprimable : [07-agilite-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
+* Transparents : [07-agilite-slides.pdf](https://matthieu-moy.fr/cours/mif01/07-agilite-slides.pdf)
+  (version imprimable : [07-agilite-handout.pdf](https://matthieu-moy.fr/cours/mif01/07-agilite-handout.pdf))
 
 ### Agilité et passage à l'échelle : la méthode Spotify (transparents de Levent Acar)
 
 * Vidéo : <a target="_blank" title="La méthode spotify" href="https://myvideo.univ-lyon1.fr/permalink/v1266483214d7t0dnl7u/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f64408f14upw2wztzw9kmg6j85/thumb_link.png" alt="La méthode spotify"/></a>
 
-* Transparents : [Présentation_spotify_v2.pdf](http://matthieu-moy.fr/cours/mif01/Présentation_spotify_v2.pdf)
+* Transparents : [Présentation_spotify_v2.pdf](https://matthieu-moy.fr/cours/mif01/Présentation_spotify_v2.pdf)
 
 ## TP 6 (5/11/2024, 15h45 et 8/11/2024, 11h30) : Tests
 
@@ -229,8 +225,8 @@ Suite à un conflit d'emploi du temps d'un intervenant, le TP est coupé en deux
 
 * Vidéo : <a target="_blank" title="Éthique et numérique" href="https://myvideo.univ-lyon1.fr/permalink/v126648320fc91hpkb0g/iframe/"><img src="https://myvideo.univ-lyon1.fr/public/videos/v125f5e878599ekgr4ire6ac5wv8q0/thumb_link.png" alt="Éthique et numérique"/></a>
 
-* Transparents : [07-ethics-slides.pdf](http://matthieu-moy.fr/cours/mif01/07-ethics-slides.pdf)
-  (version imprimable : [07-ethics-handout.pdf](http://matthieu-moy.fr/cours/mif01/07-ethics-handout.pdf))
+* Transparents : [07-ethics-slides.pdf](https://matthieu-moy.fr/cours/mif01/07-ethics-slides.pdf)
+  (version imprimable : [07-ethics-handout.pdf](https://matthieu-moy.fr/cours/mif01/07-ethics-handout.pdf))
 
 ## TP 7 (Vendredi 29/11/2024, 15h45) : Tests (suite)
 
