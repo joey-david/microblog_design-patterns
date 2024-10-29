@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
 import fr.univ_lyon1.info.m1.microblog.model.Message;
 import fr.univ_lyon1.info.m1.microblog.model.MessageData;
@@ -30,34 +31,37 @@ import javafx.stage.Stage;
  * Main class of the View (GUI) of the application.
  */
 public class JfxView {
-    private Y model;
+    private Controller controller;
     private HBox users;
+    private VBox messageList;
 
     /**
      * Main view of the application.
      */
         // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
-        public JfxView(final Y y, final Stage stage,
+        public JfxView(final Stage stage,
                        final int width, final int height) {
         stage.setTitle("Y Microblogging");
 
-        this.model = y;
-        y.setView(this);
         final VBox root = new VBox(10);
 
         // final Pane search = createSearchWidget();
         // root.getChildren().add(search);
 
         users = new HBox(10);
-        root.getChildren().add(users);
-
-        createUsersPanes();
+        messageList = new VBox(10);
+        root.getChildren().addAll(users, messageList);
 
         // Everything's ready: add it to the scene and display it
         final Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
         stage.show();
     }
+
+    public void setController(Controller controller) {
+            this.controller = controller;
+    }
+
 
     /**
      * Create the pane containing all user's, from the users' registry contained in the model.
@@ -72,7 +76,7 @@ public class JfxView {
             users.getChildren().add(p);
 
             VBox userMsgBox = new VBox();
-            
+
             Label userID = new Label(u.getId());
 
             Pane textBox = createInputWidget(u);
@@ -80,20 +84,8 @@ public class JfxView {
         }
     }
 
-    /**
-     * Add message m to all users.
-     */
-    public void addMessage(final Message m) {
-        for (Node u : users.getChildren()) {
-            ScrollPane scroll = (ScrollPane) u;
-            VBox userBox = (VBox) scroll.getContent();
-            VBox userMsg = (VBox) userBox.getChildren().get(1);
 
-            VBox msgBox = createMessageWidget(m, new MessageData());
-            userMsg.getChildren().add(msgBox);
-        }
-        //sortMessages();
-    }
+
 
     void bookmarkMessage(final Message m, final User user) {
         for (Node u : users.getChildren()) {
@@ -147,7 +139,7 @@ public class JfxView {
                         } else if (n instanceof Label) {
                             Label label = (Label) n;
                             if (m == null) {
-                                m = new Message(label.getText());
+                                m = new Message(label.getText(), user.getId());
                             } else {
                                 try {
                                     SimpleDateFormat dateFormat =
