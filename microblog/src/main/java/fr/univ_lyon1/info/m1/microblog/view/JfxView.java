@@ -5,7 +5,10 @@ import fr.univ_lyon1.info.m1.microblog.model.Message;
 import fr.univ_lyon1.info.m1.microblog.model.MessageData;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -48,14 +51,14 @@ public class JfxView {
         stage.show();
     }
 
-    public void setController(Controller controller) {
+    public void setController(final Controller controller) {
         this.controller = controller;
     }
 
     /**
      * Create the pane containing all user's, from the users' registry passed as an argument.
      */
-    public void updateUserList(Collection<User> userList) {
+    public void updateUserList(final Collection<User> userList) {
         users.getChildren().clear();
         for (User u : userList) {
             ScrollPane p = new ScrollPane();
@@ -76,7 +79,7 @@ public class JfxView {
     /**
      *
      */
-    public void updateMessageList(List<Message> messages, Map<Message, MessageData> messageData) {
+    public void updateMessageList(final List<Message> messages, final Map<Message, MessageData> messageData) {
         for (ScrollPane scrollPane : users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)
@@ -100,7 +103,7 @@ public class JfxView {
             + "-fx-padding: 8px; "
             + "-fx-margin: 5px; ";
 
-    private VBox createMessageWidget(Message m, MessageData d) {
+    private VBox createMessageWidget(final Message m, final MessageData d) {
         VBox msgBox = new VBox();
 
         String bookmarkText = d.isBookmarked() ? "⭐" : "Click to bookmark";

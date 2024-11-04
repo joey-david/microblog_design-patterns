@@ -8,40 +8,48 @@ import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import java.util.Observable;
 import java.util.Observer;
 
-
+/**
+ * Class of the Controller of the application.
+ */
 public class Controller implements Observer {
     private Y model;
     private JfxView view;
 
-    public Controller(Y _model, JfxView _view) {
-        this.model = _model;
-        this.view = _view;
+    /** Controller of the application. */
+    public Controller(final Y model, final JfxView view) {
+        this.model = model;
+        this.view = view;
         this.model.addObserver(this);
     }
 
-    public void createUser(String id) {
+    /** Calls the model's method to create the user. */
+    public void createUser(final String id) {
         model.createUser(id);
     }
 
-    public void publishMessage(String content) {
+    /** Calls the model's method to publish a message. */
+    public void publishMessage(final String content) {
         Message message = new Message(content);
         model.add(message);
     }
 
-    public void toggleBookmark(Message message) {
+    /** Calls the model's method to bookmark the message. */
+    public void toggleBookmark(final Message message) {
         model.bookmarkMessage(message);
     }
 
-    public boolean isMessageBookmarked(Message message) {
+    /** Getter for bookmark. */
+    public boolean isMessageBookmarked(final Message message) {
         return model.isMessageBookmarked(message);
     }
 
-    public int getMessageScore(Message message) {
+    /** Getter for the score. */
+    public int getMessageScore(final Message message) {
         return model.getMessageScore(message);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
         if (arg instanceof String) {
             String event = (String) arg;
             switch (event) {
@@ -51,6 +59,8 @@ public class Controller implements Observer {
                 case "MESSAGE_ADDED":
                 case "MESSAGE_BOOKMARKED":
                     view.updateMessageList(model.getMessages(), model.getMessageData());
+                    break;
+                default:
                     break;
             }
         }

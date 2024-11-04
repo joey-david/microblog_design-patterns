@@ -41,12 +41,13 @@ public class Y extends Observable {
         notifyObservers("MESSAGE_ADDED");
     }
 
-    /** Get the messages */
+    /** Get the messages. */
    public List<Message> getMessages() {
         return messages;
    }
 
-   public void bookmarkMessage(Message message) {
+   /** Bookmark the message. */
+   public void bookmarkMessage(final Message message) {
        MessageData data = messageData.get(message);
        if (data != null) {
            data.setBookmarked(!data.isBookmarked());
@@ -56,16 +57,19 @@ public class Y extends Observable {
        }
    }
 
-   public boolean isMessageBookmarked(Message message) {
+   /** Getter for bookmark. */
+   public boolean isMessageBookmarked(final Message message) {
        MessageData data = messageData.get(message);
        return data != null && data.isBookmarked();
    }
 
-   public int getMessageScore(Message message) {
+   /** Getter for score. */
+   public int getMessageScore(final Message message) {
        MessageData data = messageData.get(message);
        return data != null ? data.getScore() : -1;
    }
 
+   /** Get the message data. */
    public Map<Message, MessageData> getMessageData() {
        return messageData;
    }
