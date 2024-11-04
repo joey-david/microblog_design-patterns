@@ -79,7 +79,8 @@ public class JfxView {
     /**
      *
      */
-    public void updateMessageList(final List<Message> messages, final Map<Message, MessageData> messageData) {
+    public void updateMessageList(final List<Message> messages,
+                                  final Map<Message, MessageData> messageData) {
         for (ScrollPane scrollPane : users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)
