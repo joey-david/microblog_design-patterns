@@ -21,7 +21,7 @@ public class App extends Application {
         Controller controller = new Controller(y, v);
         v.setController(controller);
 
-        controller.createExampleMessages(v);
+        controller.createExampleMessages();
 
         // Second view (uncomment to activate)
 

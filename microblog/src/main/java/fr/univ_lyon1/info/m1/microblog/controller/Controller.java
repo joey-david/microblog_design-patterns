@@ -42,15 +42,15 @@ public class Controller implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof String) {
+        if (arg instanceof String) {
             String event = (String) arg;
-            switch(event) {
-                case "new user":
+            switch (event) {
+                case "USER_ADDED":
                     view.updateUserList(model.getUsers());
                     break;
-                case "new message":
-                case "bookmarked":
-                    view.updateMessageList(model.getMessages());
+                case "MESSAGE_ADDED":
+                case "MESSAGE_BOOKMARKED":
+                    view.updateMessageList(model.getMessages(), model.getMessageData());
                     break;
             }
         }
@@ -59,16 +59,13 @@ public class Controller implements Observer {
     /**
      * Create an example set of users and messages, for testing.
      */
-    public void createExampleMessages(final JfxView v) {
+    public void createExampleMessages() {
         User foo = model.createUser("foo");
         User bar = model.createUser("bar");
-        Message m1 = new Message("Hello, world!");
-        model.add(m1);
-        Message m2 = new Message("What is this message?");
-        model.add(m2);
-        model.add(new Message("Good bye, world!"));
-        model.add(new Message("Hello, you!"));
-        model.add(new Message("Hello hello, world world world."));
+        publishMessage("Hello, world!");
+        publishMessage("What is this message?");
+        publishMessage("Good bye, world!");
+        publishMessage("Hello, you!");
+        publishMessage("Hello hello, world world world.");
     }
 }
-

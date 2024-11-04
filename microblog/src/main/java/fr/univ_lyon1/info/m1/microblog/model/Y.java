@@ -22,7 +22,7 @@ public class Y extends Observable {
         User u = new User(id);
         users.add(u);
         setChanged();
-        notifyObservers("new user");
+        notifyObservers("USER_ADDED");
         return u;
     }
 
@@ -38,7 +38,7 @@ public class Y extends Observable {
         messageData.put(message, new MessageData());
         bookmarkScoring.computeScores(messageData);
         setChanged();
-        notifyObservers("new message");
+        notifyObservers("MESSAGE_ADDED");
     }
 
     /** Get the messages */
@@ -52,7 +52,7 @@ public class Y extends Observable {
            data.setBookmarked(!data.isBookmarked());
            bookmarkScoring.computeScores(messageData);
            setChanged();
-           notifyObservers("bookmarked");
+           notifyObservers("MESSAGE_BOOKMARKED");
        }
    }
 
@@ -63,7 +63,7 @@ public class Y extends Observable {
 
    public int getMessageScore(Message message) {
        MessageData data = messageData.get(message);
-       return data!=null ? data.getScore() : -1;
+       return data != null ? data.getScore() : -1;
    }
 
    public Map<Message, MessageData> getMessageData() {
