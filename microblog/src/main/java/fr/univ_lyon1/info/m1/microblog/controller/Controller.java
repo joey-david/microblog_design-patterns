@@ -58,7 +58,7 @@ public class Controller implements Observer {
                     break;
                 case "MESSAGE_ADDED":
                 case "MESSAGE_BOOKMARKED":
-                    view.updateMessageList(model.getMessages(), model.getMessageData());
+                    view.updateMessageList(model.getSortedMessages(), model.getMessageData());
                     break;
                 default:
                     break;

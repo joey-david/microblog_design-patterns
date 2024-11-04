@@ -46,6 +46,17 @@ public class Y extends Observable {
         return messages;
    }
 
+   /** Get the sorted messages. */
+   public List<Message> getSortedMessages() {
+       List<Message> sortedMessages = new ArrayList<>(messages);
+       sortedMessages.sort((Message m1, Message m2) -> {
+           MessageData md1 = messageData.get(m1);
+           MessageData md2 = messageData.get(m2);
+           return -md1.compare(md2);
+       });
+       return sortedMessages;
+   }
+
    /** Bookmark the message. */
    public void bookmarkMessage(final Message message) {
        MessageData data = messageData.get(message);

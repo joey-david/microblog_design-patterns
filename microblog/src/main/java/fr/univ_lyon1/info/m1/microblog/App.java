@@ -21,12 +21,12 @@ public class App extends Application {
         Controller controller = new Controller(y, v);
         v.setController(controller);
 
-        controller.createExampleMessages();
-
         // Second view (uncomment to activate)
+        //JfxView v2 = new JfxView(new Stage(), 400, 400);
+        //Controller controller2 = new Controller(y, v2);
+        //v2.setController(controller2);
 
-        JfxView v2 = new JfxView(new Stage(), 400, 400);
-        v2.setController(controller);
+        controller.createExampleMessages();
     }
 
     /**
