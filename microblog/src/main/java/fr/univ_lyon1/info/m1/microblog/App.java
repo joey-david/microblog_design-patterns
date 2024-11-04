@@ -24,7 +24,9 @@ public class App extends Application {
         controller.createExampleMessages(v);
 
         // Second view (uncomment to activate)
-        // new JfxView(y, new Stage(), 400, 400);
+
+        JfxView v2 = new JfxView(new Stage(), 400, 400);
+        v2.setController(controller);
     }
 
     /**

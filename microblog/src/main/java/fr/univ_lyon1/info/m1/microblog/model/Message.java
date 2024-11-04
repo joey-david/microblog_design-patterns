@@ -7,7 +7,6 @@ import java.util.Date;
  */
 public class Message {
     private String content;
-    private String userId;
     private Date publicationDate;
 
     public String getContent() {
@@ -18,16 +17,12 @@ public class Message {
         return publicationDate;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     /**
      * Build a Message object from it's (String) content.
      */
-    public Message(final String content, final String userId) {
+    public Message(final String content) {
         this.content = content;
-        this.userId = userId;
         this.publicationDate = new Date();
     }
 

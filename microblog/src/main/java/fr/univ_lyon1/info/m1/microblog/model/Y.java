@@ -1,10 +1,12 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Observable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Observable;
+import java.util.Collection;
 
 /**
  * Toplevel class for the Y microbloging application's model.
@@ -12,6 +14,8 @@ import java.util.Observable;
 public class Y extends Observable {
     private List<User> users = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
+    private Map<Message, MessageData> messageData = new LinkedHashMap<>();
+    private BookmarkScoring bookmarkScoring = new BookmarkScoring();
 
     /** Create a user and add it to the user's registry. */
     public User createUser(final String id) {
@@ -31,6 +35,8 @@ public class Y extends Observable {
     /** Post a message. */
     public void add(final Message message) {
         messages.add(message);
+        messageData.put(message, new MessageData());
+        bookmarkScoring.computeScores(messageData);
         setChanged();
         notifyObservers("new message");
     }
@@ -38,5 +44,29 @@ public class Y extends Observable {
     /** Get the messages */
    public List<Message> getMessages() {
         return messages;
+   }
+
+   public void bookmarkMessage(Message message) {
+       MessageData data = messageData.get(message);
+       if (data != null) {
+           data.setBookmarked(!data.isBookmarked());
+           bookmarkScoring.computeScores(messageData);
+           setChanged();
+           notifyObservers("bookmarked");
+       }
+   }
+
+   public boolean isMessageBookmarked(Message message) {
+       MessageData data = messageData.get(message);
+       return data != null && data.isBookmarked();
+   }
+
+   public int getMessageScore(Message message) {
+       MessageData data = messageData.get(message);
+       return data!=null ? data.getScore() : -1;
+   }
+
+   public Map<Message, MessageData> getMessageData() {
+       return messageData;
    }
 }
