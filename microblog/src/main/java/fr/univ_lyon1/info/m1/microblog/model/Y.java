@@ -1,28 +1,41 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
 
+import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
-import java.util.Observable;
 import java.util.Collection;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Toplevel class for the Y microbloging application's model.
  */
-public class Y extends Observable {
+public class Y {
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private List<User> users = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
     private Map<Message, MessageData> messageData = new LinkedHashMap<>();
-    private BookmarkScoring bookmarkScoring = new BookmarkScoring();
+    private ScoringStrategy scoringStrategy;
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    public Y(ScoringStrategy scoringStrategy) {
+        this.scoringStrategy = scoringStrategy;
+    }
     /** Create a user and add it to the user's registry. */
     public User createUser(final String id) {
         User u = new User(id);
         users.add(u);
-        setChanged();
-        notifyObservers("USER_ADDED");
+        pcs.firePropertyChange("USER_ADDED", null, u);
         return u;
     }
 
@@ -31,14 +44,18 @@ public class Y extends Observable {
         return users;
     }
 
+    /** Create a message for a specific user, not implemented. */
+    public void publish(final TextArea t, final User u) {
+        add(new Message(t.getText()));
+    }
 
-    /** Post a message. */
+
+    /** Post a message to all users. */
     public void add(final Message message) {
         messages.add(message);
         messageData.put(message, new MessageData());
-        bookmarkScoring.computeScores(messageData);
-        setChanged();
-        notifyObservers("MESSAGE_ADDED");
+        scoringStrategy.computeScores(messageData);
+        pcs.firePropertyChange("MESSAGE_ADDED", null, message);
     }
 
     /** Get the messages. */
@@ -62,9 +79,8 @@ public class Y extends Observable {
        MessageData data = messageData.get(message);
        if (data != null) {
            data.setBookmarked(!data.isBookmarked());
-           bookmarkScoring.computeScores(messageData);
-           setChanged();
-           notifyObservers("MESSAGE_BOOKMARKED");
+           scoringStrategy.computeScores(messageData);
+           pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, message);
        }
    }
 

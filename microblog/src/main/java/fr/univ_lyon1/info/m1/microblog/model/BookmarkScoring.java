@@ -8,9 +8,10 @@ import java.util.Set;
 /**
  * Scoring of messages based on bookmarks.
  */
-public class BookmarkScoring {
+public class BookmarkScoring implements ScoringStrategy {
 
     /** Compute the score for all messages in messagesData. */
+    @Override
     public void computeScores(final Map<Message, MessageData> messagesData) {
         Set<Message> messages = messagesData.keySet();
         Set<String> bookmarkedWords = new HashSet<>();

@@ -81,19 +81,19 @@ public class JfxView {
      */
     public void updateMessageList(final List<Message> messages,
                                   final Map<Message, MessageData> messageData) {
-        for (ScrollPane scrollPane : users.getChildren().stream()
+        users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)
-                .toList()) {
-            VBox userBox = (VBox) scrollPane.getContent();
-            VBox userMsgBox = (VBox) userBox.getChildren().get(1);
-            userMsgBox.getChildren().clear();
+                .forEach(scrollPane -> {
+                    VBox userBox = (VBox) scrollPane.getContent();
+                    VBox userMsgBox = (VBox) userBox.getChildren().get(1);
+                    userMsgBox.getChildren().clear();
 
-            for (Message message : messages) {
-                VBox msgBox = createMessageWidget(message, messageData.get(message));
-                userMsgBox.getChildren().add(msgBox);
-            }
-        }
+                    for (Message message : messages) {
+                        VBox msgBox = createMessageWidget(message, messageData.get(message));
+                        userMsgBox.getChildren().add(msgBox);
+                    }
+                });
     }
 
 

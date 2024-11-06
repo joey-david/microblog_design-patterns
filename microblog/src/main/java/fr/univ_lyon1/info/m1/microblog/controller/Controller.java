@@ -7,11 +7,13 @@ import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * Class of the Controller of the application.
  */
-public class Controller implements Observer {
+public class Controller implements PropertyChangeListener {
     private Y model;
     private JfxView view;
 
@@ -19,7 +21,23 @@ public class Controller implements Observer {
     public Controller(final Y model, final JfxView view) {
         this.model = model;
         this.view = view;
-        this.model.addObserver(this);
+        model.addPropertyChangeListener(this);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        String propertyName = evt.getPropertyName();
+        switch (propertyName) {
+            case "USER_ADDED":
+                view.updateUserList(model.getUsers());
+                break;
+            case "MESSAGE_ADDED":
+            case "MESSAGE_BOOKMARKED":
+                view.updateMessageList(model.getSortedMessages(), model.getMessageData());
+                break;
+            default:
+                break;
+        }
     }
 
     /** Calls the model's method to create the user. */
@@ -46,24 +64,6 @@ public class Controller implements Observer {
     /** Getter for the score. */
     public int getMessageScore(final Message message) {
         return model.getMessageScore(message);
-    }
-
-    @Override
-    public void update(final Observable o, final Object arg) {
-        if (arg instanceof String) {
-            String event = (String) arg;
-            switch (event) {
-                case "USER_ADDED":
-                    view.updateUserList(model.getUsers());
-                    break;
-                case "MESSAGE_ADDED":
-                case "MESSAGE_BOOKMARKED":
-                    view.updateMessageList(model.getSortedMessages(), model.getMessageData());
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     /**
