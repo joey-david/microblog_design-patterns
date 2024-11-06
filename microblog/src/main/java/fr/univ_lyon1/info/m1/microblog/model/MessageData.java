@@ -2,7 +2,6 @@ package fr.univ_lyon1.info.m1.microblog.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Date;
 
 /**
  * Piece of data associated to a message for a particular user.

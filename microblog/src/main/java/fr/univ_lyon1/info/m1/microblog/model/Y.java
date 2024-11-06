@@ -20,15 +20,18 @@ public class Y {
     private Map<Message, MessageData> messageData = new LinkedHashMap<>();
     private ScoringStrategy scoringStrategy;
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    /** Add a listener to the class. */
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    /** Remove the listener. */
+    public void removePropertyChangeListener(final PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
     }
 
-    public Y(ScoringStrategy scoringStrategy) {
+    /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
+    public Y(final ScoringStrategy scoringStrategy) {
         this.scoringStrategy = scoringStrategy;
     }
     /** Create a user and add it to the user's registry. */

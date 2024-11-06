@@ -5,8 +5,6 @@ import fr.univ_lyon1.info.m1.microblog.model.User;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -25,7 +23,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt) {
         String propertyName = evt.getPropertyName();
         switch (propertyName) {
             case "USER_ADDED":
