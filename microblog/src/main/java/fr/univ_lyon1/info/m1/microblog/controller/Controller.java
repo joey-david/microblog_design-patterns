@@ -4,6 +4,7 @@ import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
+import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -30,12 +31,18 @@ public class Controller implements PropertyChangeListener {
                 view.updateUserList(model.getUsers());
                 break;
             case "MESSAGE_ADDED":
+            case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_BOOKMARKED":
                 view.updateMessageList(model.getSortedMessages());
                 break;
             default:
                 break;
         }
+    }
+
+    /** Calls the model's method to switch the scoring strategy. */
+    public void switchScoringStrategy(final ScoringStrategy strategy) {
+        model.setScoringStrategy(strategy);
     }
 
     /** Calls the model's method to create the user. */

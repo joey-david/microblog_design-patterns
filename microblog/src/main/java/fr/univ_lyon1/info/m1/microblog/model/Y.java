@@ -19,10 +19,28 @@ public class Y {
     private List<MessageDecorator> messages = new ArrayList<>();
     private ScoringStrategy scoringStrategy;
 
+    /** Default constructor with dateScoring Strategy. */
+    public Y() {
+        this(new DateScoring());
+    }
+
     /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
     public Y(final ScoringStrategy scoringStrategy) {
         this.scoringStrategy = scoringStrategy;
     }
+
+    /** Setter for the scoring strategy. */
+    public void setScoringStrategy(final ScoringStrategy scoringStrategy) {
+        this.scoringStrategy = scoringStrategy;
+        this.scoringStrategy.computeScores(messages);
+        pcs.firePropertyChange("SCORING_STRATEGY_CHANGED", null, null);
+    }
+
+    /** Getter for the scoring strategy. */
+    public ScoringStrategy getScoringStrategy() {
+        return scoringStrategy;
+    }
+
     /** Create a user and add it to the user's registry. */
     public User createUser(final String id) {
         User u = new User(id);
