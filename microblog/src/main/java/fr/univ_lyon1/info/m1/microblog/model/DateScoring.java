@@ -11,7 +11,7 @@ public class DateScoring implements ScoringStrategy {
 
     /** Compute the score for all messages in messagesData. */
     @Override
-    public void computeScores(List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages) {
         Date cur = new Date();
         messages.forEach(m -> {
             int score = 0;

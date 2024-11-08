@@ -11,7 +11,7 @@ public class BookmarkScoring implements ScoringStrategy {
 
     /** Compute the score for all messages in messagesData. */
     @Override
-    public void computeScores(List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages) {
         Set<String> bookmarkedWords = new HashSet<>();
 
         messages.forEach((MessageDecorator m) -> {

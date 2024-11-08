@@ -49,7 +49,9 @@ public class Y {
     }
 
     /** Get the messages. */
-    public List<MessageDecorator> getMessages() { return messages; }
+    public List<MessageDecorator> getMessages() {
+        return messages;
+    }
 
    /** Get the sorted messages. */
    public List<MessageDecorator> getSortedMessages() {
