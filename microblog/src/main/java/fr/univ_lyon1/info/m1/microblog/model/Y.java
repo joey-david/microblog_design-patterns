@@ -16,19 +16,8 @@ import java.beans.PropertyChangeSupport;
 public class Y {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private List<User> users = new ArrayList<>();
-    private List<Message> messages = new ArrayList<>();
-    private Map<Message, MessageData> messageData = new LinkedHashMap<>();
+    private List<MessageDecorator> messages = new ArrayList<>();
     private ScoringStrategy scoringStrategy;
-
-    /** Add a listener to the class. */
-    public void addPropertyChangeListener(final PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
-
-    /** Remove the listener. */
-    public void removePropertyChangeListener(final PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
-    }
 
     /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
     public Y(final ScoringStrategy scoringStrategy) {
@@ -49,58 +38,62 @@ public class Y {
 
     /** Create a message for a specific user, not implemented. */
     public void publish(final TextArea t, final User u) {
-        add(new Message(t.getText()));
+        add(new MessageDecorator(t.getText()));
     }
 
-
     /** Post a message to all users. */
-    public void add(final Message message) {
+    public void add(final MessageDecorator message) {
         messages.add(message);
-        messageData.put(message, new MessageData());
-        scoringStrategy.computeScores(messageData);
+        scoringStrategy.computeScores(messages);
         pcs.firePropertyChange("MESSAGE_ADDED", null, message);
     }
 
     /** Get the messages. */
-   public List<Message> getMessages() {
-        return messages;
-   }
+    public List<MessageDecorator> getMessages() { return messages; }
 
    /** Get the sorted messages. */
-   public List<Message> getSortedMessages() {
-       List<Message> sortedMessages = new ArrayList<>(messages);
-       sortedMessages.sort((Message m1, Message m2) -> {
-           MessageData md1 = messageData.get(m1);
-           MessageData md2 = messageData.get(m2);
-           return -md1.compare(md2);
+   public List<MessageDecorator> getSortedMessages() {
+       List<MessageDecorator> sortedMessages = new ArrayList<>(messages);
+       sortedMessages.sort((MessageDecorator m1, MessageDecorator m2) -> {
+            return (-m1.getData().compare(m2.getData()));
        });
        return sortedMessages;
    }
 
+
    /** Bookmark the message. */
-   public void bookmarkMessage(final Message message) {
-       MessageData data = messageData.get(message);
-       if (data != null) {
-           data.setBookmarked(!data.isBookmarked());
-           scoringStrategy.computeScores(messageData);
-           pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, message);
-       }
+   public void bookmarkMessage(final MessageDecorator message) {
+        message.setBookmarked(!message.isBookmarked());
+        scoringStrategy.computeScores(messages);
+        pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, message);
    }
 
    /** Getter for bookmark. */
-   public boolean isMessageBookmarked(final Message message) {
-       MessageData data = messageData.get(message);
-       return data != null && data.isBookmarked();
+   public boolean isMessageBookmarked(final MessageDecorator message) {
+       return message.isBookmarked();
    }
 
    /** Getter for score. */
-   public int getMessageScore(final Message message) {
-       MessageData data = messageData.get(message);
-       return data != null ? data.getScore() : -1;
+   public int getMessageScore(final MessageDecorator message) {
+       return message.getScore();
    }
 
    /** Get the message data. */
    public Map<Message, MessageData> getMessageData() {
-       return messageData;
+       Map<Message, MessageData> map = new LinkedHashMap<>();
+       for (MessageDecorator md : messages) {
+           map.put(md, md.getData());
+       }
+       return map;
    }
+
+    /** Add a listener to the class. */
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    /** Remove the listener. */
+    public void removePropertyChangeListener(final PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
 }

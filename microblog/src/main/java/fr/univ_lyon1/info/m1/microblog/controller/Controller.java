@@ -1,6 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
-import fr.univ_lyon1.info.m1.microblog.model.Message;
+import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
@@ -31,7 +31,7 @@ public class Controller implements PropertyChangeListener {
                 break;
             case "MESSAGE_ADDED":
             case "MESSAGE_BOOKMARKED":
-                view.updateMessageList(model.getSortedMessages(), model.getMessageData());
+                view.updateMessageList(model.getSortedMessages());
                 break;
             default:
                 break;
@@ -45,22 +45,22 @@ public class Controller implements PropertyChangeListener {
 
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
-        Message message = new Message(content);
+        MessageDecorator message = new MessageDecorator(content);
         model.add(message);
     }
 
     /** Calls the model's method to bookmark the message. */
-    public void toggleBookmark(final Message message) {
+    public void toggleBookmark(final MessageDecorator message) {
         model.bookmarkMessage(message);
     }
 
     /** Getter for bookmark. */
-    public boolean isMessageBookmarked(final Message message) {
+    public boolean isMessageBookmarked(final MessageDecorator message) {
         return model.isMessageBookmarked(message);
     }
 
     /** Getter for the score. */
-    public int getMessageScore(final Message message) {
+    public int getMessageScore(final MessageDecorator message) {
         return model.getMessageScore(message);
     }
 

@@ -1,8 +1,7 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.Message;
-import fr.univ_lyon1.info.m1.microblog.model.MessageData;
+import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -79,8 +78,7 @@ public class JfxView {
     /**
      *
      */
-    public void updateMessageList(final List<Message> messages,
-                                  final Map<Message, MessageData> messageData) {
+    public void updateMessageList(final List<MessageDecorator> messages) {
         users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)
@@ -89,8 +87,8 @@ public class JfxView {
                     VBox userMsgBox = (VBox) userBox.getChildren().get(1);
                     userMsgBox.getChildren().clear();
 
-                    for (Message message : messages) {
-                        VBox msgBox = createMessageWidget(message, messageData.get(message));
+                    for (MessageDecorator message : messages) {
+                        VBox msgBox = createMessageWidget(message);
                         userMsgBox.getChildren().add(msgBox);
                     }
                 });
@@ -104,10 +102,10 @@ public class JfxView {
             + "-fx-padding: 8px; "
             + "-fx-margin: 5px; ";
 
-    private VBox createMessageWidget(final Message m, final MessageData d) {
+    private VBox createMessageWidget(final MessageDecorator m) {
         VBox msgBox = new VBox();
 
-        String bookmarkText = d.isBookmarked() ? "⭐" : "Click to bookmark";
+        String bookmarkText = m.isBookmarked() ? "⭐" : "Click to bookmark";
         Button bookButton = new Button(bookmarkText);
         bookButton.setOnAction(e -> {
             controller.toggleBookmark(m);
@@ -121,7 +119,7 @@ public class JfxView {
         Label date = new Label(dateFormat.format(m.getPublicationDate()));
         msgBox.getChildren().add(date);
 
-        final Label score = new Label("Score: " + d.getScore());
+        final Label score = new Label("Score: " + m.getScore());
         score.setTextFill(Color.LIGHTGRAY);
         msgBox.getChildren().add(score);
 

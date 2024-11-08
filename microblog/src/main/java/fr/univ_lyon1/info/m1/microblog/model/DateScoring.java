@@ -1,6 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -11,9 +11,9 @@ public class DateScoring implements ScoringStrategy {
 
     /** Compute the score for all messages in messagesData. */
     @Override
-    public void computeScores(final Map<Message, MessageData> messagesData) {
+    public void computeScores(List<MessageDecorator> messages) {
         Date cur = new Date();
-        messagesData.forEach((Message m, MessageData md) -> {
+        messages.forEach(m -> {
             int score = 0;
 
             Date publicationDate = m.getPublicationDate();
@@ -28,7 +28,7 @@ public class DateScoring implements ScoringStrategy {
                 score++;
             }
 
-            md.setScore(score);
+            m.setScore(score);
         });
     }
 
