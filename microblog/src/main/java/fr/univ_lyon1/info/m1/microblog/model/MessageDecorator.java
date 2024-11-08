@@ -1,13 +1,12 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.Date;
 
 /** Decorator for Message that includes MessageData. */
 public class MessageDecorator extends Message {
     private MessageData data;
 
     /** Default constructor. */
-    public MessageDecorator(String content) {
+    public MessageDecorator(final String content) {
         super(content);
         data = new MessageData();
     }
@@ -19,7 +18,7 @@ public class MessageDecorator extends Message {
     }
 
     /** Set the data associated with the message. */
-    public void setData(MessageData data) {
+    public void setData(final MessageData data) {
         this.data = data;
     }
 
@@ -29,7 +28,7 @@ public class MessageDecorator extends Message {
     }
 
     /** Set the score of the message. */
-    public void setScore(int score) {
+    public void setScore(final int score) {
         data.setScore(score);
     }
 
@@ -39,7 +38,7 @@ public class MessageDecorator extends Message {
     }
 
     /** Set the bookmarked status of the message. */
-    public void setBookmarked(boolean bookmarked) {
+    public void setBookmarked(final boolean bookmarked) {
         data.setBookmarked(bookmarked);
     }
 }

@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Main class of the View (GUI) of the application.
