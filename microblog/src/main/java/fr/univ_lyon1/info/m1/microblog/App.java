@@ -1,5 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog;
 
+import fr.univ_lyon1.info.m1.microblog.config.YConfiguration;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
 import fr.univ_lyon1.info.m1.microblog.model.DateScoring;
@@ -8,6 +9,8 @@ import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Main class for the application (structure imposed by JavaFX).
@@ -23,6 +26,7 @@ public class App extends Application {
         DateScoring dateScoring = new DateScoring();
         LengthScoring lengthScoring = new LengthScoring();
         final Y y = new Y(lengthScoring);
+        YConfiguration config = new YConfiguration(y);
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
@@ -32,7 +36,11 @@ public class App extends Application {
         //Controller controller2 = new Controller(y, v2);
         //v2.setController(controller2);
 
-        y.loadExampleMessages();
+        try {
+            config.initialize();
+        } catch (IOException e) {
+            System.err.println("Error initializing app: " + e.getMessage());
+        }
     }
 
     /**
