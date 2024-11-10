@@ -32,6 +32,7 @@ public class Controller implements PropertyChangeListener {
             case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_BOOKMARKED":
+            case "MESSAGE_REMOVED":
                 view.updateMessageList(model.getSortedMessages());
                 break;
             default:
@@ -52,6 +53,11 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
         model.add(content);
+    }
+
+    /** Calls the model's method to delete a message. */
+    public void deleteMessage(final MessageDecorator message) {
+        model.removeMessage(message);
     }
 
     /** Calls the model's method to bookmark the message. */

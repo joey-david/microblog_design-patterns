@@ -78,6 +78,13 @@ public class Y {
         pcs.firePropertyChange("MESSAGE_ADDED", null, message);
     }
 
+    /** Remove a message. */
+    public void removeMessage(final MessageDecorator message) {
+        messages.remove(message);
+        scoringStrategy.computeScores(messages);
+        pcs.firePropertyChange("MESSAGE_REMOVED", null, message);
+    }
+
     /** Get the messages. */
     public List<MessageDecorator> getMessages() {
         return messages;

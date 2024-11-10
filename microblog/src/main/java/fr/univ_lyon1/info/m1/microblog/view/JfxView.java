@@ -103,13 +103,24 @@ public class JfxView {
 
     private VBox createMessageWidget(final MessageDecorator m) {
         VBox msgBox = new VBox();
-
         String bookmarkText = m.isBookmarked() ? "⭐" : "Click to bookmark";
+
+        // Buttons are stored in the buttonBox
+        HBox buttonBox = new HBox();
+
+        // bookmark button
         Button bookButton = new Button(bookmarkText);
         bookButton.setOnAction(e -> {
             controller.toggleBookmark(m);
         });
-        msgBox.getChildren().add(bookButton);
+        // delete button
+        Button deleteButton = new Button("❌");
+        deleteButton.setOnAction(e -> {
+            controller.deleteMessage(m);
+        });
+
+        buttonBox.getChildren().addAll(bookButton, deleteButton);
+        msgBox.getChildren().add(buttonBox);
 
         final Label label = new Label(m.getContent());
         msgBox.getChildren().add(label);
