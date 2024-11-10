@@ -8,8 +8,6 @@ import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 /**
  * Main class for the application (structure imposed by JavaFX).
  */
@@ -32,14 +30,7 @@ public class App extends Application {
         //Controller controller2 = new Controller(y, v2);
         //v2.setController(controller2);
 
-        y.createUser("foo");
-        y.createUser("bar");
-
-        try {
-            y.loadMessagesFromFile("messages/example-messages.txt");
-        } catch (IOException e) {
-            System.err.println("Error loading messages: " + e.getMessage());
-        }
+        y.loadExampleMessages();
     }
 
     /**
