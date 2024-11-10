@@ -75,7 +75,12 @@ public class JfxView {
     }
 
     /**
-     *
+     * The score threshold to display messages.
+     */
+    private int scoreThreshold = 0;
+
+    /**
+     * Create the pane containing all messages, from the messages' registry passed as an argument.
      */
     public void updateMessageList(final List<MessageDecorator> messages) {
         users.getChildren().stream()
@@ -87,8 +92,10 @@ public class JfxView {
                     userMsgBox.getChildren().clear();
 
                     for (MessageDecorator message : messages) {
-                        VBox msgBox = createMessageWidget(message);
-                        userMsgBox.getChildren().add(msgBox);
+                        if (message.getScore() > scoreThreshold) {
+                            VBox msgBox = createMessageWidget(message);
+                            userMsgBox.getChildren().add(msgBox);
+                        }
                     }
                 });
     }
