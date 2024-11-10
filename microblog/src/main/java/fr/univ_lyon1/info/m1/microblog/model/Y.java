@@ -67,7 +67,7 @@ public class Y {
 
     /** Add method which uses the factory. */
     public void add(final String content) {
-        MessageDecorator message = new MessageDecorator(content);
+        MessageDecorator message = messageFactory.createMessage(content);
         add(message);
     }
 
