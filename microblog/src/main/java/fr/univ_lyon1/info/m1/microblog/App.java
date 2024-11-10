@@ -3,6 +3,7 @@ package fr.univ_lyon1.info.m1.microblog;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
 import fr.univ_lyon1.info.m1.microblog.model.DateScoring;
+import fr.univ_lyon1.info.m1.microblog.model.LengthScoring;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import javafx.application.Application;
@@ -20,7 +21,8 @@ public class App extends Application {
     public void start(final Stage stage) throws Exception {
         BookmarkScoring bookmarkScoring = new BookmarkScoring();
         DateScoring dateScoring = new DateScoring();
-        final Y y = new Y(dateScoring);
+        LengthScoring lengthScoring = new LengthScoring();
+        final Y y = new Y(lengthScoring);
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
