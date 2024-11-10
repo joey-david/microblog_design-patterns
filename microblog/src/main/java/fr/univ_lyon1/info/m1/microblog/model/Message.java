@@ -17,6 +17,10 @@ public class Message {
         return publicationDate;
     }
 
+    public void setPublicationDate(final Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
 
     /**
      * Build a Message object from it's (String) content.
@@ -25,5 +29,4 @@ public class Message {
         this.content = content;
         this.publicationDate = new Date();
     }
-
 }

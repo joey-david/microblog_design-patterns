@@ -2,10 +2,9 @@ package fr.univ_lyon1.info.m1.microblog.model;
 
 
 import java.awt.TextArea;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.Collection;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,6 +17,7 @@ public class Y {
     private List<User> users = new ArrayList<>();
     private List<MessageDecorator> messages = new ArrayList<>();
     private ScoringStrategy scoringStrategy;
+    private MessageFactory messageFactory;
 
     /** Default constructor with dateScoring Strategy. */
     public Y() {
@@ -27,6 +27,7 @@ public class Y {
     /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
     public Y(final ScoringStrategy scoringStrategy) {
         this.scoringStrategy = scoringStrategy;
+        this.messageFactory = new DefaultMessageFactory();
     }
 
     /** Setter for the scoring strategy. */
@@ -34,6 +35,11 @@ public class Y {
         this.scoringStrategy = scoringStrategy;
         this.scoringStrategy.computeScores(messages);
         pcs.firePropertyChange("SCORING_STRATEGY_CHANGED", null, null);
+    }
+
+    /** Setter for the message factory. */
+    public void setMessageFactory(final MessageFactory messageFactory) {
+        this.messageFactory = messageFactory;
     }
 
     /** Getter for the scoring strategy. */
@@ -57,6 +63,12 @@ public class Y {
     /** Create a message for a specific user, not implemented. */
     public void publish(final TextArea t, final User u) {
         add(new MessageDecorator(t.getText()));
+    }
+
+    /** Add method which uses the factory. */
+    public void add(final String content) {
+        MessageDecorator message = new MessageDecorator(content);
+        add(message);
     }
 
     /** Post a message to all users. */
@@ -98,13 +110,12 @@ public class Y {
        return message.getScore();
    }
 
-   /** Get the message data. */
-   public Map<Message, MessageData> getMessageData() {
-       Map<Message, MessageData> map = new LinkedHashMap<>();
-       for (MessageDecorator md : messages) {
-           map.put(md, md.getData());
+   /** Load messages from file. */
+   public void loadMessagesFromFile(final String resourcePath) throws IOException {
+       List<MessageDecorator> loadedMessages = messageFactory.loadMessagesFromFile(resourcePath);
+       for (MessageDecorator md : loadedMessages) {
+           add(md);
        }
-       return map;
    }
 
     /** Add a listener to the class. */

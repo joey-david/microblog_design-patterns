@@ -1,16 +1,16 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
 
+
 /** Decorator for Message that includes MessageData. */
 public class MessageDecorator extends Message {
     private MessageData data;
 
-    /** Default constructor. */
+    /** Default constructor with content. */
     public MessageDecorator(final String content) {
         super(content);
         data = new MessageData();
     }
-
 
     /** Get the data associated with the message. */
     public MessageData getData() {

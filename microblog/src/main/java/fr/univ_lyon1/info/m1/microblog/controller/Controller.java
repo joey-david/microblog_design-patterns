@@ -1,7 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
-import fr.univ_lyon1.info.m1.microblog.model.User;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
@@ -52,8 +51,7 @@ public class Controller implements PropertyChangeListener {
 
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
-        MessageDecorator message = new MessageDecorator(content);
-        model.add(message);
+        model.add(content);
     }
 
     /** Calls the model's method to bookmark the message. */
@@ -69,18 +67,5 @@ public class Controller implements PropertyChangeListener {
     /** Getter for the score. */
     public int getMessageScore(final MessageDecorator message) {
         return model.getMessageScore(message);
-    }
-
-    /**
-     * Create an example set of users and messages, for testing.
-     */
-    public void createExampleMessages() {
-        User foo = model.createUser("foo");
-        User bar = model.createUser("bar");
-        publishMessage("Hello, world!");
-        publishMessage("What is this message?");
-        publishMessage("Good bye, world!");
-        publishMessage("Hello, you!");
-        publishMessage("Hello hello, world world world.");
     }
 }
