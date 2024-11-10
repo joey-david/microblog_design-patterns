@@ -32,4 +32,8 @@ public class DateScoring implements ScoringStrategy {
         });
     }
 
+    @Override
+    public String toString() {
+        return "Date";
+    }
 }

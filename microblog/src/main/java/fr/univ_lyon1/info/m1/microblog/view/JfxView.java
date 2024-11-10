@@ -1,19 +1,18 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
-import fr.univ_lyon1.info.m1.microblog.model.User;
+import fr.univ_lyon1.info.m1.microblog.model.*;
+import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
+import javafx.scene.control.ComboBox;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -26,6 +25,8 @@ public class JfxView {
     private Controller controller;
     private HBox users;
     private VBox root;
+    private final ComboBox<ScoringStrategy> strategyComboBox;
+    private int scoreThreshold = 0;
 
     /**
      * Main view of the application.
@@ -36,6 +37,28 @@ public class JfxView {
         stage.setTitle("Y Microblogging");
 
         root = new VBox(10);
+
+        strategyComboBox = new ComboBox<>(FXCollections.observableArrayList(
+                new ChronologicalScoring(),
+                new DateScoring(),
+                new LengthScoring()
+        ));
+        strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(strategyComboBox.getValue()));
+
+        // Use toString() method for displaying items
+        strategyComboBox.setCellFactory(lv -> new ListCell<ScoringStrategy>() {
+            @Override
+            protected void updateItem(ScoringStrategy item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.toString());
+            }
+        });
+
+        strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
+        Label strategyLabel = new Label("Select Scoring Strategy:");
+        HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox);
+        strategyBox.setAlignment(Pos.CENTER); // Center the HBox
+        root.getChildren().add(strategyBox);
 
         // final Pane search = createSearchWidget();
         // root.getChildren().add(search);
@@ -73,11 +96,6 @@ public class JfxView {
             userBox.getChildren().addAll(userID, userMsgBox, textBox);
         }
     }
-
-    /**
-     * The score threshold to display messages.
-     */
-    private int scoreThreshold = 0;
 
     /**
      * Create the pane containing all messages, from the messages' registry passed as an argument.
@@ -161,5 +179,9 @@ public class JfxView {
         });
         input.getChildren().addAll(t, s);
         return input;
+    }
+
+    public void setScoreThreshold(int i) {
+        scoreThreshold = i;
     }
 }

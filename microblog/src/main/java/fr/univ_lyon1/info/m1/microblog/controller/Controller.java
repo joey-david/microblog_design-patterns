@@ -1,5 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
+import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
@@ -43,6 +44,13 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to switch the scoring strategy. */
     public void switchScoringStrategy(final ScoringStrategy strategy) {
         model.setScoringStrategy(strategy);
+        if (strategy instanceof ChronologicalScoring) {
+            view.setScoreThreshold(-1);
+        } else {
+            view.setScoreThreshold(1);
+        }
+        view.updateMessageList(model.getSortedMessages());
+
     }
 
     /** Calls the model's method to create the user. */
@@ -53,16 +61,19 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
         model.add(content);
+        view.updateMessageList(model.getSortedMessages());
     }
 
     /** Calls the model's method to delete a message. */
     public void deleteMessage(final MessageDecorator message) {
         model.removeMessage(message);
+        view.updateMessageList(model.getSortedMessages());
     }
 
     /** Calls the model's method to bookmark the message. */
     public void toggleBookmark(final MessageDecorator message) {
         model.bookmarkMessage(message);
+        view.updateMessageList(model.getSortedMessages());
     }
 
     /** Getter for bookmark. */

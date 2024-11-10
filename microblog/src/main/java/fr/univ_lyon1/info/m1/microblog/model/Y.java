@@ -125,17 +125,6 @@ public class Y {
        }
    }
 
-   /** Load example messages and create users. */
-   public void loadExampleMessages() {
-       createUser("foo");
-       createUser("bar");
-       try {
-           loadMessagesFromFile("messages/example-messages.txt");
-       } catch (IOException e) {
-           System.err.println("Error loading messaages: " + e.getMessage());
-       }
-   }
-
     /** Add a listener to the class. */
     public void addPropertyChangeListener(final PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
