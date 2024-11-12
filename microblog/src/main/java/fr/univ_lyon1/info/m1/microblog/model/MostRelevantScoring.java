@@ -5,17 +5,12 @@ import java.util.List;
 /**
  * Global scoring strategy that combines multiple scoring strategies.
  */
-public class RelevantScoring implements ScoringStrategy {
-    private final List<ScoringStrategy> strategies;
+public class MostRelevantScoring implements ScoringStrategy {
+    private final List<ScoringStrategy> strategies = List.of(
+            new DateScoring(),
+            new LengthScoring(),
+            new BookmarkScoring());
 
-    /**
-     * Constructor.
-     *
-     * @param strategies List of scoring strategies to combine.
-     */
-    public RelevantScoring(final List<ScoringStrategy> strategies) {
-        this.strategies = strategies;
-    }
 
     /**
      * Compute the score for all messages in messagesData.
@@ -51,6 +46,6 @@ public class RelevantScoring implements ScoringStrategy {
      */
     @Override
     public String toString() {
-        return "Relevant Recent Messages";
+        return "Most Relevant Messages";
     }
 }

@@ -1,11 +1,11 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
+import fr.univ_lyon1.info.m1.microblog.view.JfxView;
+import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
 import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
-import fr.univ_lyon1.info.m1.microblog.view.JfxView;
-import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
-import fr.univ_lyon1.info.m1.microblog.model.RelevantScoring;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -49,7 +49,7 @@ public class Controller implements PropertyChangeListener {
         strategy.computeScores(model.getMessages());
         if (strategy instanceof ChronologicalScoring) {
             view.setScoreThreshold(-1);
-        } else if (strategy instanceof RelevantScoring) {
+        } else if (strategy instanceof MostRelevantScoring) {
             view.setScoreThreshold(0);
         }
         view.updateMessageList(model.getSortedMessages());

@@ -1,14 +1,13 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
+import fr.univ_lyon1.info.m1.microblog.model.RecentRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
-import fr.univ_lyon1.info.m1.microblog.model.User;
-import fr.univ_lyon1.info.m1.microblog.model.RelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
-import fr.univ_lyon1.info.m1.microblog.model.DateScoring;
-import fr.univ_lyon1.info.m1.microblog.model.LengthScoring;
-import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
+import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.User;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -51,11 +50,8 @@ public class JfxView {
 
         strategyComboBox = new ComboBox<>(FXCollections.observableArrayList(
                 new ChronologicalScoring(),
-                new RelevantScoring(List.of(
-                        new DateScoring(),
-                        new LengthScoring(),
-                        new BookmarkScoring()))
-
+                new RecentRelevantScoring(),
+                new MostRelevantScoring()
         ));
         strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
                 strategyComboBox.getValue()));
@@ -70,7 +66,7 @@ public class JfxView {
         });
 
         strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
-        strategyComboBox.getSelectionModel().select(1); // Select RelevantScoring by default
+        strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring by default
         Label strategyLabel = new Label("Select Scoring Strategy:");
         HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox);
         strategyBox.setAlignment(Pos.CENTER); // Center the HBox

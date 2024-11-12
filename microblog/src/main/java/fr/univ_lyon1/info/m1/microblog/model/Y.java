@@ -22,7 +22,7 @@ public class Y {
 
     /** Default constructor with dateScoring Strategy. */
     public Y() {
-        this(new RelevantScoring(List.of(new LengthScoring())));
+        this(new MostRelevantScoring());
     }
 
     /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
