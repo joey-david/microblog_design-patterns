@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Collection;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.stream.Collectors;
 
 /**
  * Toplevel class for the Y microbloging application's model.
@@ -21,7 +22,7 @@ public class Y {
 
     /** Default constructor with dateScoring Strategy. */
     public Y() {
-        this(new DateScoring());
+        this(new RelevantScoring(List.of(new LengthScoring())));
     }
 
     /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
@@ -90,15 +91,25 @@ public class Y {
         return messages;
     }
 
-   /** Get the sorted messages. */
-   public List<MessageDecorator> getSortedMessages() {
-       List<MessageDecorator> sortedMessages = new ArrayList<>(messages);
-       sortedMessages.sort((MessageDecorator m1, MessageDecorator m2) -> {
-            return (-m1.getData().compare(m2.getData()));
-       });
-       return sortedMessages;
-   }
-
+    /** Get the sorted messages. */
+    public List<MessageDecorator> getSortedMessages() {
+        return messages.stream()
+                .sorted((m1, m2) -> {
+                    if (m1.isBookmarked() && !m2.isBookmarked()) {
+                        return -1;
+                    } else if (!m1.isBookmarked() && m2.isBookmarked()) {
+                        return 1;
+                    } else {
+                        int scoreDiff = m2.getScore() - m1.getScore();
+                        if (scoreDiff == 0) {
+                            return m2.getPublicationDate().compareTo(m1.getPublicationDate());
+                        } else {
+                            return scoreDiff;
+                        }
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
    /** Bookmark the message. */
    public void bookmarkMessage(final MessageDecorator message) {

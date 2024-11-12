@@ -1,6 +1,5 @@
 package fr.univ_lyon1.info.m1.microblog.model;
-
-
+import java.util.Date;
 
 /** Decorator for Message that includes MessageData. */
 public class MessageDecorator extends Message {
@@ -40,5 +39,10 @@ public class MessageDecorator extends Message {
     /** Set the bookmarked status of the message. */
     public void setBookmarked(final boolean bookmarked) {
         data.setBookmarked(bookmarked);
+    }
+
+    /** Get the publication date of the message. */
+    public Date getPublicationDate() {
+        return super.getPublicationDate();
     }
 }

@@ -12,10 +12,14 @@ public class ChronologicalScoring implements ScoringStrategy {
     @Override
     public void computeScores(final List<MessageDecorator> messages) {
         messages.sort(Comparator.comparing(Message::getPublicationDate).reversed());
+        int score = messages.size();
+        for (MessageDecorator message : messages) {
+            message.setScore(score--);
+        }
     }
 
     @Override
     public String toString() {
-        return "Chronological order";
+        return "Messages in chronological order";
     }
 }

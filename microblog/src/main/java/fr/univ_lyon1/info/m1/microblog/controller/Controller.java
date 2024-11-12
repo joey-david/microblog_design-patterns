@@ -5,6 +5,7 @@ import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
+import fr.univ_lyon1.info.m1.microblog.model.RelevantScoring;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,6 +24,7 @@ public class Controller implements PropertyChangeListener {
         model.addPropertyChangeListener(this);
     }
 
+    /** Calls the model's method to add a property change listener. */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
         String propertyName = evt.getPropertyName();
@@ -44,13 +46,13 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to switch the scoring strategy. */
     public void switchScoringStrategy(final ScoringStrategy strategy) {
         model.setScoringStrategy(strategy);
+        strategy.computeScores(model.getMessages());
         if (strategy instanceof ChronologicalScoring) {
             view.setScoreThreshold(-1);
-        } else {
-            view.setScoreThreshold(1);
+        } else if (strategy instanceof RelevantScoring) {
+            view.setScoreThreshold(0);
         }
         view.updateMessageList(model.getSortedMessages());
-
     }
 
     /** Calls the model's method to create the user. */

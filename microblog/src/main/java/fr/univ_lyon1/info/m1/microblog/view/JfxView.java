@@ -1,11 +1,22 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.*;
+import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
+import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
+import fr.univ_lyon1.info.m1.microblog.model.User;
+import fr.univ_lyon1.info.m1.microblog.model.RelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
+import fr.univ_lyon1.info.m1.microblog.model.DateScoring;
+import fr.univ_lyon1.info.m1.microblog.model.LengthScoring;
+import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -40,21 +51,26 @@ public class JfxView {
 
         strategyComboBox = new ComboBox<>(FXCollections.observableArrayList(
                 new ChronologicalScoring(),
-                new DateScoring(),
-                new LengthScoring()
+                new RelevantScoring(List.of(
+                        new DateScoring(),
+                        new LengthScoring(),
+                        new BookmarkScoring()))
+
         ));
-        strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(strategyComboBox.getValue()));
+        strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
+                strategyComboBox.getValue()));
 
         // Use toString() method for displaying items
         strategyComboBox.setCellFactory(lv -> new ListCell<ScoringStrategy>() {
             @Override
-            protected void updateItem(ScoringStrategy item, boolean empty) {
+            protected void updateItem(final ScoringStrategy item, final boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty ? null : item.toString());
             }
         });
 
         strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
+        strategyComboBox.getSelectionModel().select(1); // Select RelevantScoring by default
         Label strategyLabel = new Label("Select Scoring Strategy:");
         HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox);
         strategyBox.setAlignment(Pos.CENTER); // Center the HBox
@@ -72,8 +88,12 @@ public class JfxView {
         stage.show();
     }
 
+    /**
+     * Set the controller for the view.
+     */
     public void setController(final Controller controller) {
         this.controller = controller;
+        controller.switchScoringStrategy(strategyComboBox.getValue());
     }
 
     /**
@@ -181,7 +201,7 @@ public class JfxView {
         return input;
     }
 
-    public void setScoreThreshold(int i) {
+    public void setScoreThreshold(final int i) {
         scoreThreshold = i;
     }
 }

@@ -2,9 +2,6 @@ package fr.univ_lyon1.info.m1.microblog;
 
 import fr.univ_lyon1.info.m1.microblog.config.YConfiguration;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
-import fr.univ_lyon1.info.m1.microblog.model.DateScoring;
-import fr.univ_lyon1.info.m1.microblog.model.LengthScoring;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import javafx.application.Application;
@@ -22,19 +19,17 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        BookmarkScoring bookmarkScoring = new BookmarkScoring();
-        DateScoring dateScoring = new DateScoring();
-        LengthScoring lengthScoring = new LengthScoring();
-        final Y y = new Y(lengthScoring);
+        final Y y = new Y();
         YConfiguration config = new YConfiguration(y);
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
+        v.updateMessageList(y.getSortedMessages());
 
         // Second view (uncomment to activate)
-        //JfxView v2 = new JfxView(new Stage(), 400, 400);
-        //Controller controller2 = new Controller(y, v2);
-        //v2.setController(controller2);
+//        JfxView v2 = new JfxView(new Stage(), 400, 400);
+//        Controller controller2 = new Controller(y, v2);
+//        v2.setController(controller2);
 
         try {
             config.initialize();

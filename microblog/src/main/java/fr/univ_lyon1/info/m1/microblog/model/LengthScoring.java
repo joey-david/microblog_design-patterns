@@ -16,9 +16,9 @@ public class LengthScoring implements ScoringStrategy {
             int lengthDiscrepancy = Math.abs(42 - m.getContent().length());
 
             int score = 0;
-            if (lengthDiscrepancy <= 15) {
+            if (lengthDiscrepancy <= 10) {
                 score = 2;
-            } else if (lengthDiscrepancy <= 30) {
+            } else if (lengthDiscrepancy <= 20) {
                 score = 1;
             }
 
