@@ -9,6 +9,8 @@ import fr.univ_lyon1.info.m1.microblog.model.Y;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class of the Controller of the application.
@@ -16,6 +18,7 @@ import java.beans.PropertyChangeListener;
 public class Controller implements PropertyChangeListener {
     private Y model;
     private JfxView view;
+    private String currentSearchQuery = "";
 
     /** Controller of the application. */
     public Controller(final Y model, final JfxView view) {
@@ -37,10 +40,15 @@ public class Controller implements PropertyChangeListener {
             case "MESSAGE_BOOKMARKED":
             case "MESSAGE_REMOVED":
                 view.updateMessageList(model.getSortedMessages());
+                refreshMessages();
                 break;
             default:
                 break;
         }
+    }
+
+    private void refreshMessages() {
+        searchMessages(currentSearchQuery);
     }
 
     /** Calls the model's method to switch the scoring strategy. */
@@ -53,6 +61,7 @@ public class Controller implements PropertyChangeListener {
             view.setScoreThreshold(0);
         }
         view.updateMessageList(model.getSortedMessages());
+        refreshMessages();
     }
 
     /** Calls the model's method to create the user. */
@@ -64,12 +73,14 @@ public class Controller implements PropertyChangeListener {
     public void publishMessage(final String content) {
         model.add(content);
         view.updateMessageList(model.getSortedMessages());
+        refreshMessages();
     }
 
     /** Calls the model's method to delete a message. */
     public void deleteMessage(final MessageDecorator message) {
         model.removeMessage(message);
         view.updateMessageList(model.getSortedMessages());
+        refreshMessages();
     }
 
     /** Calls the model's method to bookmark the message. */
@@ -86,5 +97,19 @@ public class Controller implements PropertyChangeListener {
     /** Getter for the score. */
     public int getMessageScore(final MessageDecorator message) {
         return model.getMessageScore(message);
+    }
+
+    /** Search function updater. */
+    public void searchMessages(final String search) {
+        currentSearchQuery = search;
+        List<MessageDecorator> filteredMessages = model.getMessages().stream()
+                .filter(message -> isValidLookup(message.getContent(), search))
+                .collect(Collectors.toList());
+        view.updateMessageList(filteredMessages);
+    }
+
+    /** search boolean function. */
+    private boolean isValidLookup(final String message, final String query) {
+        return message.toLowerCase().contains(query.toLowerCase());
     }
 }

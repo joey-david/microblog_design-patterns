@@ -9,10 +9,12 @@ import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.model.User;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,7 +24,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
-import javafx.scene.control.ComboBox;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -41,7 +42,6 @@ public class JfxView {
     /**
      * Main view of the application.
      */
-    // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
     public JfxView(final Stage stage,
                    final int width, final int height) {
         stage.setTitle("Y Microblogging");
@@ -68,12 +68,19 @@ public class JfxView {
         strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
         strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring by default
         Label strategyLabel = new Label("Select Scoring Strategy:");
-        HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox);
+
+        TextField searchBar = new TextField();
+        searchBar.setPromptText("Search messages");
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            controller.searchMessages(newValue);
+        });
+
+        HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox, searchBar);
+
         strategyBox.setAlignment(Pos.CENTER); // Center the HBox
         root.getChildren().add(strategyBox);
 
-        // final Pane search = createSearchWidget();
-        // root.getChildren().add(search);
+
 
         users = new HBox(10);
         root.getChildren().add(users);
@@ -133,7 +140,6 @@ public class JfxView {
                     }
                 });
     }
-
 
     static final String MSG_STYLE = "-fx-background-color: white; "
             + "-fx-border-color: black; -fx-border-width: 1;"
