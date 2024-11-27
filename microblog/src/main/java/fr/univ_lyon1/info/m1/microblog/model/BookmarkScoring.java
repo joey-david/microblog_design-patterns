@@ -15,14 +15,13 @@ public class BookmarkScoring implements ScoringStrategy {
         Set<String> bookmarkedWords = new HashSet<>();
 
         messages.forEach((MessageDecorator m) -> {
-           MessageData d = m.getData();
-           String[] w = m.getContent().toLowerCase().split("[^\\p{Alpha}]+");
-           Set<String> words = new HashSet<>();
-           words.addAll(Arrays.asList(w));
-           d.setWords(words);
-           if (d.isBookmarked()) {
-               bookmarkedWords.addAll(words);
-           }
+            MessageData d = m.getData();
+            String[] w = m.getContent().toLowerCase().split("[^\\p{Alpha}]+");
+            Set<String> words = new HashSet<>(Arrays.asList(w));
+            d.setWords(words);
+            if (d.isBookmarked()) {
+                bookmarkedWords.addAll(words);
+            }
         });
 
         messages.forEach((MessageDecorator m) -> {

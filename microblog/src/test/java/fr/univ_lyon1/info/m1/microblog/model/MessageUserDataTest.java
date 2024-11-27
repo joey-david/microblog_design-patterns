@@ -15,13 +15,10 @@ import org.junit.jupiter.api.Test;
 public class MessageUserDataTest {
     @Test
     void dummyTestMessageContent() {
-        // Given
         Message m = new Message("Some content");
 
-        // When
         String s = m.getContent();
 
-        // Then
         assertThat(s, is("Some content"));
     }
 
