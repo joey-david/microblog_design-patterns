@@ -74,10 +74,12 @@ public class ControllerTest {
 
     @Test
     void testCreateUser() {
-        controller.createUser("user");
+        Platform.runLater(() -> {
+            controller.createUser("user");
 
-        assertEquals(1, model.getUsers().size());
-        assertTrue(model.getUsers().stream().anyMatch(user -> user.getId().equals("user")));
+            assertEquals(1, model.getUsers().size());
+            assertTrue(model.getUsers().stream().anyMatch(user -> user.getId().equals("user")));
+        });
     }
 
     @Test
@@ -128,4 +130,8 @@ public class ControllerTest {
         assertEquals(model.getMessageScore(message), controller.getMessageScore(message));
     }
 
+    @Test
+    void testSearchMessages() {
+        //TODO : don't know how to test this
+    }
 }
