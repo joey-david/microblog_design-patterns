@@ -104,7 +104,7 @@ public class JfxView {
      */
     public void updateUserList(final Collection<User> userList) {
         users.getChildren().clear();
-        for (User u : userList) {
+        for (User u : userList) { //TODO: remove User, replace with strings
             ScrollPane p = new ScrollPane();
             VBox userBox = new VBox();
             p.setMinWidth(300);
@@ -123,7 +123,7 @@ public class JfxView {
     /**
      * Create the pane containing all messages, from the messages' registry passed as an argument.
      */
-    public void updateMessageList(final List<MessageDecorator> messages) {
+    public void updateMessageList(final List<MessageDecorator> messages) { //TODO: find a way to remove messages ?
         users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)

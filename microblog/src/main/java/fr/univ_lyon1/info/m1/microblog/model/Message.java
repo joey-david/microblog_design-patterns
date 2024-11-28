@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Message and its own data.
  */
-public class Message {
+public class Message { //TODO: add string UserId and adapt bookmarks so it only bookmarks for the specific user, same for deleting only for the creator
     private String content;
     private Date publicationDate;
 
