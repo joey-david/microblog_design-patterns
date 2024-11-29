@@ -19,6 +19,10 @@ public class DefaultMessageFactory implements MessageFactory {
         return new MessageDecorator(content);
     }
 
+    public MessageDecorator createMessage(final String content, final String userId) {
+        return new MessageDecorator(content, userId);
+    }
+
     @Override
     public MessageDecorator createMessage(final String content, final Date publicationDate) {
         MessageDecorator decorator = new MessageDecorator(content);

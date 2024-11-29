@@ -8,10 +8,13 @@ import java.util.Date;
 public class Message { //TODO: add string UserId and adapt bookmarks so it only bookmarks for the specific user, same for deleting only for the creator
     private String content;
     private Date publicationDate;
+    private String userId;
 
     public String getContent() {
         return content;
     }
+
+    public String getUserId() { return userId; }
 
     public Date getPublicationDate() {
         return publicationDate;
@@ -27,6 +30,12 @@ public class Message { //TODO: add string UserId and adapt bookmarks so it only 
      */
     public Message(final String content) {
         this.content = content;
+        this.publicationDate = new Date();
+    }
+
+    public Message(final String content, final String userId) {
+        this.content = content;
+        this.userId = userId;
         this.publicationDate = new Date();
     }
 }

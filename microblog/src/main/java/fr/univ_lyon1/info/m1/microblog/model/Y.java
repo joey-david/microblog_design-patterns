@@ -71,8 +71,9 @@ public class Y {
     }
 
     /** Create a message for a specific user, not implemented. */
-    public void publish(final TextArea t, final User u) { //TODO: implement
-        add(new MessageDecorator(t.getText()));
+    public void publish(final String content, final String u) { //TODO: implement
+        MessageDecorator message = new MessageDecorator(content, u);
+        add(message);
     }
 
     /** Add method which uses the factory. */

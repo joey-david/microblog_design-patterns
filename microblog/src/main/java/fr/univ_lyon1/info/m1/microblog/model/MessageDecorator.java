@@ -11,6 +11,12 @@ public class MessageDecorator extends Message {
         data = new MessageData();
     }
 
+    /** Csontructor with content and userId. */
+    public MessageDecorator(final String content, final String userId) {
+        super(content, userId);
+        data = new MessageData();
+    }
+
     /** Get the data associated with the message. */
     public MessageData getData() {
         return data;

@@ -183,13 +183,13 @@ public class JfxView {
         return msgBox;
     }
 
-    private Pane createInputWidget(final User u) {
+    private Pane createInputWidget(final String u) {
         final Pane input = new HBox();
         TextArea t = new TextArea();
         t.setMaxSize(200, 150);
         t.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER && e.isControlDown()) {
-                controller.publishMessage(t.getText());
+                controller.publishMessage(t.getText(), u);
                 t.clear();
             }
         });

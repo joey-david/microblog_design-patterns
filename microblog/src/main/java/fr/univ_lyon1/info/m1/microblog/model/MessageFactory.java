@@ -8,6 +8,8 @@ import java.util.List;
 public interface MessageFactory {
     /** Create Message from content. */
     MessageDecorator createMessage(String content);
+    /** Create Message from content and user. */
+    MessageDecorator createMessage(String content, String userId);
     /** Create Message from content and publication date. */
     MessageDecorator createMessage(String content, Date publicationDate);
     /** Load messages from a file. */
