@@ -61,6 +61,15 @@ public class Y {
         return users;
     }
 
+    /** Get the ids of the users. */
+    public List<String> getUserIds() {
+        List<String> userIds = new ArrayList<>();
+        for(User u : users) {
+            userIds.add(u.getId());
+        }
+        return userIds;
+    }
+
     /** Create a message for a specific user, not implemented. */
     public void publish(final TextArea t, final User u) { //TODO: implement
         add(new MessageDecorator(t.getText()));

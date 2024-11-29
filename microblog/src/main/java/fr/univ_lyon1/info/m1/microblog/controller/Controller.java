@@ -33,7 +33,7 @@ public class Controller implements PropertyChangeListener {
         String propertyName = evt.getPropertyName();
         switch (propertyName) {
             case "USER_ADDED":
-                view.updateUserList(model.getUsers());
+                view.updateUserList(model.getUserIds());
                 break;
             case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
@@ -72,6 +72,12 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
         model.add(content);
+        view.updateMessageList(model.getSortedMessages());
+        refreshMessages();
+    }
+
+    public void publishMessage(final String content, final String user) {
+        model.publish(content, user);
         view.updateMessageList(model.getSortedMessages());
         refreshMessages();
     }

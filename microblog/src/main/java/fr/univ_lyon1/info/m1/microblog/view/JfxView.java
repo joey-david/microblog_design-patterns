@@ -6,7 +6,6 @@ import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
 import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
-import fr.univ_lyon1.info.m1.microblog.model.User;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -102,9 +101,9 @@ public class JfxView {
     /**
      * Create the pane containing all user's, from the users' registry passed as an argument.
      */
-    public void updateUserList(final Collection<User> userList) {
+    public void updateUserList(final Collection<String> userList) {
         users.getChildren().clear();
-        for (User u : userList) { //TODO: remove User, replace with strings
+        for (String s : userList) {
             ScrollPane p = new ScrollPane();
             VBox userBox = new VBox();
             p.setMinWidth(300);
@@ -113,9 +112,9 @@ public class JfxView {
 
             VBox userMsgBox = new VBox();
 
-            Label userID = new Label(u.getId());
+            Label userID = new Label(s);
 
-            Pane textBox = createInputWidget(u);
+            Pane textBox = createInputWidget(s);
             userBox.getChildren().addAll(userID, userMsgBox, textBox);
         }
     }
