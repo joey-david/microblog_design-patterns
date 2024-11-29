@@ -1,10 +1,15 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 /**
  * User of the application.
  */
 public class User {
     private String id;
+    private List<UUID> bookmarks = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -47,5 +52,28 @@ public class User {
 
     public void setId(final String id) {
         this.id = id;
+    }
+
+    public List<UUID> getBookmarkedMessages() {
+        return bookmarks;
+    }
+
+    public void toggleMessageBookmark(final UUID messageId) {
+        if(bookmarks.isEmpty()) {
+            bookmarks.add(messageId);
+            return;
+        }
+        if (bookmarks.contains(messageId)) {
+            bookmarks.remove(messageId);
+        } else {
+            bookmarks.add(messageId);
+        }
+    }
+
+    public boolean isMessageBookmarked(final UUID messageId) {
+        if(bookmarks.isEmpty()) {
+            return false;
+        }
+        return bookmarks.contains(messageId);
     }
 }

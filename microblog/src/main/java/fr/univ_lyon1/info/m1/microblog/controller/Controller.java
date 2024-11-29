@@ -35,11 +35,15 @@ public class Controller implements PropertyChangeListener {
             case "USER_ADDED":
                 view.updateUserList(model.getUserIds());
                 break;
+            case "MESSAGE_BOOKMARKED":
+                String user = (String) evt.getNewValue();
+                view.updateMessageListForUser(model.getSortedMessages(user), user);
             case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
-            case "MESSAGE_BOOKMARKED":
             case "MESSAGE_REMOVED":
-                view.updateMessageList(model.getSortedMessages());
+                for(String userId : model.getUserIds()) {
+                    view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+                }
                 refreshMessages();
                 break;
             default:
@@ -60,7 +64,9 @@ public class Controller implements PropertyChangeListener {
         } else if (strategy instanceof MostRelevantScoring) {
             view.setScoreThreshold(0);
         }
-        view.updateMessageList(model.getSortedMessages());
+        for(String userId : model.getUserIds()) {
+            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+        }
         refreshMessages();
     }
 
@@ -72,32 +78,38 @@ public class Controller implements PropertyChangeListener {
     /** Calls the model's method to publish a message. */
     public void publishMessage(final String content) {
         model.add(content);
-        view.updateMessageList(model.getSortedMessages());
+        for(String userId : model.getUserIds()) {
+            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+        }
         refreshMessages();
     }
 
     public void publishMessage(final String content, final String user) {
         model.publish(content, user);
-        view.updateMessageList(model.getSortedMessages());
+        for(String userId : model.getUserIds()) {
+            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+        }
         refreshMessages();
     }
 
     /** Calls the model's method to delete a message. */
-    public void deleteMessage(final MessageDecorator message) {
+    public void deleteMessage(final MessageDecorator message, final String userId) {
         model.removeMessage(message);
-        view.updateMessageList(model.getSortedMessages());
+        for(String user : model.getUserIds()) {
+            view.updateMessageListForUser(model.getSortedMessages(user), user);
+        }
         refreshMessages();
     }
 
     /** Calls the model's method to bookmark the message. */
-    public void toggleBookmark(final MessageDecorator message) {
-        model.bookmarkMessage(message);
-        view.updateMessageList(model.getSortedMessages());
+    public void toggleBookmark(final MessageDecorator message, final String userId) {
+        model.bookmarkMessage(message, userId);
+        view.updateMessageListForUser(model.getSortedMessages(userId), userId);
     }
 
     /** Getter for bookmark. */
-    public boolean isMessageBookmarked(final MessageDecorator message) {
-        return model.isMessageBookmarked(message);
+    public boolean isMessageBookmarked(final MessageDecorator message, final String userId) {
+        return model.isMessageBookmarked(message, userId);
     }
 
     /** Getter for the score. */

@@ -1,11 +1,7 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
-import fr.univ_lyon1.info.m1.microblog.model.RecentRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.*;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
-import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
-import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
-import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -128,13 +124,37 @@ public class JfxView {
                 .map(node -> (ScrollPane) node)
                 .forEach(scrollPane -> {
                     VBox userBox = (VBox) scrollPane.getContent();
+                    Label userIdLabel = (Label) userBox.getChildren().get(0);
+                    String userId = userIdLabel.getText();
                     VBox userMsgBox = (VBox) userBox.getChildren().get(1);
                     userMsgBox.getChildren().clear();
 
                     for (MessageDecorator message : messages) {
                         if (message.getScore() > scoreThreshold) {
-                            VBox msgBox = createMessageWidget(message);
+                            VBox msgBox = createMessageWidget(message, userId);
                             userMsgBox.getChildren().add(msgBox);
+                        }
+                    }
+                });
+    }
+
+    public void updateMessageListForUser(final List<MessageDecorator> messages, final String userId) {
+        users.getChildren().stream()
+                .filter(node -> node instanceof ScrollPane)
+                .map(node -> (ScrollPane) node)
+                .forEach(scrollPane -> {
+                    VBox userBox = (VBox) scrollPane.getContent();
+                    Label userIdLabel = (Label) userBox.getChildren().get(0);
+                    String user = userIdLabel.getText();
+                    if (user.equals(userId)) {
+                        VBox userMsgBox = (VBox) userBox.getChildren().get(1);
+                        userMsgBox.getChildren().clear();
+
+                        for (MessageDecorator message : messages) {
+                            if (message.getScore() > scoreThreshold) {
+                                VBox msgBox = createMessageWidget(message, userId);
+                                userMsgBox.getChildren().add(msgBox);
+                            }
                         }
                     }
                 });
@@ -147,9 +167,9 @@ public class JfxView {
             + "-fx-padding: 8px; "
             + "-fx-margin: 5px; ";
 
-    private VBox createMessageWidget(final MessageDecorator m) {
+    private VBox createMessageWidget(final MessageDecorator m, final String userId) {
         VBox msgBox = new VBox();
-        String bookmarkText = m.isBookmarked() ? "⭐" : "Click to bookmark";
+        String bookmarkText = controller.isMessageBookmarked(m, userId) ? "⭐" : "Click to bookmark";
 
         // Buttons are stored in the buttonBox
         HBox buttonBox = new HBox();
@@ -157,12 +177,12 @@ public class JfxView {
         // bookmark button
         Button bookButton = new Button(bookmarkText);
         bookButton.setOnAction(e -> {
-            controller.toggleBookmark(m);
+            controller.toggleBookmark(m, userId);
         });
         // delete button
         Button deleteButton = new Button("❌");
         deleteButton.setOnAction(e -> {
-            controller.deleteMessage(m);
+            controller.deleteMessage(m, userId);
         });
 
         buttonBox.getChildren().addAll(bookButton, deleteButton);
@@ -195,7 +215,7 @@ public class JfxView {
         });
         Button s = new Button("Publish");
         s.setOnAction(e -> {
-            controller.publishMessage(t.getText());
+            controller.publishMessage(t.getText(), u);
             t.clear();
         });
         input.getChildren().addAll(t, s);

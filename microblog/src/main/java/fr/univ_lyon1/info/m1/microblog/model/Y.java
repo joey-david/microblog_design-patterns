@@ -102,35 +102,57 @@ public class Y {
     }
 
     /** Get the sorted messages. */
-    public List<MessageDecorator> getSortedMessages() {
-        return messages.stream()
-                .sorted((m1, m2) -> {
-                    if (m1.isBookmarked() && !m2.isBookmarked()) {
-                        return -1;
-                    } else if (!m1.isBookmarked() && m2.isBookmarked()) {
-                        return 1;
-                    } else {
-                        int scoreDiff = m2.getScore() - m1.getScore();
-                        if (scoreDiff == 0) {
-                            return m2.getPublicationDate().compareTo(m1.getPublicationDate());
+    public List<MessageDecorator> getSortedMessages(final String userId) {
+        User user = getUserById(userId);
+        if(user != null) {
+            return messages.stream()
+                    .sorted((m1, m2) -> {
+                        if (user.isMessageBookmarked(m1.getMessageId()) && !user.isMessageBookmarked(m2.getMessageId())) {
+                            return -1;
+                        } else if (!user.isMessageBookmarked(m1.getMessageId()) && user.isMessageBookmarked(m2.getMessageId())) {
+                            return 1;
                         } else {
-                            return scoreDiff;
+                            int scoreDiff = m2.getScore() - m1.getScore();
+                            if (scoreDiff == 0) {
+                                return m2.getPublicationDate().compareTo(m1.getPublicationDate());
+                            } else {
+                                return scoreDiff;
+                            }
                         }
-                    }
-                })
-                .collect(Collectors.toList());
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            return null;
+        }
     }
 
-   /** Bookmark the message. */
-   public void bookmarkMessage(final MessageDecorator message) {
-        message.setBookmarked(!message.isBookmarked());
+    private User getUserById(String userId) {
+        for (User u : users) {
+            if (u.getId().equals(userId)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    /** Bookmark the message. */
+   public void bookmarkMessage(final MessageDecorator message, final String userId) {
+        User user = getUserById(userId);
+        if(user != null) {
+            user.toggleMessageBookmark(message.getMessageId());
+        }
         scoringStrategy.computeScores(messages);
-        pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, message);
+        pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, userId);
    }
 
    /** Getter for bookmark. */
-   public boolean isMessageBookmarked(final MessageDecorator message) {
-       return message.isBookmarked();
+   public boolean isMessageBookmarked(final MessageDecorator message, final String userId) {
+       User user = getUserById(userId);
+         if(user != null) {
+              return user.isMessageBookmarked(message.getMessageId());
+         } else {
+              return false;
+         }
    }
 
    /** Getter for score. */

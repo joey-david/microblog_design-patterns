@@ -1,6 +1,8 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,8 +12,8 @@ public class MessageData {
     /**
      * Represents the data associated with a message.
      */
-    private boolean isBookmarked = false;
     private int score = -1;
+    private Map<String, Integer> userScores = new HashMap<>();
     private Set<String> words = new HashSet<>();
 
     /**
@@ -48,47 +50,5 @@ public class MessageData {
      */
     public void setScore(final int score) {
         this.score = score;
-    }
-
-    /**
-     * Returns whether the message is bookmarked or not.
-     *
-     * @return true if the message is bookmarked, false otherwise
-     */
-    public boolean isBookmarked() {
-        return isBookmarked;
-    }
-
-    /**
-     * Sets whether the message is bookmarked or not.
-     *
-     * @param bookmarked true if the message is bookmarked, false otherwise
-     */
-    public void setBookmarked(final boolean bookmarked) {
-        this.isBookmarked = bookmarked;
-    }
-
-    /**
-     * Compare two Messages metadata. Suitable for sorting.
-     */
-    public int compare(final MessageData rightData) {
-        int scoreLeft = getScore();
-        int scoreRight = rightData.getScore();
-
-        //if either of the messages is bookmarked, place it before the other.
-        if (this.isBookmarked()) {
-            return 1;
-        }
-        if (rightData.isBookmarked()) {
-            return -1;
-        }
-        if (scoreLeft < scoreRight) {
-            return -1;
-        } else if (scoreLeft == scoreRight) {
-            return 0;
-        } else if (scoreLeft > scoreRight) {
-            return 1;
-        }
-        throw new AssertionError("Case not covered in comparision");
     }
 }
