@@ -24,7 +24,7 @@ public class App extends Application {
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
-        for(String userId : y.getUserIds()) {
+        for (String userId : y.getUserIds()) {
             v.updateMessageListForUser(y.getSortedMessages(userId), userId);
         }
 

@@ -1,9 +1,7 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
-import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
-import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 
@@ -41,7 +39,7 @@ public class Controller implements PropertyChangeListener {
             case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_REMOVED":
-                for(String userId : model.getUserIds()) {
+                for (String userId : model.getUserIds()) {
                     view.updateMessageListForUser(model.getSortedMessages(userId), userId);
                 }
                 break;
@@ -71,7 +69,8 @@ public class Controller implements PropertyChangeListener {
         model.createUser(id);
     }
 
-    public String getUsernameById(String userId) {
+    /** Calls the model's method to get the username by id. */
+    public String getUsernameById(final String userId) {
         return model.getUsernameById(userId);
     }
 

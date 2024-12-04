@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Message and its own data.
  */
-public class Message { //TODO: add string UserId and adapt bookmarks so it only bookmarks for the specific user, same for deleting only for the creator
+public class Message {
     private String content;
     private Date publicationDate;
     private String userId;
@@ -16,7 +16,9 @@ public class Message { //TODO: add string UserId and adapt bookmarks so it only 
         return content;
     }
 
-    public String getUserId() { return userId; }
+    public String getUserId() {
+        return userId;
+    }
 
     public Date getPublicationDate() {
         return publicationDate;
@@ -32,7 +34,7 @@ public class Message { //TODO: add string UserId and adapt bookmarks so it only 
 
 
     /**
-     * Build a Message object from it's (String) content.
+     * Build a Message object from its (String) content.
      */
     public Message(final String content) {
         this.content = content;
@@ -40,6 +42,9 @@ public class Message { //TODO: add string UserId and adapt bookmarks so it only 
         this.messageId = UUID.randomUUID();
     }
 
+    /**
+     * Build a Message object from its (String) content and it's (String) userId.
+     */
     public Message(final String content, final String userId) {
         this.content = content;
         this.userId = userId;

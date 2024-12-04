@@ -1,8 +1,8 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
-import fr.univ_lyon1.info.m1.microblog.model.*;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 
+import fr.univ_lyon1.info.m1.microblog.model.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -81,10 +81,11 @@ public class JfxView {
                 controller.searchMessages(newValue, s);
             });
 
-            ComboBox<ScoringStrategy> strategyComboBox = new ComboBox<>(FXCollections.observableArrayList(
-                    new ChronologicalScoring(),
-                    new RecentRelevantScoring(),
-                    new MostRelevantScoring()
+            ComboBox<ScoringStrategy> strategyComboBox =
+                    new ComboBox<>(FXCollections.observableArrayList(
+                        new ChronologicalScoring(),
+                        new RecentRelevantScoring(),
+                        new MostRelevantScoring()
             ));
             strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
                     strategyComboBox.getValue(), s));
@@ -112,7 +113,8 @@ public class JfxView {
     /**
      * Create the pane containing all messages, from the messages' registry passed as an argument.
      */
-    public void updateMessageListForUser(final List<MessageDecorator> messages, final String userId) {
+    public void updateMessageListForUser(final List<MessageDecorator> messages,
+                                         final String userId) {
         users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)

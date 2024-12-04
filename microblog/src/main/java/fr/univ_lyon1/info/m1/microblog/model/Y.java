@@ -1,7 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
 
-import java.awt.TextArea;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +57,7 @@ public class Y {
         return u;
     }
 
+    /** Create a user and add it to the user's registry. */
     public User createUser(final String id, final String username) {
         User u = new User(id, username);
         users.add(u);
@@ -73,7 +73,7 @@ public class Y {
     /** Get the ids of the users. */
     public List<String> getUserIds() {
         List<String> userIds = new ArrayList<>();
-        for(User u : users) {
+        for (User u : users) {
             userIds.add(u.getId());
         }
         return userIds;
@@ -117,12 +117,14 @@ public class Y {
     /** Get the sorted messages. */
     public List<MessageDecorator> getSortedMessages(final String userId) {
         User user = getUserById(userId);
-        if(user != null) {
+        if (user != null) {
             return messages.stream()
                     .sorted((m1, m2) -> {
-                        if (user.isMessageBookmarked(m1.getMessageId()) && !user.isMessageBookmarked(m2.getMessageId())) {
+                        if (user.isMessageBookmarked(m1.getMessageId())
+                                && !user.isMessageBookmarked(m2.getMessageId())) {
                             return -1;
-                        } else if (!user.isMessageBookmarked(m1.getMessageId()) && user.isMessageBookmarked(m2.getMessageId())) {
+                        } else if (!user.isMessageBookmarked(m1.getMessageId())
+                                && user.isMessageBookmarked(m2.getMessageId())) {
                             return 1;
                         } else {
                             int scoreDiff = m2.getScore() - m1.getScore();
@@ -139,7 +141,8 @@ public class Y {
         }
     }
 
-    public User getUserById(String userId) {
+    /** Get the user by id. */
+    public User getUserById(final String userId) {
         for (User u : users) {
             if (u.getId().equals(userId)) {
                 return u;
@@ -148,9 +151,10 @@ public class Y {
         return null;
     }
 
-    public String getUsernameById(String userId) {
+    /** Get the username by id. */
+    public String getUsernameById(final String userId) {
         User user = getUserById(userId);
-        if(user != null) {
+        if (user != null) {
             return user.getUsername();
         } else {
             return null;
@@ -160,7 +164,7 @@ public class Y {
     /** Bookmark the message. */
    public void bookmarkMessage(final MessageDecorator message, final String userId) {
         User user = getUserById(userId);
-        if(user != null) {
+        if (user != null) {
             user.toggleMessageBookmark(message.getMessageId());
         }
         scoringStrategy.computeScores(messages, user);
@@ -170,7 +174,7 @@ public class Y {
    /** Getter for bookmark. */
    public boolean isMessageBookmarked(final MessageDecorator message, final String userId) {
        User user = getUserById(userId);
-         if(user != null) {
+         if (user != null) {
               return user.isMessageBookmarked(message.getMessageId());
          } else {
               return false;

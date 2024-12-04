@@ -19,6 +19,7 @@ public class DefaultMessageFactory implements MessageFactory {
         return new MessageDecorator(content);
     }
 
+    @Override
     public MessageDecorator createMessage(final String content, final String userId) {
         return new MessageDecorator(content, userId);
     }
@@ -32,7 +33,9 @@ public class DefaultMessageFactory implements MessageFactory {
         return decorator;
     }
 
-    public MessageDecorator createMessage(final String content, final String userId, final Date publicationDate) {
+    /** Create Message from content, user and publication date. */
+    public MessageDecorator createMessage(final String content, final String userId,
+                                          final Date publicationDate) {
         MessageDecorator decorator = new MessageDecorator(content, userId);
         if (publicationDate != null) {
             decorator.setPublicationDate(publicationDate);
@@ -41,7 +44,8 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @Override
-    public List<MessageDecorator> loadMessagesFromFile(final String resourcePath) throws IOException {
+    public List<MessageDecorator> loadMessagesFromFile(final String resourcePath)
+            throws IOException {
         List<MessageDecorator> messages = new ArrayList<>();
 
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
