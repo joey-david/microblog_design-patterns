@@ -8,9 +8,9 @@ import java.util.Comparator;
  */
 public class ChronologicalScoring implements ScoringStrategy {
 
-    /** Compute the score for all messages in messagesData. */
+    /** Compute the score for all messages in messagesData for a specific user. */
     @Override
-    public void computeScores(final List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages, final User user) {
         messages.sort(Comparator.comparing(Message::getPublicationDate).reversed());
         int score = messages.size();
         for (MessageDecorator message : messages) {

@@ -34,7 +34,9 @@ public class Y {
     /** Setter for the scoring strategy. */
     public void setScoringStrategy(final ScoringStrategy scoringStrategy) {
         this.scoringStrategy = scoringStrategy;
-        this.scoringStrategy.computeScores(messages);
+        for (User u : users) {
+            scoringStrategy.computeScores(messages, u);
+        }
         pcs.firePropertyChange("SCORING_STRATEGY_CHANGED", null, null);
     }
 
@@ -51,6 +53,13 @@ public class Y {
     /** Create a user and add it to the user's registry. */
     public User createUser(final String id) {
         User u = new User(id);
+        users.add(u);
+        pcs.firePropertyChange("USER_ADDED", null, u);
+        return u;
+    }
+
+    public User createUser(final String id, final String username) {
+        User u = new User(id, username);
         users.add(u);
         pcs.firePropertyChange("USER_ADDED", null, u);
         return u;
@@ -85,14 +94,18 @@ public class Y {
     /** Post a message to all users. */
     public void add(final MessageDecorator message) {
         messages.add(message);
-        scoringStrategy.computeScores(messages);
+        for (User u : users) {
+            scoringStrategy.computeScores(messages, u);
+        }
         pcs.firePropertyChange("MESSAGE_ADDED", null, message);
     }
 
     /** Remove a message. */
     public void removeMessage(final MessageDecorator message) {
         messages.remove(message);
-        scoringStrategy.computeScores(messages);
+        for (User u : users) {
+            scoringStrategy.computeScores(messages, u);
+        }
         pcs.firePropertyChange("MESSAGE_REMOVED", null, message);
     }
 
@@ -126,7 +139,7 @@ public class Y {
         }
     }
 
-    private User getUserById(String userId) {
+    public User getUserById(String userId) {
         for (User u : users) {
             if (u.getId().equals(userId)) {
                 return u;
@@ -135,13 +148,22 @@ public class Y {
         return null;
     }
 
+    public String getUsernameById(String userId) {
+        User user = getUserById(userId);
+        if(user != null) {
+            return user.getUsername();
+        } else {
+            return null;
+        }
+    }
+
     /** Bookmark the message. */
    public void bookmarkMessage(final MessageDecorator message, final String userId) {
         User user = getUserById(userId);
         if(user != null) {
             user.toggleMessageBookmark(message.getMessageId());
         }
-        scoringStrategy.computeScores(messages);
+        scoringStrategy.computeScores(messages, user);
         pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, userId);
    }
 

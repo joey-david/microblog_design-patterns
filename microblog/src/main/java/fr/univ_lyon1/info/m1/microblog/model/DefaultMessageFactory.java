@@ -32,9 +32,16 @@ public class DefaultMessageFactory implements MessageFactory {
         return decorator;
     }
 
+    public MessageDecorator createMessage(final String content, final String userId, final Date publicationDate) {
+        MessageDecorator decorator = new MessageDecorator(content, userId);
+        if (publicationDate != null) {
+            decorator.setPublicationDate(publicationDate);
+        }
+        return decorator;
+    }
+
     @Override
-    public List<MessageDecorator> loadMessagesFromFile(final String resourcePath)
-            throws IOException {
+    public List<MessageDecorator> loadMessagesFromFile(final String resourcePath) throws IOException {
         List<MessageDecorator> messages = new ArrayList<>();
 
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
@@ -47,19 +54,16 @@ public class DefaultMessageFactory implements MessageFactory {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length > 0) {
-                    MessageDecorator message;
-                    if (parts.length > 1) {
-                        try {
-                            Date date = DATE_FORMAT.parse(parts[1].trim());
-                            message = createMessage(parts[0].trim(), date);
-                        } catch (ParseException e) {
-                            message = createMessage(parts[0].trim());
-                        }
-                    } else {
-                        message = createMessage(parts[0].trim());
+                if (parts.length == 3) {
+                    String content = parts[0].trim();
+                    String dateStr = parts[1].trim();
+                    String username = parts[2].trim();
+                    try {
+                        Date date = DATE_FORMAT.parse(dateStr);
+                        messages.add(createMessage(content, username, date));
+                    } catch (ParseException e) {
+                        messages.add(createMessage(content, username));
                     }
-                    messages.add(message);
                 }
             }
         }

@@ -1,20 +1,20 @@
-Just another day at the office...|2024-11-12 09:30:00
-Remember to pick up groceries on your way home!|2024-11-11 16:45:00
-Quick status update: project is on track for delivery next week.|2024-11-09 11:20:00
-Has anyone seen my coffee mug?|2024-11-08 08:15:00
-The weather is absolutely perfect today. Time for a walk!|2024-11-06 12:00:00
-Meeting cancelled - please disregard previous calendar invite.|2024-10-31 14:25:00
-New feature deployment successful!|2024-10-28 22:15:00
-Don't forget about the team lunch tomorrow at noon.|2024-10-25 17:30:00
-Working from home today due to the snowstorm.|2024-10-20 07:45:00
-Happy birthday to our awesome team lead! 🎉|2024-10-15 10:00:00
-System maintenance scheduled for tonight at 11 PM EST.|2024-09-28 13:50:00
-Can someone review my pull request? It's urgent.|2024-09-25 15:40:00
-Great presentation everyone! Really impressed with the results.|2024-09-20 16:15:00
-Running late for the standup - start without me.|2024-09-15 09:55:00
-Does anyone have access to the production logs from last week?|2024-08-30 11:10:00
-Reminder: quarterly planning session tomorrow morning.|2024-08-25 16:00:00
-Server issues resolved - all systems back online.|2024-08-20 03:25:00
-Taking a half day today - dentist appointment.|2024-08-15 08:30:00
-Welcome to our new team members! Looking forward to working together.|2024-08-10 09:00:00
-Just pushed the hotfix - please test ASAP.|2024-08-05 14:20:00J
+Just another day at the office...|2024-11-12 09:30:00|Joey
+Remember to pick up groceries on your way home!|2024-11-11 16:45:00|Ugo
+Quick status update: project is on track for delivery next week.|2024-11-09 11:20:00|John
+Has anyone seen my coffee mug?|2024-11-08 08:15:00|Henry
+The weather is absolutely perfect today. Time for a walk!|2024-11-06 12:00:00|Paul
+Meeting cancelled - please disregard previous calendar invite.|2024-10-31 14:25:00|James
+New feature deployment successful!|2024-10-28 22:15:00|Joey
+Don't forget about the team lunch tomorrow at noon.|2024-10-25 17:30:00|Ugo
+Working from home today due to the snowstorm.|2024-10-20 07:45:00|John
+Happy birthday to our awesome team lead! 🎉|2024-10-15 10:00:00|Henry
+System maintenance scheduled for tonight at 11 PM EST.|2024-09-28 13:50:00|Paul
+Can someone review my pull request? It's urgent.|2024-09-25 15:40:00|James
+Great presentation everyone! Really impressed with the results.|2024-09-20 16:15:00|Joey
+Running late for the standup - start without me.|2024-09-15 09:55:00|Ugo
+Does anyone have access to the production logs from last week?|2024-08-30 11:10:00|John
+Reminder: quarterly planning session tomorrow morning.|2024-08-25 16:00:00|Henry
+Server issues resolved - all systems back online.|2024-08-20 03:25:00|Paul
+Taking a half day today - dentist appointment.|2024-08-15 08:30:00|James
+Welcome to our new team members! Looking forward to working together.|2024-08-10 09:00:00|Joey
+Just pushed the hotfix - please test ASAP.|2024-08-05 14:20:00|Ugo

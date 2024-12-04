@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 /**
  * Scoring of messages based on bookmarks.
  */
 public class BookmarkScoring implements ScoringStrategy {
 
-    /** Compute the score for all messages in messagesData. */
+    /** Compute the score for all messages in messagesData for a specific user. */
     @Override
-    public void computeScores(final List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages, final User user) {
         Set<String> bookmarkedWords = new HashSet<>();
 
         messages.forEach((MessageDecorator m) -> {
@@ -19,7 +20,7 @@ public class BookmarkScoring implements ScoringStrategy {
             String[] w = m.getContent().toLowerCase().split("[^\\p{Alpha}]+");
             Set<String> words = new HashSet<>(Arrays.asList(w));
             d.setWords(words);
-            if (d.isBookmarked()) {
+            if (user.isMessageBookmarked(m.getMessageId())) {
                 bookmarkedWords.addAll(words);
             }
         });
@@ -36,4 +37,8 @@ public class BookmarkScoring implements ScoringStrategy {
         });
     }
 
+    @Override
+    public String toString() {
+        return "Messages scored by bookmarks";
+    }
 }

@@ -88,7 +88,7 @@ public class ControllerTest {
             model.removeMessage(m);
         }
         String message = "This message is used to test publishing";
-        controller.publishMessage(message);
+        controller.publishMessage(message, "user");
 
         assertTrue(model.getMessages().stream().anyMatch(msg -> msg.getContent().equals(message)));
     }

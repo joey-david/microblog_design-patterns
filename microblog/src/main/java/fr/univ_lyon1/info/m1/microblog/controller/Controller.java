@@ -44,29 +44,25 @@ public class Controller implements PropertyChangeListener {
                 for(String userId : model.getUserIds()) {
                     view.updateMessageListForUser(model.getSortedMessages(userId), userId);
                 }
-                refreshMessages();
                 break;
             default:
                 break;
         }
+        refreshMessages();
     }
 
+    /** Refreshes the displayed messages. */
     private void refreshMessages() {
-        searchMessages(currentSearchQuery);
+        for (String userId : model.getUserIds()) {
+            searchMessages(currentSearchQuery, userId);
+        }
     }
 
     /** Calls the model's method to switch the scoring strategy. */
-    public void switchScoringStrategy(final ScoringStrategy strategy) {
+    public void switchScoringStrategy(final ScoringStrategy strategy, final String userId) {
         model.setScoringStrategy(strategy);
-        strategy.computeScores(model.getMessages());
-        if (strategy instanceof ChronologicalScoring) {
-            view.setScoreThreshold(-1);
-        } else if (strategy instanceof MostRelevantScoring) {
-            view.setScoreThreshold(0);
-        }
-        for(String userId : model.getUserIds()) {
-            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
-        }
+        strategy.computeScores(model.getMessages(), model.getUserById(userId));
+        view.updateMessageListForUser(model.getSortedMessages(userId), userId);
         refreshMessages();
     }
 
@@ -75,18 +71,14 @@ public class Controller implements PropertyChangeListener {
         model.createUser(id);
     }
 
-    /** Calls the model's method to publish a message. */
-    public void publishMessage(final String content) {
-        model.add(content);
-        for(String userId : model.getUserIds()) {
-            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
-        }
-        refreshMessages();
+    public String getUsernameById(String userId) {
+        return model.getUsernameById(userId);
     }
 
+    /** Calls the model's method to publish a message. */
     public void publishMessage(final String content, final String user) {
         model.publish(content, user);
-        for(String userId : model.getUserIds()) {
+        for (String userId : model.getUserIds()) {
             view.updateMessageListForUser(model.getSortedMessages(userId), userId);
         }
         refreshMessages();
@@ -94,11 +86,13 @@ public class Controller implements PropertyChangeListener {
 
     /** Calls the model's method to delete a message. */
     public void deleteMessage(final MessageDecorator message, final String userId) {
-        model.removeMessage(message);
-        for(String user : model.getUserIds()) {
-            view.updateMessageListForUser(model.getSortedMessages(user), user);
+        if (message.getUserId().equals(userId)) {
+            model.removeMessage(message);
+            for (String user : model.getUserIds()) {
+                view.updateMessageListForUser(model.getSortedMessages(user), user);
+            }
+            refreshMessages();
         }
-        refreshMessages();
     }
 
     /** Calls the model's method to bookmark the message. */
@@ -118,12 +112,12 @@ public class Controller implements PropertyChangeListener {
     }
 
     /** Search function updater. */
-    public void searchMessages(final String search) {
+    public void searchMessages(final String search, final String userId) {
         currentSearchQuery = search;
         List<MessageDecorator> filteredMessages = model.getMessages().stream()
                 .filter(message -> isValidLookup(message.getContent(), search))
                 .collect(Collectors.toList());
-        view.updateMessageList(filteredMessages);
+        view.updateMessageListForUser(filteredMessages, userId);
     }
 
     /** search boolean function. */

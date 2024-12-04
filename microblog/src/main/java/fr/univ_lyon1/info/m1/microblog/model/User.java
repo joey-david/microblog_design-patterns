@@ -9,6 +9,7 @@ import java.util.UUID;
  */
 public class User {
     private String id;
+    private String username;
     private List<UUID> bookmarks = new ArrayList<>();
 
     @Override
@@ -29,13 +30,8 @@ public class User {
         }
         User other = (User) obj;
         if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
-            return false;
-        }
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     /**
@@ -44,6 +40,20 @@ public class User {
      */
     public User(final String id) {
         this.id = id;
+        this.username = "no name set, id: " + id;
+    }
+
+    public User(final String id, final String username) {
+        this.id = id;
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
     }
 
     public String getId() {

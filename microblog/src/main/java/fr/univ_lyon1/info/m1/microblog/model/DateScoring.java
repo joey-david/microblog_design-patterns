@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class DateScoring implements ScoringStrategy {
 
-    /** Compute the score for all messages in messagesData. */
+    /** Compute the score for all messages in messagesData for a specific user. */
     @Override
-    public void computeScores(final List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages, final User user) {
         Date cur = new Date();
         messages.forEach(m -> {
             int score = 0;
