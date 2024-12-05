@@ -1,8 +1,6 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User of the application.
@@ -11,6 +9,7 @@ public class User {
     private String id;
     private String username;
     private List<UUID> bookmarks = new ArrayList<>();
+    private Map<UUID, Integer> messageScores = new HashMap<>();
 
     @Override
     public int hashCode() {
@@ -106,5 +105,17 @@ public class User {
             return false;
         }
         return bookmarks.contains(messageId);
+    }
+
+    public int getMessageScore(UUID messageId) {
+        return messageScores.getOrDefault(messageId, 0);
+    }
+
+    public void setMessageScore(UUID messageId, int score) {
+        messageScores.put(messageId, score);
+    }
+
+    public void removeMessageScore(UUID messageId) {
+        messageScores.remove(messageId);
     }
 }

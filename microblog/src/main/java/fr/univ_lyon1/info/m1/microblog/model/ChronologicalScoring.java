@@ -14,7 +14,7 @@ public class ChronologicalScoring implements ScoringStrategy {
         messages.sort(Comparator.comparing(Message::getPublicationDate).reversed());
         int score = messages.size();
         for (MessageDecorator message : messages) {
-            message.setScore(score--);
+            user.setMessageScore(message.getMessageId(), score--);
         }
     }
 

@@ -28,7 +28,7 @@ public class DateScoring implements ScoringStrategy {
                 score++;
             }
 
-            m.setScore(score);
+            user.setMessageScore(m.getMessageId(), score);
         });
     }
 

@@ -106,8 +106,8 @@ public class Controller implements PropertyChangeListener {
     }
 
     /** Getter for the score. */
-    public int getMessageScore(final MessageDecorator message) {
-        return model.getMessageScore(message);
+    public int getMessageScore(final MessageDecorator message, final String userId) {
+        return model.getMessageScore(message, userId);
     }
 
     /** Search function updater. */
@@ -122,5 +122,11 @@ public class Controller implements PropertyChangeListener {
     /** search boolean function. */
     private boolean isValidLookup(final String message, final String query) {
         return message.toLowerCase().contains(query.toLowerCase());
+    }
+
+    /** Calls the model to make sure that the message should be displayed. */
+    public boolean shouldDisplay(final MessageDecorator message,
+                                 final String userId, final int scoreThreshold) {
+        return model.shouldDisplay(message, userId, scoreThreshold);
     }
 }

@@ -12,8 +12,6 @@ public class MessageData {
     /**
      * Represents the data associated with a message.
      */
-    private int score = -1;
-    private Map<String, Integer> userScores = new HashMap<>();
     private Set<String> words = new HashSet<>();
 
     /**
@@ -32,23 +30,5 @@ public class MessageData {
      */
     public void setWords(final Set<String> words) {
         this.words = words;
-    }
-
-    /**
-     * Returns the score of the message.
-     *
-     * @return the score
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /**
-     * Sets the score of the message.
-     *
-     * @param score the score
-     */
-    public void setScore(final int score) {
-        this.score = score;
     }
 }

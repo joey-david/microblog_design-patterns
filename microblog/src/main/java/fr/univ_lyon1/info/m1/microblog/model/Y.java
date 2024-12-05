@@ -127,7 +127,8 @@ public class Y {
                                 && user.isMessageBookmarked(m2.getMessageId())) {
                             return 1;
                         } else {
-                            int scoreDiff = m2.getScore() - m1.getScore();
+                            int scoreDiff = user.getMessageScore(m2.getMessageId())
+                                    - user.getMessageScore(m1.getMessageId());
                             if (scoreDiff == 0) {
                                 return m2.getPublicationDate().compareTo(m1.getPublicationDate());
                             } else {
@@ -182,8 +183,13 @@ public class Y {
    }
 
    /** Getter for score. */
-   public int getMessageScore(final MessageDecorator message) {
-       return message.getScore();
+   public int getMessageScore(final MessageDecorator message, final String userId) {
+         User user = getUserById(userId);
+         if (user != null) {
+              return user.getMessageScore(message.getMessageId());
+         } else {
+              return 0;
+         }
    }
 
    /** Load messages from file. */
@@ -202,5 +208,16 @@ public class Y {
     /** Remove the listener. */
     public void removePropertyChangeListener(final PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
+    }
+
+    /** Check if a message should be displayed */
+    public boolean shouldDisplay(final MessageDecorator message,
+                                 final String userId, final int threshold) {
+        User user = getUserById(userId);
+        if (user != null) {
+            return user.getMessageScore(message.getMessageId()) >= threshold;
+        } else {
+            return false;
+        }
     }
 }

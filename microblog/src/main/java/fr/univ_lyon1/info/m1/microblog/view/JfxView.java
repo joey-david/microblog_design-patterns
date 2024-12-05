@@ -127,7 +127,7 @@ public class JfxView {
                         userMsgBox.getChildren().clear();
 
                         for (MessageDecorator message : messages) {
-                            if (message.getScore() > scoreThreshold) {
+                            if (controller.shouldDisplay(message, userId, scoreThreshold)) {
                                 VBox msgBox = createMessageWidget(message, userId);
                                 userMsgBox.getChildren().add(msgBox);
                             }
@@ -175,7 +175,7 @@ public class JfxView {
         Label date = new Label(dateFormat.format(m.getPublicationDate()));
         msgBox.getChildren().add(date);
 
-        final Label score = new Label("Score: " + m.getScore());
+        final Label score = new Label("Score: " + controller.getMessageScore(m, userId));
         score.setTextFill(Color.LIGHTGRAY);
 
         final Label author = new Label("Author: " + controller.getUsernameById(m.getUserId()));

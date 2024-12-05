@@ -22,7 +22,7 @@ public class LengthScoring implements ScoringStrategy {
                 score = 1;
             }
 
-            m.setScore(score);
+            user.setMessageScore(m.getMessageId(), score);
         });
     }
 }

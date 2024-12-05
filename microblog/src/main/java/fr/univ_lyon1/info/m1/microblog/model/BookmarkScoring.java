@@ -1,24 +1,18 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Scoring of messages based on bookmarks.
- */
 public class BookmarkScoring implements ScoringStrategy {
 
-    /** Compute the score for all messages in messagesData for a specific user. */
     @Override
     public void computeScores(final List<MessageDecorator> messages, final User user) {
         Set<String> bookmarkedWords = new HashSet<>();
 
         messages.forEach((MessageDecorator m) -> {
             MessageData d = m.getData();
-            String[] w = m.getContent().toLowerCase().split("[^\\p{Alpha}]+");
-            Set<String> words = new HashSet<>(Arrays.asList(w));
+            Set<String> words = new HashSet<>(List.of(m.getContent().toLowerCase().split("[^\\p{Alpha}]+")));
             d.setWords(words);
             if (user.isMessageBookmarked(m.getMessageId())) {
                 bookmarkedWords.addAll(words);
@@ -33,7 +27,7 @@ public class BookmarkScoring implements ScoringStrategy {
                     score++;
                 }
             }
-            d.setScore(score);
+            user.setMessageScore(m.getMessageId(), score);
         });
     }
 

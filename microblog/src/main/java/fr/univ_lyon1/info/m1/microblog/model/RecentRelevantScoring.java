@@ -11,7 +11,7 @@ public class RecentRelevantScoring implements ScoringStrategy {
     @Override
     public void computeScores(final List<MessageDecorator> messages, final User user) {
         // Reset scores
-        messages.forEach(m -> m.setScore(0));
+        messages.forEach(m -> user.setMessageScore(m.getMessageId(), 0));
 
         // Temporary storage for scores
         int[] tempScores = new int[messages.size()];
@@ -20,13 +20,13 @@ public class RecentRelevantScoring implements ScoringStrategy {
         for (ScoringStrategy strategy : strategies) {
             strategy.computeScores(messages, user);
             for (int i = 0; i < messages.size(); i++) {
-                tempScores[i] += messages.get(i).getScore();
+                tempScores[i] += user.getMessageScore(messages.get(i).getMessageId());
             }
         }
 
         // Set the final scores
         for (int i = 0; i < messages.size(); i++) {
-            messages.get(i).setScore(tempScores[i]);
+            user.setMessageScore(messages.get(i).getMessageId(), tempScores[i]);
         }
     }
 
