@@ -32,21 +32,22 @@ public class Controller implements PropertyChangeListener {
         switch (propertyName) {
             case "USER_ADDED":
                 view.updateUserList(model.getUserIds());
+                refreshMessages();
                 break;
             case "MESSAGE_BOOKMARKED":
-                String user = (String) evt.getNewValue();
-                view.updateMessageListForUser(model.getSortedMessages(user), user);
+                view.updateMessageListForUser(model.getSortedMessages((String) evt.getNewValue()),
+                        (String) evt.getNewValue());
             case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_REMOVED":
                 for (String userId : model.getUserIds()) {
                     view.updateMessageListForUser(model.getSortedMessages(userId), userId);
                 }
+                refreshMessages();
                 break;
             default:
                 break;
         }
-        refreshMessages();
     }
 
     /** Refreshes the displayed messages. */
@@ -58,10 +59,8 @@ public class Controller implements PropertyChangeListener {
 
     /** Calls the model's method to switch the scoring strategy. */
     public void switchScoringStrategy(final ScoringStrategy strategy, final String userId) {
-        model.setScoringStrategy(strategy);
-        strategy.computeScores(model.getMessages(), model.getUserById(userId));
+        model.setScoringStrategy(strategy, userId);
         view.updateMessageListForUser(model.getSortedMessages(userId), userId);
-        refreshMessages();
     }
 
     /** Calls the model's method to create the user. */

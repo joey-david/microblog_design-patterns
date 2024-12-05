@@ -8,8 +8,9 @@ import java.util.*;
 public class User {
     private String id;
     private String username;
-    private List<UUID> bookmarks = new ArrayList<>();
+    private Set<UUID> bookmarks = new HashSet<>();
     private Map<UUID, Integer> messageScores = new HashMap<>();
+    private ScoringStrategy scoringStrategy;
 
     @Override
     public int hashCode() {
@@ -54,15 +55,26 @@ public class User {
         this.username = username;
     }
 
-
+    /**
+     * Get the username of the user.
+     * @return the username of the user.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Set the username of the user.
+     * @param username must be a unique username.
+     */
     public void setUsername(final String username) {
         this.username = username;
     }
 
+    /**
+     * Get the id of the user.
+     * @return the id of the user.
+     */
     public String getId() {
         return id;
     }
@@ -75,19 +87,11 @@ public class User {
         this.id = id;
     }
 
-    public List<UUID> getBookmarkedMessages() {
-        return bookmarks;
-    }
-
     /**
      * Toggle the bookmark of a message.
      * @param messageId the id of the message to toggle the bookmark.
      */
     public void toggleMessageBookmark(final UUID messageId) {
-        if (bookmarks.isEmpty()) {
-            bookmarks.add(messageId);
-            return;
-        }
         if (bookmarks.contains(messageId)) {
             bookmarks.remove(messageId);
         } else {
@@ -101,21 +105,48 @@ public class User {
      * @return true if the message is bookmarked, false otherwise.
      */
     public boolean isMessageBookmarked(final UUID messageId) {
-        if (bookmarks.isEmpty()) {
-            return false;
-        }
         return bookmarks.contains(messageId);
     }
 
-    public int getMessageScore(UUID messageId) {
+    /**
+     * Get the score of a message.
+     * @param messageId the id of the message to get the score.
+     * @return the score of the message.
+     */
+    public int getMessageScore(final UUID messageId) {
         return messageScores.getOrDefault(messageId, 0);
     }
 
-    public void setMessageScore(UUID messageId, int score) {
+    /**
+     * Set the score of a message.
+     * @param messageId the id of the message to set the score.
+     * @param score the score to set.
+     */
+    public void setMessageScore(final UUID messageId, final int score) {
         messageScores.put(messageId, score);
     }
 
-    public void removeMessageScore(UUID messageId) {
+    /**
+     * Remove the score of a message.
+     * @param messageId the id of the message to remove the score.
+     */
+    public void removeMessageScore(final UUID messageId) {
         messageScores.remove(messageId);
+    }
+
+    /**
+     * Get the scoring strategy.
+     * @return the scoring strategy.
+     */
+    public ScoringStrategy getScoringStrategy() {
+        return scoringStrategy;
+    }
+
+    /**
+     * Set the scoring strategy.
+     * @param scoringStrategy the scoring strategy to set.
+     */
+    public void setScoringStrategy(final ScoringStrategy scoringStrategy) {
+        this.scoringStrategy = scoringStrategy;
     }
 }

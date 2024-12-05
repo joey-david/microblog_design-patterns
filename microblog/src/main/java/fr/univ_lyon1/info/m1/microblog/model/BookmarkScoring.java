@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Scoring strategy for the bookmarks - focuses on the wordkeeping system.
+ */
 public class BookmarkScoring implements ScoringStrategy {
 
     @Override
@@ -12,7 +15,8 @@ public class BookmarkScoring implements ScoringStrategy {
 
         messages.forEach((MessageDecorator m) -> {
             MessageData d = m.getData();
-            Set<String> words = new HashSet<>(List.of(m.getContent().toLowerCase().split("[^\\p{Alpha}]+")));
+            Set<String> words =
+                    new HashSet<>(List.of(m.getContent().toLowerCase().split("[^\\p{Alpha}]+")));
             d.setWords(words);
             if (user.isMessageBookmarked(m.getMessageId())) {
                 bookmarkedWords.addAll(words);

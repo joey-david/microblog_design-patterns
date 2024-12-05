@@ -104,6 +104,10 @@ public class Y {
     public void removeMessage(final MessageDecorator message) {
         messages.remove(message);
         for (User u : users) {
+            u.removeMessageScore(message.getMessageId());
+            if (u.isMessageBookmarked(message.getMessageId())) {
+                u.toggleMessageBookmark(message.getMessageId());
+            }
             scoringStrategy.computeScores(messages, u);
         }
         pcs.firePropertyChange("MESSAGE_REMOVED", null, message);
@@ -150,6 +154,16 @@ public class Y {
             }
         }
         return null;
+    }
+
+    /** Set the scoring strategy for a user. */
+    public void setScoringStrategy(final ScoringStrategy scoringStrategy, final String userId) {
+        User user = getUserById(userId);
+        if (user != null) {
+            user.setScoringStrategy(scoringStrategy);
+            scoringStrategy.computeScores(messages, user);
+            pcs.firePropertyChange("SCORING_STRATEGY_CHANGED", null, userId);
+        }
     }
 
     /** Get the username by id. */
@@ -210,7 +224,7 @@ public class Y {
         pcs.removePropertyChangeListener(listener);
     }
 
-    /** Check if a message should be displayed */
+    /** Check if a message should be displayed.*/
     public boolean shouldDisplay(final MessageDecorator message,
                                  final String userId, final int threshold) {
         User user = getUserById(userId);
