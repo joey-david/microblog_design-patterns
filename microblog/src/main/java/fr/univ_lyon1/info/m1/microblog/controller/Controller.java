@@ -8,7 +8,6 @@ import fr.univ_lyon1.info.m1.microblog.model.Y;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class of the Controller of the application.
@@ -34,11 +33,12 @@ public class Controller implements PropertyChangeListener {
                 view.updateUserList(model.getUserIds());
                 refreshMessages();
                 break;
+            case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_BOOKMARKED":
                 view.updateMessageListForUser(model.getSortedMessages((String) evt.getNewValue()),
                         (String) evt.getNewValue());
+                break;
             case "MESSAGE_ADDED":
-            case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_REMOVED":
                 for (String userId : model.getUserIds()) {
                     view.updateMessageListForUser(model.getSortedMessages(userId), userId);
@@ -111,16 +111,8 @@ public class Controller implements PropertyChangeListener {
 
     /** Search function updater. */
     public void searchMessages(final String search, final String userId) {
-        currentSearchQuery = search;
-        List<MessageDecorator> filteredMessages = model.getMessages().stream()
-                .filter(message -> isValidLookup(message.getContent(), search))
-                .collect(Collectors.toList());
+        List<MessageDecorator> filteredMessages = model.getFilteredMessages(search, userId);
         view.updateMessageListForUser(filteredMessages, userId);
-    }
-
-    /** search boolean function. */
-    private boolean isValidLookup(final String message, final String query) {
-        return message.toLowerCase().contains(query.toLowerCase());
     }
 
     /** Calls the model to make sure that the message should be displayed. */

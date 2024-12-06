@@ -21,7 +21,6 @@ public class LengthScoring implements ScoringStrategy {
             } else if (lengthDiscrepancy <= 20) {
                 score = 1;
             }
-
             user.setMessageScore(m.getMessageId(), score);
         });
     }

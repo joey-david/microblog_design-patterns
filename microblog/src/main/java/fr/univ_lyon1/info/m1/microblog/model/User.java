@@ -1,6 +1,10 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * User of the application.
@@ -43,6 +47,7 @@ public class User {
     public User(final String id) {
         this.id = id;
         this.username = "no name set, id: " + id;
+        this.scoringStrategy = new RecentRelevantScoring();
     }
 
     /**
@@ -53,6 +58,19 @@ public class User {
     public User(final String id, final String username) {
         this.id = id;
         this.username = username;
+        this.scoringStrategy = new RecentRelevantScoring();
+    }
+
+    /**
+     * Constructor for User.
+     * @param id must be a unique identifier.
+     * @param username must be a unique username.
+     * @param scoringStrategy the scoring strategy to set.
+     */
+    public User(final String id, final String username, final ScoringStrategy scoringStrategy) {
+        this.id = id;
+        this.username = username;
+        this.scoringStrategy = scoringStrategy;
     }
 
     /**
@@ -94,8 +112,10 @@ public class User {
     public void toggleMessageBookmark(final UUID messageId) {
         if (bookmarks.contains(messageId)) {
             bookmarks.remove(messageId);
+            // System.out.println(username + " removed " + messageId + " from their bookmarks");
         } else {
             bookmarks.add(messageId);
+            // System.out.println(username + " bookmarked " + messageId);
         }
     }
 
@@ -114,7 +134,7 @@ public class User {
      * @return the score of the message.
      */
     public int getMessageScore(final UUID messageId) {
-        return messageScores.getOrDefault(messageId, 0);
+        return messageScores.getOrDefault(messageId, 999);
     }
 
     /**

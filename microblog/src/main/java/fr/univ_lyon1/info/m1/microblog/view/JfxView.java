@@ -2,7 +2,12 @@ package fr.univ_lyon1.info.m1.microblog.view;
 
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 
-import fr.univ_lyon1.info.m1.microblog.model.*;
+import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
+import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.RecentRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
+import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -87,6 +92,7 @@ public class JfxView {
                         new RecentRelevantScoring(),
                         new MostRelevantScoring()
             ));
+
             strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
                     strategyComboBox.getValue(), s));
 
@@ -204,7 +210,6 @@ public class JfxView {
         Button s = new Button("Publish");
         s.setOnAction(e -> {
             controller.publishMessage(t.getText(), u);
-            t.clear();
         });
         input.getChildren().addAll(t, s);
         return input;

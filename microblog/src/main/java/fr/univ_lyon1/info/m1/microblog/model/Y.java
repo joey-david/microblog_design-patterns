@@ -16,27 +16,11 @@ public class Y {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private List<User> users = new ArrayList<>();
     private List<MessageDecorator> messages = new ArrayList<>();
-    private ScoringStrategy scoringStrategy;
     private MessageFactory messageFactory;
 
-    /** Default constructor with dateScoring Strategy. */
+    /** Default constructor. */
     public Y() {
-        this(new MostRelevantScoring());
-    }
-
-    /** Constructor for the model, mainly necessary to add a specific scoring strategy. */
-    public Y(final ScoringStrategy scoringStrategy) {
-        this.scoringStrategy = scoringStrategy;
         this.messageFactory = new DefaultMessageFactory();
-    }
-
-    /** Setter for the scoring strategy. */
-    public void setScoringStrategy(final ScoringStrategy scoringStrategy) {
-        this.scoringStrategy = scoringStrategy;
-        for (User u : users) {
-            scoringStrategy.computeScores(messages, u);
-        }
-        pcs.firePropertyChange("SCORING_STRATEGY_CHANGED", null, null);
     }
 
     /** Setter for the message factory. */
@@ -44,25 +28,22 @@ public class Y {
         this.messageFactory = messageFactory;
     }
 
-    /** Getter for the scoring strategy. */
-    public ScoringStrategy getScoringStrategy() {
-        return scoringStrategy;
-    }
-
-    /** Create a user and add it to the user's registry. */
-    public User createUser(final String id) {
+    /**
+     * Create a user and add it to the user's registry.
+     */
+    public void createUser(final String id) {
         User u = new User(id);
         users.add(u);
         pcs.firePropertyChange("USER_ADDED", null, u);
-        return u;
     }
 
-    /** Create a user and add it to the user's registry. */
-    public User createUser(final String id, final String username) {
+    /**
+     * Create a user and add it to the user's registry.
+     */
+    public void createUser(final String id, final String username) {
         User u = new User(id, username);
         users.add(u);
         pcs.firePropertyChange("USER_ADDED", null, u);
-        return u;
     }
 
     /** Get the users in the registry. */
@@ -80,7 +61,7 @@ public class Y {
     }
 
     /** Create a message for a specific user, not implemented. */
-    public void publish(final String content, final String u) { //TODO: implement
+    public void publish(final String content, final String u) {
         MessageDecorator message = new MessageDecorator(content, u);
         add(message);
     }
@@ -95,21 +76,33 @@ public class Y {
     public void add(final MessageDecorator message) {
         messages.add(message);
         for (User u : users) {
-            scoringStrategy.computeScores(messages, u);
+            u.getScoringStrategy().computeScores(messages, u);
         }
         pcs.firePropertyChange("MESSAGE_ADDED", null, message);
     }
 
+    /** search boolean function. */
+    private boolean isValidLookup(final String message, final String query) {
+        return message.toLowerCase().contains(query.toLowerCase());
+    }
+
+    /** Get the filtered messages. */
+    public List<MessageDecorator> getFilteredMessages(final String search, final String userId) {
+        return getSortedMessages(userId).stream()
+                .filter(message -> isValidLookup(message.getContent(), search))
+                .collect(Collectors.toList());
+    }
+
     /** Remove a message. */
     public void removeMessage(final MessageDecorator message) {
-        messages.remove(message);
         for (User u : users) {
             u.removeMessageScore(message.getMessageId());
             if (u.isMessageBookmarked(message.getMessageId())) {
                 u.toggleMessageBookmark(message.getMessageId());
             }
-            scoringStrategy.computeScores(messages, u);
+            u.getScoringStrategy().computeScores(messages, u);
         }
+        messages.remove(message);
         pcs.firePropertyChange("MESSAGE_REMOVED", null, message);
     }
 
@@ -177,14 +170,14 @@ public class Y {
     }
 
     /** Bookmark the message. */
-   public void bookmarkMessage(final MessageDecorator message, final String userId) {
+    public void bookmarkMessage(final MessageDecorator message, final String userId) {
         User user = getUserById(userId);
         if (user != null) {
             user.toggleMessageBookmark(message.getMessageId());
+            user.getScoringStrategy().computeScores(messages, user);
+            pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, userId);
         }
-        scoringStrategy.computeScores(messages, user);
-        pcs.firePropertyChange("MESSAGE_BOOKMARKED", null, userId);
-   }
+    }
 
    /** Getter for bookmark. */
    public boolean isMessageBookmarked(final MessageDecorator message, final String userId) {
