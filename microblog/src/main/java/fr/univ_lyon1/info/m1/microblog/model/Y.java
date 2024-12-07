@@ -31,19 +31,19 @@ public class Y {
     /**
      * Create a user and add it to the user's registry.
      */
-    public void createUser(final String id) {
-        User u = new User(id);
-        users.add(u);
-        pcs.firePropertyChange("USER_ADDED", null, u);
-    }
-
-    /**
-     * Create a user and add it to the user's registry.
-     */
     public void createUser(final String id, final String username) {
         User u = new User(id, username);
         users.add(u);
         pcs.firePropertyChange("USER_ADDED", null, u);
+    }
+
+    /** Remove a user from the registry. */
+    public void removeUser(final String id) {
+        User user = getUserById(id);
+        if (user != null) {
+            users.remove(user);
+            pcs.firePropertyChange("USER_REMOVED", null, user);
+        }
     }
 
     /** Get the users in the registry. */

@@ -30,6 +30,7 @@ public class Controller implements PropertyChangeListener {
         String propertyName = evt.getPropertyName();
         switch (propertyName) {
             case "USER_ADDED":
+            case "USER_REMOVED":
                 view.updateUserList(model.getUserIds());
                 refreshMessages();
                 break;
@@ -65,7 +66,12 @@ public class Controller implements PropertyChangeListener {
 
     /** Calls the model's method to create the user. */
     public void createUser(final String id, final String username) {
-        model.createUser(id);
+        model.createUser(id, username);
+    }
+
+    /** Calls the model's method to remove the user. */
+    public void removeUser(final String userId) {
+        model.removeUser(userId);
     }
 
     /** Calls the model's method to get the username by id. */
