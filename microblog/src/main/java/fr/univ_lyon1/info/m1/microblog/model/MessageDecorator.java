@@ -27,26 +27,6 @@ public class MessageDecorator extends Message {
         this.data = data;
     }
 
-    /** Get the score of the message. */
-    public int getScore() {
-        return data.getScore();
-    }
-
-    /** Set the score of the message. */
-    public void setScore(final int score) {
-        data.setScore(score);
-    }
-
-    /** Check if the message is bookmarked. */
-    public boolean isBookmarked() {
-        return data.isBookmarked();
-    }
-
-    /** Set the bookmarked status of the message. */
-    public void setBookmarked(final boolean bookmarked) {
-        data.setBookmarked(bookmarked);
-    }
-
     /** Get the publication date of the message. */
     public Date getPublicationDate() {
         return super.getPublicationDate();

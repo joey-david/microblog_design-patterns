@@ -4,15 +4,10 @@ import fr.univ_lyon1.info.m1.microblog.model.Y;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
 import fr.univ_lyon1.info.m1.microblog.model.BookmarkScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
-import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
-import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.CountDownLatch;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
- * Test of Controller methods.
+ * Test the Controller class.
  */
 public class ControllerTest {
     private static Controller controller;
@@ -28,110 +23,129 @@ public class ControllerTest {
     private static JfxView view;
 
     @BeforeAll
-    static void setUp() throws Exception {
-        /* ??? stolen online, please don't ask us to explain
-         * thread wizardry */
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(() -> {
-            try {
-                model = new Y();
-                view = new JfxView(new Stage(), 800, 800);
-                controller = new Controller(model, view);
-                view.setController(controller);
-            } finally {
-                latch.countDown();
-            }
-        });
-        latch.await();
+    static void setUp() {
+        model = new Y();
+        view = Mockito.mock(JfxView.class);
+        controller = new Controller(model, view);
     }
 
     @Test
     void testSwitchScoringStrategyBookmark() {
+        controller.createUser("user", "testUser");
         ScoringStrategy strategy = new BookmarkScoring();
-        controller.switchScoringStrategy(strategy);
-
-        assertEquals(strategy, model.getScoringStrategy());
-        assertInstanceOf(BookmarkScoring.class, model.getScoringStrategy());
-    }
-
-    @Test
-    void testSwitchScoringStrategyChronological() {
-        ScoringStrategy strategy = new ChronologicalScoring();
-        controller.switchScoringStrategy(strategy);
-
-        assertEquals(strategy, model.getScoringStrategy());
-        assertInstanceOf(ChronologicalScoring.class, model.getScoringStrategy());
-    }
-
-    @Test
-    void testSwitchScoringStrategyRelevant() {
-        ScoringStrategy strategy = new MostRelevantScoring();
-        controller.switchScoringStrategy(strategy);
-
-        assertEquals(strategy, model.getScoringStrategy());
-        assertInstanceOf(MostRelevantScoring.class, model.getScoringStrategy());
+        controller.switchScoringStrategy(strategy, "user");
+        assertEquals(strategy, model.getUserById("user").getScoringStrategy());
+        assertInstanceOf(BookmarkScoring.class, model.getUserById("user").getScoringStrategy());
+        controller.removeUser("user");
     }
 
     @Test
     void testCreateUser() {
-        Platform.runLater(() -> {
-            controller.createUser("user");
+        controller.createUser("user", "testUser");
+        assertEquals(1, model.getUsers().size());
+        assertTrue(model.getUsers().stream().anyMatch(user -> user.getId().equals("user")));
+        controller.removeUser("user");
+    }
 
-            assertEquals(1, model.getUsers().size());
-            assertTrue(model.getUsers().stream().anyMatch(user -> user.getId().equals("user")));
-        });
+    @Test
+    void testRemoveUser() {
+        controller.createUser("user", "testUser");
+        controller.removeUser("user");
+        assertEquals(0, model.getUsers().size());
+        assertFalse(model.getUsers().stream().anyMatch(user -> user.getId().equals("user")));
+    }
+
+    @Test
+    void testGetUsernameById() {
+        controller.createUser("user", "testUser");
+        assertEquals("testUser", controller.getUsernameById("user"));
+        controller.removeUser("user");
     }
 
     @Test
     void testPublishMessage() {
-        for (MessageDecorator m: model.getMessages()) {
+        controller.createUser("user", "testUser");
+        for (MessageDecorator m : model.getMessages()) {
             model.removeMessage(m);
         }
         String message = "This message is used to test publishing";
-        controller.publishMessage(message);
-
+        controller.publishMessage(message, "user");
         assertTrue(model.getMessages().stream().anyMatch(msg -> msg.getContent().equals(message)));
+        controller.removeUser("user");
     }
 
     @Test
     void testDeleteMessage() {
-        MessageDecorator message = new MessageDecorator("This message is used to test deleting");
+        controller.createUser("user", "testUser");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test deleting",
+                "user");
         model.add(message);
-        controller.deleteMessage(message);
-
+        controller.deleteMessage(message, "user");
         assertFalse(model.getMessages().contains(message));
+        controller.removeUser("user");
     }
 
     @Test
     void testToggleBookmark() {
-        MessageDecorator message =
-                new MessageDecorator("This message is used to test toggling bookmark");
+        controller.createUser("user", "testUser");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test toggling bookmark", "user");
         model.add(message);
-        controller.toggleBookmark(message);
-
-        assertTrue(model.isMessageBookmarked(message));
+        controller.toggleBookmark(message, "user");
+        assertTrue(model.isMessageBookmarked(message, "user"));
+        model.removeMessage(message);
+        controller.removeUser("user");
     }
 
     @Test
     void testIsMessageBookmarked() {
-        MessageDecorator message =
-                new MessageDecorator("This message is used to test getting bookmark status");
+        controller.createUser("user", "testUser");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test getting bookmark status", "user");
         model.add(message);
-        model.bookmarkMessage(message);
-
-        assertTrue(controller.isMessageBookmarked(message));
+        model.bookmarkMessage(message, "user");
+        assertTrue(controller.isMessageBookmarked(message, "user"));
+        model.removeMessage(message);
+        controller.removeUser("user");
     }
 
     @Test
-    void testMessageScore() {
-        MessageDecorator message = new MessageDecorator("This message is used to test scoring");
+    void testGetMessageScore() {
+        controller.createUser("user", "testUser");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test scoring", "user");
         model.add(message);
-
-        assertEquals(model.getMessageScore(message), controller.getMessageScore(message));
+        assertEquals(model.getMessageScore(message, "user"),
+                controller.getMessageScore(message, "user"));
+        model.removeMessage(message);
+        controller.removeUser("user");
     }
 
     @Test
     void testSearchMessages() {
-        //TODO : don't know how to test this
+        controller.createUser("user", "testUser");
+        String searchQuery = "test";
+        controller.searchMessages(searchQuery, "user");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test searching", "user");
+        MessageDecorator message2 = new MessageDecorator(
+                "This message is used to try searching", "user");
+        assertTrue(model.getFilteredMessages(searchQuery, "user").stream()
+                .allMatch(msg -> msg.getContent().contains(searchQuery)));
+        model.removeMessage(message);
+        model.removeMessage(message2);
+        controller.removeUser("user");
+    }
+
+    @Test
+    void testShouldDisplay() {
+        controller.createUser("user", "testUser");
+        MessageDecorator message = new MessageDecorator(
+                "This message is used to test display", "user");
+        model.add(message);
+        assertTrue(controller.shouldDisplay(message, "user", 0));
+        model.removeMessage(message);
+        controller.removeUser("user");
     }
 }

@@ -31,26 +31,30 @@ public class MessageUserDataTest {
         add(msgs, m1);
         MessageDecorator m2 = new MessageDecorator("Hello, you!");
         add(msgs, m2);
-        MessageDecorator m3 = new MessageDecorator("What is this message ?");
+        MessageDecorator m3 = new MessageDecorator("What is this message?");
         add(msgs, m3);
-        msgs.get(msgs.indexOf(m1)).setBookmarked(true);
+
+        User user = new User("testUser");
+
+        // Bookmark a message for the user
+        user.toggleMessageBookmark(m1.getMessageId());
 
         // When
-        new BookmarkScoring().computeScores(msgs);
+        new BookmarkScoring().computeScores(msgs, user);
 
         // Then
-        assertThat(msgs.get(msgs.indexOf(m1)).getScore(), is(2));
-        assertThat(msgs.get(msgs.indexOf(m2)).getScore(), is(1));
-        assertThat(msgs.get(msgs.indexOf(m3)).getScore(), is(0));
+        assertThat(user.getMessageScore(m1.getMessageId()), is(2));
+        assertThat(user.getMessageScore(m2.getMessageId()), is(1));
+        assertThat(user.getMessageScore(m3.getMessageId()), is(0));
 
-        List<Message> sorted = msgs.stream()
+        List<MessageDecorator> sorted = msgs.stream()
                 .sorted((MessageDecorator left, MessageDecorator right) ->
-                        Integer.compare(right.getScore(), left.getScore())
+                        Integer.compare(user.getMessageScore(right.getMessageId()),
+                                user.getMessageScore(left.getMessageId()))
                 )
                 .collect(Collectors.toList());
 
         assertThat(sorted, contains(m1, m2, m3));
-
     }
 
     private void add(final List<MessageDecorator> msgs, final MessageDecorator m) {

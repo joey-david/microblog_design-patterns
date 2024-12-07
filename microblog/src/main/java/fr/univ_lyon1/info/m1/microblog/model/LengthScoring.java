@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class LengthScoring implements ScoringStrategy {
 
-    /** Compute the score for all messages in messagesData. */
+    /** Compute the score for all messages in messagesData for a specific user. */
     @Override
-    public void computeScores(final List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages, final User user) {
         messages.forEach(m -> {
             int lengthDiscrepancy = Math.abs(42 - m.getContent().length());
 
@@ -21,8 +21,7 @@ public class LengthScoring implements ScoringStrategy {
             } else if (lengthDiscrepancy <= 20) {
                 score = 1;
             }
-
-            m.setScore(score);
+            user.setMessageScore(m.getMessageId(), score);
         });
     }
 }

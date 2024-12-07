@@ -24,7 +24,9 @@ public class App extends Application {
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
-        v.updateMessageList(y.getSortedMessages());
+        for (String userId : y.getUserIds()) {
+            v.updateMessageListForUser(y.getSortedMessages(userId), userId);
+        }
 
         // Second view (uncomment to activate)
 //        JfxView v2 = new JfxView(new Stage(), 400, 400);

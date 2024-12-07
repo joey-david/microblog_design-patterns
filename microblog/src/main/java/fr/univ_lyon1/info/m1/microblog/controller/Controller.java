@@ -1,16 +1,13 @@
 package fr.univ_lyon1.info.m1.microblog.controller;
 
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
-import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
-import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class of the Controller of the application.
@@ -33,13 +30,20 @@ public class Controller implements PropertyChangeListener {
         String propertyName = evt.getPropertyName();
         switch (propertyName) {
             case "USER_ADDED":
+            case "USER_REMOVED":
                 view.updateUserList(model.getUserIds());
+                refreshMessages();
                 break;
-            case "MESSAGE_ADDED":
             case "SCORING_STRATEGY_CHANGED":
             case "MESSAGE_BOOKMARKED":
+                view.updateMessageListForUser(model.getSortedMessages((String) evt.getNewValue()),
+                        (String) evt.getNewValue());
+                break;
+            case "MESSAGE_ADDED":
             case "MESSAGE_REMOVED":
-                view.updateMessageList(model.getSortedMessages());
+                for (String userId : model.getUserIds()) {
+                    view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+                }
                 refreshMessages();
                 break;
             default:
@@ -47,75 +51,79 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    /** Refreshes the displayed messages. */
     private void refreshMessages() {
-        searchMessages(currentSearchQuery);
+        for (String userId : model.getUserIds()) {
+            searchMessages(currentSearchQuery, userId);
+        }
     }
 
     /** Calls the model's method to switch the scoring strategy. */
-    public void switchScoringStrategy(final ScoringStrategy strategy) {
-        model.setScoringStrategy(strategy);
-        strategy.computeScores(model.getMessages());
-        if (strategy instanceof ChronologicalScoring) {
-            view.setScoreThreshold(-1);
-        } else if (strategy instanceof MostRelevantScoring) {
-            view.setScoreThreshold(0);
-        }
-        view.updateMessageList(model.getSortedMessages());
-        refreshMessages();
+    public void switchScoringStrategy(final ScoringStrategy strategy, final String userId) {
+        model.setScoringStrategy(strategy, userId);
+        view.updateMessageListForUser(model.getSortedMessages(userId), userId);
     }
 
     /** Calls the model's method to create the user. */
-    public void createUser(final String id) {
-        model.createUser(id);
+    public void createUser(final String id, final String username) {
+        model.createUser(id, username);
+    }
+
+    /** Calls the model's method to remove the user. */
+    public void removeUser(final String userId) {
+        model.removeUser(userId);
+    }
+
+    /** Calls the model's method to get the username by id. */
+    public String getUsernameById(final String userId) {
+        return model.getUsernameById(userId);
     }
 
     /** Calls the model's method to publish a message. */
-    public void publishMessage(final String content) {
-        model.add(content);
-        view.updateMessageList(model.getSortedMessages());
-        refreshMessages();
-    }
-
     public void publishMessage(final String content, final String user) {
         model.publish(content, user);
-        view.updateMessageList(model.getSortedMessages());
+        for (String userId : model.getUserIds()) {
+            view.updateMessageListForUser(model.getSortedMessages(userId), userId);
+        }
         refreshMessages();
     }
 
     /** Calls the model's method to delete a message. */
-    public void deleteMessage(final MessageDecorator message) {
-        model.removeMessage(message);
-        view.updateMessageList(model.getSortedMessages());
-        refreshMessages();
+    public void deleteMessage(final MessageDecorator message, final String userId) {
+        if (message.getUserId().equals(userId)) {
+            model.removeMessage(message);
+            for (String user : model.getUserIds()) {
+                view.updateMessageListForUser(model.getSortedMessages(user), user);
+            }
+            refreshMessages();
+        }
     }
 
     /** Calls the model's method to bookmark the message. */
-    public void toggleBookmark(final MessageDecorator message) {
-        model.bookmarkMessage(message);
-        view.updateMessageList(model.getSortedMessages());
+    public void toggleBookmark(final MessageDecorator message, final String userId) {
+        model.bookmarkMessage(message, userId);
+        view.updateMessageListForUser(model.getSortedMessages(userId), userId);
     }
 
     /** Getter for bookmark. */
-    public boolean isMessageBookmarked(final MessageDecorator message) {
-        return model.isMessageBookmarked(message);
+    public boolean isMessageBookmarked(final MessageDecorator message, final String userId) {
+        return model.isMessageBookmarked(message, userId);
     }
 
     /** Getter for the score. */
-    public int getMessageScore(final MessageDecorator message) {
-        return model.getMessageScore(message);
+    public int getMessageScore(final MessageDecorator message, final String userId) {
+        return model.getMessageScore(message, userId);
     }
 
     /** Search function updater. */
-    public void searchMessages(final String search) {
-        currentSearchQuery = search;
-        List<MessageDecorator> filteredMessages = model.getMessages().stream()
-                .filter(message -> isValidLookup(message.getContent(), search))
-                .collect(Collectors.toList());
-        view.updateMessageList(filteredMessages);
+    public void searchMessages(final String search, final String userId) {
+        List<MessageDecorator> filteredMessages = model.getFilteredMessages(search, userId);
+        view.updateMessageListForUser(filteredMessages, userId);
     }
 
-    /** search boolean function. */
-    private boolean isValidLookup(final String message, final String query) {
-        return message.toLowerCase().contains(query.toLowerCase());
+    /** Calls the model to make sure that the message should be displayed. */
+    public boolean shouldDisplay(final MessageDecorator message,
+                                 final String userId, final int scoreThreshold) {
+        return model.shouldDisplay(message, userId, scoreThreshold);
     }
 }

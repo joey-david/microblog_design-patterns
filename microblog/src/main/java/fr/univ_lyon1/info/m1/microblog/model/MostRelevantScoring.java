@@ -11,39 +11,34 @@ public class MostRelevantScoring implements ScoringStrategy {
             new LengthScoring(),
             new BookmarkScoring());
 
-
     /**
-     * Compute the score for all messages in messagesData.
+     * Compute the score for all messages in messagesData for a specific user.
      *
      * @param messages List of messages to score.
+     * @param user     The user for whom the scores are being computed.
      */
     @Override
-    public void computeScores(final List<MessageDecorator> messages) {
+    public void computeScores(final List<MessageDecorator> messages, final User user) {
         // Reset scores
-        messages.forEach(m -> m.setScore(0));
+        messages.forEach(m -> user.setMessageScore(m.getMessageId(), 0));
 
         // Temporary storage for scores
         int[] tempScores = new int[messages.size()];
 
         // Apply each strategy and accumulate scores
         for (ScoringStrategy strategy : strategies) {
-            strategy.computeScores(messages);
+            strategy.computeScores(messages, user);
             for (int i = 0; i < messages.size(); i++) {
-                tempScores[i] += messages.get(i).getScore();
+                tempScores[i] += user.getMessageScore(messages.get(i).getMessageId());
             }
         }
 
         // Set the final scores
         for (int i = 0; i < messages.size(); i++) {
-            messages.get(i).setScore(tempScores[i]);
+            user.setMessageScore(messages.get(i).getMessageId(), tempScores[i]);
         }
     }
 
-    /**
-     * Get the list of scoring strategies.
-     *
-     * @return List of scoring strategies.
-     */
     @Override
     public String toString() {
         return "Most Relevant Messages";

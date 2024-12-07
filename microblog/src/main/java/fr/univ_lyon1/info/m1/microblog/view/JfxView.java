@@ -1,11 +1,12 @@
 package fr.univ_lyon1.info.m1.microblog.view;
 
-import fr.univ_lyon1.info.m1.microblog.model.RecentRelevantScoring;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
-import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
-import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
+
 import fr.univ_lyon1.info.m1.microblog.model.ChronologicalScoring;
 import fr.univ_lyon1.info.m1.microblog.model.MostRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.RecentRelevantScoring;
+import fr.univ_lyon1.info.m1.microblog.model.ScoringStrategy;
+import fr.univ_lyon1.info.m1.microblog.model.MessageDecorator;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,6 +20,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -35,7 +37,6 @@ public class JfxView {
     private Controller controller;
     private HBox users;
     private VBox root;
-    private final ComboBox<ScoringStrategy> strategyComboBox;
     private int scoreThreshold = 0;
 
     /**
@@ -46,40 +47,6 @@ public class JfxView {
         stage.setTitle("Y Microblogging");
 
         root = new VBox(10);
-
-        strategyComboBox = new ComboBox<>(FXCollections.observableArrayList(
-                new ChronologicalScoring(),
-                new RecentRelevantScoring(),
-                new MostRelevantScoring()
-        ));
-        strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
-                strategyComboBox.getValue()));
-
-        // Use toString() method for displaying items
-        strategyComboBox.setCellFactory(lv -> new ListCell<ScoringStrategy>() {
-            @Override
-            protected void updateItem(final ScoringStrategy item, final boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : item.toString());
-            }
-        });
-
-        strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
-        strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring by default
-        Label strategyLabel = new Label("Select Scoring Strategy:");
-
-        TextField searchBar = new TextField();
-        searchBar.setPromptText("Search messages");
-        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-            controller.searchMessages(newValue);
-        });
-
-        HBox strategyBox = new HBox(10, strategyLabel, strategyComboBox, searchBar);
-
-        strategyBox.setAlignment(Pos.CENTER); // Center the HBox
-        root.getChildren().add(strategyBox);
-
-
 
         users = new HBox(10);
         root.getChildren().add(users);
@@ -95,7 +62,6 @@ public class JfxView {
      */
     public void setController(final Controller controller) {
         this.controller = controller;
-        controller.switchScoringStrategy(strategyComboBox.getValue());
     }
 
     /**
@@ -114,27 +80,63 @@ public class JfxView {
 
             Label userID = new Label(s);
 
+            TextField searchBar = new TextField();
+            searchBar.setPromptText("Search messages");
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+                controller.searchMessages(newValue, s);
+            });
+
+            ComboBox<ScoringStrategy> strategyComboBox =
+                    new ComboBox<>(FXCollections.observableArrayList(
+                        new ChronologicalScoring(),
+                        new RecentRelevantScoring(),
+                        new MostRelevantScoring()
+            ));
+
+            strategyComboBox.setOnAction(e -> controller.switchScoringStrategy(
+                    strategyComboBox.getValue(), s));
+
+            // Use toString() method for displaying items
+            strategyComboBox.setCellFactory(lv -> new ListCell<ScoringStrategy>() {
+                @Override
+                protected void updateItem(final ScoringStrategy item, final boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item.toString());
+                }
+            });
+
+            strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
+            strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring
+
+            HBox strategyBox = new HBox(10, strategyComboBox, searchBar);
+            strategyBox.setAlignment(Pos.CENTER);
+
             Pane textBox = createInputWidget(s);
-            userBox.getChildren().addAll(userID, userMsgBox, textBox);
+            userBox.getChildren().addAll(userID, strategyBox, userMsgBox, textBox);
         }
     }
 
     /**
      * Create the pane containing all messages, from the messages' registry passed as an argument.
      */
-    public void updateMessageList(final List<MessageDecorator> messages) { //TODO: find a way to remove messages ?
+    public void updateMessageListForUser(final List<MessageDecorator> messages,
+                                         final String userId) {
         users.getChildren().stream()
                 .filter(node -> node instanceof ScrollPane)
                 .map(node -> (ScrollPane) node)
                 .forEach(scrollPane -> {
                     VBox userBox = (VBox) scrollPane.getContent();
-                    VBox userMsgBox = (VBox) userBox.getChildren().get(1);
-                    userMsgBox.getChildren().clear();
+                    Label userIdLabel = (Label) userBox.getChildren().get(0);
+                    String user = userIdLabel.getText();
+                    if (user.equals(userId)) {
+                        VBox userMsgBox = (VBox) userBox.getChildren().get(2);
+                        userMsgBox.getChildren().clear();
 
-                    for (MessageDecorator message : messages) {
-                        if (message.getScore() > scoreThreshold) {
-                            VBox msgBox = createMessageWidget(message);
-                            userMsgBox.getChildren().add(msgBox);
+                        for (MessageDecorator message : messages) {
+                            if (controller.shouldDisplay(message, userId, scoreThreshold)) {
+                                VBox msgBox = createMessageWidget(message, userId);
+                                userMsgBox.getChildren().add(msgBox);
+                            }
                         }
                     }
                 });
@@ -147,9 +149,10 @@ public class JfxView {
             + "-fx-padding: 8px; "
             + "-fx-margin: 5px; ";
 
-    private VBox createMessageWidget(final MessageDecorator m) {
+    private VBox createMessageWidget(final MessageDecorator m, final String userId) {
         VBox msgBox = new VBox();
-        String bookmarkText = m.isBookmarked() ? "⭐" : "Click to bookmark";
+        String bookmarkText = controller.isMessageBookmarked(m, userId) ? "⭐"
+                : "Click to bookmark";
 
         // Buttons are stored in the buttonBox
         HBox buttonBox = new HBox();
@@ -157,15 +160,19 @@ public class JfxView {
         // bookmark button
         Button bookButton = new Button(bookmarkText);
         bookButton.setOnAction(e -> {
-            controller.toggleBookmark(m);
+            controller.toggleBookmark(m, userId);
         });
-        // delete button
-        Button deleteButton = new Button("❌");
-        deleteButton.setOnAction(e -> {
-            controller.deleteMessage(m);
-        });
+        buttonBox.getChildren().add(bookButton);
 
-        buttonBox.getChildren().addAll(bookButton, deleteButton);
+        // delete button, only if the user is the author
+        if (m.getUserId().equals(userId)) {
+            Button deleteButton = new Button("❌");
+            deleteButton.setOnAction(e -> {
+                controller.deleteMessage(m, userId);
+            });
+            buttonBox.getChildren().add(deleteButton);
+        }
+
         msgBox.getChildren().add(buttonBox);
 
         final Label label = new Label(m.getContent());
@@ -175,9 +182,17 @@ public class JfxView {
         Label date = new Label(dateFormat.format(m.getPublicationDate()));
         msgBox.getChildren().add(date);
 
-        final Label score = new Label("Score: " + m.getScore());
+        final Label score = new Label("Score: " + controller.getMessageScore(m, userId));
         score.setTextFill(Color.LIGHTGRAY);
-        msgBox.getChildren().add(score);
+
+        final Label author = new Label("Author: " + controller.getUsernameById(m.getUserId()));
+        author.setTextFill(Color.GRAY);
+
+        HBox scoreAuthorBox = new HBox(10, score, author);
+        HBox.setHgrow(author, Priority.ALWAYS);
+        author.setMaxWidth(Double.MAX_VALUE);
+        scoreAuthorBox.setAlignment(Pos.CENTER_LEFT);
+        msgBox.getChildren().add(scoreAuthorBox);
 
         msgBox.setStyle(MSG_STYLE);
         return msgBox;
@@ -195,8 +210,7 @@ public class JfxView {
         });
         Button s = new Button("Publish");
         s.setOnAction(e -> {
-            controller.publishMessage(t.getText());
-            t.clear();
+            controller.publishMessage(t.getText(), u);
         });
         input.getChildren().addAll(t, s);
         return input;

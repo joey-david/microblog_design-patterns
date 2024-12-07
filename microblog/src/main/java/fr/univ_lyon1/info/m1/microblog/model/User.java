@@ -1,10 +1,20 @@
 package fr.univ_lyon1.info.m1.microblog.model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * User of the application.
  */
 public class User {
     private String id;
+    private String username;
+    private Set<UUID> bookmarks = new HashSet<>();
+    private Map<UUID, Integer> messageScores = new HashMap<>();
+    private ScoringStrategy scoringStrategy;
 
     @Override
     public int hashCode() {
@@ -24,13 +34,10 @@ public class User {
         }
         User other = (User) obj;
         if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
-            return false;
+            return other.id == null;
+        } else {
+            return id.equals(other.id);
         }
-        return true;
     }
 
     /**
@@ -39,13 +46,127 @@ public class User {
      */
     public User(final String id) {
         this.id = id;
+        this.username = "no name set, id: " + id;
+        this.scoringStrategy = new RecentRelevantScoring();
     }
 
+    /**
+     * Constructor for User.
+     * @param id must be a unique identifier.
+     * @param username must be a unique username.
+     */
+    public User(final String id, final String username) {
+        this.id = id;
+        this.username = username;
+        this.scoringStrategy = new RecentRelevantScoring();
+    }
+
+    /**
+     * Constructor for User.
+     * @param id must be a unique identifier.
+     * @param username must be a unique username.
+     * @param scoringStrategy the scoring strategy to set.
+     */
+    public User(final String id, final String username, final ScoringStrategy scoringStrategy) {
+        this.id = id;
+        this.username = username;
+        this.scoringStrategy = scoringStrategy;
+    }
+
+    /**
+     * Get the username of the user.
+     * @return the username of the user.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Set the username of the user.
+     * @param username must be a unique username.
+     */
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    /**
+     * Get the id of the user.
+     * @return the id of the user.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Set the id of the user.
+     * @param id must be a unique identifier.
+     */
     public void setId(final String id) {
         this.id = id;
+    }
+
+    /**
+     * Toggle the bookmark of a message.
+     * @param messageId the id of the message to toggle the bookmark.
+     */
+    public void toggleMessageBookmark(final UUID messageId) {
+        if (bookmarks.contains(messageId)) {
+            bookmarks.remove(messageId);
+            // System.out.println(username + " removed " + messageId + " from their bookmarks");
+        } else {
+            bookmarks.add(messageId);
+            // System.out.println(username + " bookmarked " + messageId);
+        }
+    }
+
+    /**
+     * Check if a message is bookmarked.
+     * @param messageId the id of the message to check.
+     * @return true if the message is bookmarked, false otherwise.
+     */
+    public boolean isMessageBookmarked(final UUID messageId) {
+        return bookmarks.contains(messageId);
+    }
+
+    /**
+     * Get the score of a message.
+     * @param messageId the id of the message to get the score.
+     * @return the score of the message.
+     */
+    public int getMessageScore(final UUID messageId) {
+        return messageScores.getOrDefault(messageId, 999);
+    }
+
+    /**
+     * Set the score of a message.
+     * @param messageId the id of the message to set the score.
+     * @param score the score to set.
+     */
+    public void setMessageScore(final UUID messageId, final int score) {
+        messageScores.put(messageId, score);
+    }
+
+    /**
+     * Remove the score of a message.
+     * @param messageId the id of the message to remove the score.
+     */
+    public void removeMessageScore(final UUID messageId) {
+        messageScores.remove(messageId);
+    }
+
+    /**
+     * Get the scoring strategy.
+     * @return the scoring strategy.
+     */
+    public ScoringStrategy getScoringStrategy() {
+        return scoringStrategy;
+    }
+
+    /**
+     * Set the scoring strategy.
+     * @param scoringStrategy the scoring strategy to set.
+     */
+    public void setScoringStrategy(final ScoringStrategy scoringStrategy) {
+        this.scoringStrategy = scoringStrategy;
     }
 }

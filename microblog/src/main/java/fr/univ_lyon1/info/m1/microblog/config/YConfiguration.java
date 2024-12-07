@@ -40,7 +40,7 @@ public class YConfiguration {
         String[] users = usersStr.split(",");
         for (String user : users) {
             if (!user.trim().isEmpty()) {
-                model.createUser(user.trim());
+                model.createUser(user.trim(), user.trim());
             }
         }
     }
