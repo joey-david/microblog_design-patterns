@@ -30,7 +30,7 @@ public class YConfiguration {
         } catch (IOException e) {
             System.err.println("Warning: could not load " + CONFIG_FILE);
             config.setProperty("users", "foo,bar");
-            config.setProperty("messages.file", "messages/example-messages.txt");
+            config.setProperty("messages.file", "messages/test-messages.txt");
         }
         return config;
     }

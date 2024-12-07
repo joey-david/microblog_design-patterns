@@ -3,6 +3,7 @@ package fr.univ_lyon1.info.m1.microblog;
 import fr.univ_lyon1.info.m1.microblog.config.YConfiguration;
 import fr.univ_lyon1.info.m1.microblog.controller.Controller;
 import fr.univ_lyon1.info.m1.microblog.model.Y;
+import fr.univ_lyon1.info.m1.microblog.utils.TestMessageGenerator;
 import fr.univ_lyon1.info.m1.microblog.view.JfxView;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,6 +20,8 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
+        TestMessageGenerator.generateMessages();
+
         final Y y = new Y();
         YConfiguration config = new YConfiguration(y);
         JfxView v = new JfxView(stage, 600, 600);
