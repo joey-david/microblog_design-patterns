@@ -106,7 +106,7 @@ public class JfxView {
             });
 
             strategyComboBox.setButtonCell(strategyComboBox.getCellFactory().call(null));
-            strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring by default
+            strategyComboBox.getSelectionModel().select(1); // Select MostRelevantScoring
 
             HBox strategyBox = new HBox(10, strategyComboBox, searchBar);
             strategyBox.setAlignment(Pos.CENTER);
@@ -151,7 +151,8 @@ public class JfxView {
 
     private VBox createMessageWidget(final MessageDecorator m, final String userId) {
         VBox msgBox = new VBox();
-        String bookmarkText = controller.isMessageBookmarked(m, userId) ? "⭐" : "Click to bookmark";
+        String bookmarkText = controller.isMessageBookmarked(m, userId) ? "⭐"
+                : "Click to bookmark";
 
         // Buttons are stored in the buttonBox
         HBox buttonBox = new HBox();

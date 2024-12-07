@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,28 +16,29 @@ public class BookmarkScoringTest {
 
     @Test
     void testBookmarkScoring() {
-        //
-
+        // Given
         List<MessageDecorator> msgs = new ArrayList<>();
 
-        MessageDecorator m1 = new MessageDecorator("Hello world");
-        m1.setBookmarked(true);
+        MessageDecorator m1 = new MessageDecorator("Hello world", UUID.randomUUID().toString());
+        MessageDecorator m2 = new MessageDecorator("Hello everyone", UUID.randomUUID().toString());
+        MessageDecorator m3 = new MessageDecorator("Goodbye world", UUID.randomUUID().toString());
+
         msgs.add(m1);
-
-        MessageDecorator m2 = new MessageDecorator("Hello everyone");
-        m2.setBookmarked(false);
         msgs.add(m2);
-
-        MessageDecorator m3 = new MessageDecorator("Goodbye world");
-        m3.setBookmarked(false);
         msgs.add(m3);
 
+        User user = new User(UUID.randomUUID().toString(), "testUser");
+
+        // Bookmark messages for the user
+        user.toggleMessageBookmark(m1.getMessageId());
+        user.toggleMessageBookmark(m3.getMessageId());
+
         // When
-        new BookmarkScoring().computeScores(msgs);
+        new BookmarkScoring().computeScores(msgs, user);
 
         // Then
-        assertThat(m1.getScore(), is(2)); // "hello" and "world" are bookmarked
-        assertThat(m2.getScore(), is(1)); // "hello" is bookmarked
-        assertThat(m3.getScore(), is(1)); // "world" is bookmarked
+        assertThat(user.getMessageScore(m1.getMessageId()), is(2));
+        assertThat(user.getMessageScore(m2.getMessageId()), is(1));
+        assertThat(user.getMessageScore(m3.getMessageId()), is(2));
     }
 }

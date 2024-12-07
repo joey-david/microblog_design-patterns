@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,28 +21,32 @@ public class RecentRelevantScoringTest {
         // Given
         List<MessageDecorator> msgs = new ArrayList<>();
 
-        MessageDecorator m1 = new MessageDecorator("Message 1");
+        MessageDecorator m1 = new MessageDecorator("Message 1", UUID.randomUUID().toString());
         m1.setPublicationDate(new Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(12)));
-        m1.setBookmarked(true);
         msgs.add(m1);
 
-        MessageDecorator m2 = new MessageDecorator("This is longer, and it's Message 2");
+        MessageDecorator m2 = new MessageDecorator("This is longer, and it's Message 2",
+                UUID.randomUUID().toString());
         m2.setPublicationDate(new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(10)));
-        m2.setBookmarked(false);
         msgs.add(m2);
 
-        MessageDecorator m3 = new MessageDecorator("This is the perfect length, "
-                + "it's scoring the top length score.");
+        MessageDecorator m3 = new MessageDecorator("This is the perfect length,"
+                + " it's scoring the top length score.", UUID.randomUUID().toString());
         m3.setPublicationDate(new Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1)));
-        m3.setBookmarked(true);
         msgs.add(m3);
 
+        User user = new User(UUID.randomUUID().toString(), "testUser");
+
+        // Bookmark messages for the user
+        user.toggleMessageBookmark(m1.getMessageId());
+        user.toggleMessageBookmark(m3.getMessageId());
+
         // When
-        new RecentRelevantScoring().computeScores(msgs);
+        new RecentRelevantScoring().computeScores(msgs, user);
 
         // Then
-        assertThat(m1.getScore(), is(3)); // recent and bookmarked
-        assertThat(m2.getScore(), is(5)); // recent but not bookmarked
-        assertThat(m3.getScore(), is(12)); // recent and bookmarked
+        assertThat(user.getMessageScore(m1.getMessageId()), is(3));
+        assertThat(user.getMessageScore(m2.getMessageId()), is(5));
+        assertThat(user.getMessageScore(m3.getMessageId()), is(12));
     }
 }

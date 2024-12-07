@@ -64,7 +64,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     /** Calls the model's method to create the user. */
-    public void createUser(final String id) {
+    public void createUser(final String id, final String username) {
         model.createUser(id);
     }
 
