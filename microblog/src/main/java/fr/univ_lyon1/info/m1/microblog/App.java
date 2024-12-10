@@ -19,11 +19,19 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
+
         final Y y = new Y();
         YConfiguration config = new YConfiguration(y);
         JfxView v = new JfxView(stage, 600, 600);
         Controller controller = new Controller(y, v);
         v.setController(controller);
+
+        try {
+            config.initialize();
+        } catch (IOException e) {
+            System.err.println("Error initializing app: " + e.getMessage());
+        }
+
         for (String userId : y.getUserIds()) {
             v.updateMessageListForUser(y.getSortedMessages(userId), userId);
         }
@@ -32,12 +40,6 @@ public class App extends Application {
 //        JfxView v2 = new JfxView(new Stage(), 400, 400);
 //        Controller controller2 = new Controller(y, v2);
 //        v2.setController(controller2);
-
-        try {
-            config.initialize();
-        } catch (IOException e) {
-            System.err.println("Error initializing app: " + e.getMessage());
-        }
     }
 
     /**

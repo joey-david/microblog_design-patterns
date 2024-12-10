@@ -41,9 +41,6 @@ public class Controller implements PropertyChangeListener {
                 break;
             case "MESSAGE_ADDED":
             case "MESSAGE_REMOVED":
-                for (String userId : model.getUserIds()) {
-                    view.updateMessageListForUser(model.getSortedMessages(userId), userId);
-                }
                 refreshMessages();
                 break;
             default:
