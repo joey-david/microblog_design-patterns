@@ -211,6 +211,7 @@ public class JfxView {
         Button s = new Button("Publish");
         s.setOnAction(e -> {
             controller.publishMessage(t.getText(), u);
+            t.clear();
         });
         input.getChildren().addAll(t, s);
         return input;
