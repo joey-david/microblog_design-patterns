@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +62,8 @@ public class DefaultMessageFactory implements MessageFactory {
                     String millisecondOffset = parts[1].trim();
                     String username = parts[2].trim();
                     try {
-                        Date date = new Date(System.currentTimeMillis() - Long.parseLong(millisecondOffset));
+                        Date date = new Date(System.currentTimeMillis()
+                                - Long.parseLong(millisecondOffset));
                         messages.add(createMessage(content, username, date));
                     } catch (NumberFormatException e) {
                         messages.add(createMessage(content, username));
